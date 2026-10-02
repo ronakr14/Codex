@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>The Codex</title>
+      <link>https://localhost:8080</link>
+      <description>Last 10 notes on The Codex</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Daily Briefings</title>
+    <link>https://localhost:8080/00-Briefings/</link>
+    <guid>https://localhost:8080/00-Briefings/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Fri, 02 Oct 2026 07:05:28 GMT</pubDate>
+  </item><item>
+    <title>The Codex</title>
+    <link>https://localhost:8080/</link>
+    <guid>https://localhost:8080/</guid>
+    <description><![CDATA[ Personal engineering handbook — data engineering, software engineering, AI, databases and architecture notes, plus reference material, interview prep, projects and a daily briefing feed. ]]></description>
+    <pubDate>Fri, 02 Oct 2026 07:05:28 GMT</pubDate>
+  </item><item>
+    <title>2026-10-01</title>
+    <link>https://localhost:8080/00-Briefings/2026-10-01</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10-01</guid>
+    <description><![CDATA[ Daily Engineering Briefing — 01 October 2026 1. ]]></description>
+    <pubDate>Wed, 30 Sep 2026 18:30:00 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
