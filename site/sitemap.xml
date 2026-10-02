@@ -1,10 +1,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
+    <loc>https://localhost:8080/00-Briefings/2026-09-30</loc>
+    <lastmod>2026-09-29T18:30:00.000Z</lastmod>
+  </url><url>
     <loc>https://localhost:8080/00-Briefings/2026-10-01</loc>
     <lastmod>2026-09-30T18:30:00.000Z</lastmod>
   </url><url>
     <loc>https://localhost:8080/00-Briefings/</loc>
-    <lastmod>2026-10-02T07:05:28.682Z</lastmod>
+    <lastmod>2026-10-02T08:57:56.664Z</lastmod>
   </url><url>
     <loc>https://localhost:8080/</loc>
-    <lastmod>2026-10-02T07:05:28.682Z</lastmod>
+    <lastmod>2026-10-02T08:57:56.664Z</lastmod>
   </url></urlset>
