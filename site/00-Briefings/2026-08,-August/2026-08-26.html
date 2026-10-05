@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>2026-08-26</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="2026-08-26"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2026-08-26"/><meta name="twitter:description" content="Daily Tech Briefing — August 26, 2026 I filtered out the themes we’ve already covered repeatedly—MCP governance, Iceberg Variant, ADOP, Python 3.15, borderless lakehouses, etc."/><meta property="og:description" content="Daily Tech Briefing — August 26, 2026 I filtered out the themes we’ve already covered repeatedly—MCP governance, Iceberg Variant, ADOP, Python 3.15, borderless lakehouses, etc."/><meta property="og:image:alt" content="Daily Tech Briefing — August 26, 2026 I filtered out the themes we’ve already covered repeatedly—MCP governance, Iceberg Variant, ADOP, Python 3.15, borderless lakehouses, etc."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/00-Briefings/2026-08,-August/2026-08-26"/><meta property="twitter:url" content="https://localhost:8080/00-Briefings/2026-08,-August/2026-08-26"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="Daily Tech Briefing — August 26, 2026 I filtered out the themes we’ve already covered repeatedly—MCP governance, Iceberg Variant, ADOP, Python 3.15, borderless lakehouses, etc."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="00-Briefings/2026-08,-August/2026-08-26"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-18"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-18" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../00-Briefings/">Daily Briefings</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../00-Briefings/2026-08,-August/">2026 08, August</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2026 08 26</a></div></nav><h1 class="article-title">2026-08-26</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-25T18:30:00.000Z">Aug 26, 2026</time><span>9 min read</span></p></div></div><article class="popover-hint"><h1 id="daily-tech-briefing--august-26-2026">Daily Tech Briefing — August 26, 2026<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#daily-tech-briefing--august-26-2026" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>I filtered out the themes we’ve already covered repeatedly—MCP governance, Iceberg Variant, ADOP, Python 3.15, borderless lakehouses, etc. Today’s five have the strongest signal for <strong>agent architecture, inference infrastructure, databases, security, and the senior-engineer/architect career shift</strong>.</p>
+<hr/>
+<h2 id="1-nvidias-avo-result-is-a-strong-demonstration-that-the-agent-harness-can-matter-more-than-the-model">1. NVIDIA’s AVO result is a strong demonstration that the agent harness can matter more than the model<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-nvidias-avo-result-is-a-strong-demonstration-that-the-agent-harness-can-matter-more-than-the-model" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>NVIDIA reported that its <strong>Agentic Variation Operators (AVO)</strong> system achieved a <strong>100.00 RHAE score on the ARC-AGI-3 public set</strong>, completing all 183 levels across 25 environments. The striking comparison is that the underlying Claude Opus 5 model had a roughly 30% baseline in the benchmark setting; NVIDIA attributes the improvement to the surrounding agent architecture rather than simply using a stronger model. (<a href="https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/" title="NVIDIA AVO Reaches 100% on ARC-AGI-3, Demonstrating a Frontier-Level General-Purpose Architecture for Long-Horizon Autonomous Agents | NVIDIA Technical Blog" class="external">NVIDIA Developer<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>AVO combines:</p>
+<ul>
+<li>
+<p>persistent memory</p>
+</li>
+<li>
+<p>supervision</p>
+</li>
+<li>
+<p>tool use</p>
+</li>
+<li>
+<p>iterative planning</p>
+</li>
+<li>
+<p>candidate generation</p>
+</li>
+<li>
+<p>execution-based evaluation</p>
+</li>
+<li>
+<p>lineage of previous attempts</p>
+</li>
+</ul>
+<p>It was also used for GPU-kernel optimization, where NVIDIA says it explored more than 500 directions and committed 40 kernel versions, achieving up to 10.5% better performance than FlashAttention-4 on DGX B200. (<a href="https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/" title="NVIDIA AVO Reaches 100% on ARC-AGI-3, Demonstrating a Frontier-Level General-Purpose Architecture for Long-Horizon Autonomous Agents | NVIDIA Technical Blog" class="external">NVIDIA Developer<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="why-it-matters-to-you">Why it matters to you<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-to-you" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is the <strong>most technically important item today</strong>.</p>
+<p>The useful lesson isn’t “NVIDIA got 100%.”</p>
+<p>It’s:</p>
+<blockquote>
+<p><strong>Model capability × harness quality = agent capability.</strong></p>
+</blockquote>
+<p>Think of the architecture as:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>              Frontier Model</span></span>
+<span data-line><span>                    │</span></span>
+<span data-line><span>             ┌──────┴──────┐</span></span>
+<span data-line><span>             │    Harness   │</span></span>
+<span data-line><span>             ├──────────────┤</span></span>
+<span data-line><span>             │ Memory       │</span></span>
+<span data-line><span>             │ Tools        │</span></span>
+<span data-line><span>             │ Planning     │</span></span>
+<span data-line><span>             │ Evaluation   │</span></span>
+<span data-line><span>             │ Supervision  │</span></span>
+<span data-line><span>             │ Recovery     │</span></span>
+<span data-line><span>             │ State        │</span></span>
+<span data-line><span>             └──────┬───────┘</span></span>
+<span data-line><span>                    │</span></span>
+<span data-line><span>             Long-running task</span></span></code></pre></figure>
+<p>That is directly relevant to your transition toward <strong>AI/LLM architecture</strong>.</p>
+<p>You should increasingly think about agents the same way you’d think about distributed systems: the model is one compute component; the surrounding runtime determines reliability.</p>
+<h3 id="experiment-worth-doing">Experiment worth doing<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#experiment-worth-doing" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Take a small coding task and implement two versions:</p>
+<p><strong>A.</strong> simple LLM → tool → answer<br/>
+<strong>B.</strong> LLM + persistent state + evaluator + retry loop + tool history</p>
+<p>Measure task completion rate and token cost.</p>
+<p>That experiment will teach you more about agent engineering than another model-comparison chart.</p>
+<p><a href="https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/" class="external">NVIDIA’s AVO technical report<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<hr/>
+<h2 id="2-trace-gives-ai-agents-something-weve-been-missing-portable-proof-of-what-actually-ran">2. TRACE gives AI agents something we’ve been missing: portable proof of what actually ran<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-trace-gives-ai-agents-something-weve-been-missing-portable-proof-of-what-actually-ran" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>The Linux Foundation announced <strong>TRACE — Trust, Runtime Attestation and Compliance Evidence</strong> on August 25.</p>
+<p>TRACE is an open specification developed with AMD, Intel, Microsoft, OPAQUE and the Technology Innovation Institute. It creates a <strong>cryptographically verifiable evidence record</strong> tying together the runtime environment, software, policies, data classifications and tool usage of an AI workload. (<a href="https://www.hpcwire.com/aiwire/2026/08/25/linux-foundation-welcomes-trace-to-advance-verifiable-runtime-evidence-for-ai-workloads/" title="AIwire - Covering Scientific &amp; Technical AI" class="external">HPCwire<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>It builds on existing standards including:</p>
+<ul>
+<li>
+<p>RATS</p>
+</li>
+<li>
+<p>EAT</p>
+</li>
+<li>
+<p>SLSA</p>
+</li>
+<li>
+<p>SCITT</p>
+</li>
+<li>
+<p>SPIFFE</p>
+</li>
+<li>
+<p>EAR</p>
+</li>
+</ul>
+<p>Rather than creating another isolated security framework, TRACE attempts to compose those standards into a portable evidence layer. (<a href="https://www.hpcwire.com/aiwire/2026/08/25/linux-foundation-welcomes-trace-to-advance-verifiable-runtime-evidence-for-ai-workloads/" title="AIwire - Covering Scientific &amp; Technical AI" class="external">HPCwire<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="why-it-matters">Why it matters<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is the missing layer between:</p>
+<p><strong>“We configured the agent securely.”</strong></p>
+<p>and</p>
+<p><strong>“We can prove what happened.”</strong></p>
+<p>Imagine an agent processing regulated data:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Agent</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>Model</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>Tool</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>Database</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>External API</span></span></code></pre></figure>
+<p>A conventional log might tell you:</p>
+<blockquote>
+<p>Agent called tool X at 10:31.</p>
+</blockquote>
+<p>TRACE’s direction is closer to:</p>
+<blockquote>
+<p>This exact workload, running this software, under these policies, accessed this classification of data, invoked these tools, in this attested runtime.</p>
+</blockquote>
+<p>That’s a massive difference for:</p>
+<ul>
+<li>
+<p>healthcare</p>
+</li>
+<li>
+<p>finance</p>
+</li>
+<li>
+<p>government</p>
+</li>
+<li>
+<p>enterprise AI</p>
+</li>
+<li>
+<p>sovereign infrastructure</p>
+</li>
+<li>
+<p>regulated data pipelines</p>
+</li>
+</ul>
+<h3 id="why-it-matters-for-your-architecture-goals">Why it matters for your architecture goals<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-for-your-architecture-goals" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is <strong>supply-chain provenance + zero-trust + AI observability</strong> converging.</p>
+<p>I’d add this concept to your architecture vocabulary:</p>
+<blockquote>
+<p><strong>Runtime evidence is different from application logs.</strong></p>
+</blockquote>
+<p>Logs tell you what the application claims happened.</p>
+<p>Attestation attempts to provide independently verifiable evidence about the environment and execution.</p>
+<p>That’s going to matter as autonomous agents get access to increasingly sensitive systems.</p>
+<p><a href="https://www.hpcwire.com/aiwire/2026/08/25/linux-foundation-welcomes-trace-to-advance-verifiable-runtime-evidence-for-ai-workloads/" class="external">Linux Foundation / TRACE announcement<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<hr/>
+<h2 id="3-ray-summit--the-first-vllm-conference-show-that-inference-is-becoming-a-distributed-systems-discipline">3. Ray Summit + the first vLLM Conference show that inference is becoming a distributed-systems discipline<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-ray-summit--the-first-vllm-conference-show-that-inference-is-becoming-a-distributed-systems-discipline" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Ray Summit 2026 is running August 24–26</strong>, with the first-ever <strong>vLLM Conference</strong> colocated with it. (<a href="https://www.anyscale.com/ray-summit/2026?source=editors" title="Ray Summit 2026 | Hosted by Anyscale" class="external">Anyscale<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>The technical agenda is particularly relevant: sessions cover full-stack vLLM optimization, DeepSeek and MiniMax serving, GB200/GB300 topology-aware scheduling, frontier MoE serving, GPU-native data preprocessing, reinforcement-learning infrastructure and large-scale post-training. (<a href="https://www.nvidia.com/en-us/events/ray-summit/" title="NVIDIA at Ray Summit 2026—AI Sessions, Keynotes &amp; Registration | NVIDIA" class="external">NVIDIA<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>NVIDIA’s vLLM session specifically covers optimization from <strong>kernel-level FlashInfer work through distributed serving with NVIDIA Dynamo</strong>, targeting higher throughput and lower latency. (<a href="https://www.nvidia.com/en-us/events/ray-summit/" title="NVIDIA at Ray Summit 2026—AI Sessions, Keynotes &amp; Registration | NVIDIA" class="external">NVIDIA<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="why-it-matters-1">Why it matters<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is where LLM infrastructure starts looking remarkably familiar to a data engineer.</p>
+<p>The problem is no longer:</p>
+<p><code>How do I call an LLM API?</code></p>
+<p>It’s:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Request routing</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Scheduling</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>GPU placement</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>KV-cache management</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Batching</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Model parallelism</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Network topology</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Inference</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Observability / autoscaling</span></span></code></pre></figure>
+<p>That’s a <strong>distributed systems problem</strong>.</p>
+<p>And vLLM’s architecture increasingly resembles an operating system for inference: resource management, scheduling, memory management, batching and execution.</p>
+<h3 id="why-this-matters-to-your-career">Why this matters to your career<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-this-matters-to-your-career" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is one of the best bridges between your existing strengths and AI infrastructure.</p>
+<p>You already understand:</p>
+<p><strong>distributed processing + data pipelines + cloud + databases</strong></p>
+<p>Add:</p>
+<p><strong>GPU scheduling + inference serving + model runtime architecture</strong></p>
+<p>and you start moving toward <strong>AI infrastructure/platform architecture</strong>, which is considerably more durable than simply learning another LLM API.</p>
+<h3 id="what-id-learn">What I’d learn<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#what-id-learn" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Start with:</p>
+<p><strong>PagedAttention → KV cache → continuous batching → prefix caching → disaggregated serving</strong></p>
+<p>Those concepts explain a surprising amount of modern LLM-serving architecture.</p>
+<p><a href="https://www.anyscale.com/ray-summit/2026?source=editors" class="external">Ray Summit 2026 — Anyscale<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<hr/>
+<h2 id="4-kimis-database-architecture-highlights-a-new-problem-ai-generated-software-needs-persistent-state-even-when-compute-is-disposable">4. Kimi’s database architecture highlights a new problem: AI-generated software needs persistent state even when compute is disposable<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-kimis-database-architecture-highlights-a-new-problem-ai-generated-software-needs-persistent-state-even-when-compute-is-disposable" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>PingCAP announced that Kimi.ai is using <strong>TiDB Cloud</strong> for persistent infrastructure behind its agent-generated applications.</p>
+<p>The architectural problem is interesting: Kimi agents can generate and deploy complete applications, so the platform needs to provision isolated databases rapidly and preserve application/development state independently of temporary execution environments. PingCAP says its deployment can provision isolated databases in roughly one second and support very large numbers of application tenants. (<a href="https://portal.sina.com.hk/finance/finance-globenewswire/globenewswire/2026/08/25/1898793/kimi-ai-selects-tidb-to-power-persistent-data-infrastructure-for-next-generation-ai-agents/" title="Kimi.ai Selects TiDB to Power Persistent Data Infrastructure for Next-Generation AI Agents - 新浪香港" class="external">Sina Portal<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>The more important architecture is:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>        Agent</span></span>
+<span data-line><span>          │</span></span>
+<span data-line><span>    Generate App</span></span>
+<span data-line><span>          │</span></span>
+<span data-line><span>   ┌──────┴──────┐</span></span>
+<span data-line><span>   │             │</span></span>
+<span data-line><span>Ephemeral      Persistent</span></span>
+<span data-line><span>Compute          State</span></span>
+<span data-line><span>   │             │</span></span>
+<span data-line><span>   │          Database</span></span>
+<span data-line><span>   │          Filesystem</span></span>
+<span data-line><span>   │          Git state</span></span>
+<span data-line><span>   │          Checkpoints</span></span>
+<span data-line><span>   │</span></span>
+<span data-line><span>Destroyed</span></span></code></pre></figure>
+<h3 id="why-it-matters-2">Why it matters<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is a subtle but important shift.</p>
+<p>Traditional application architecture assumes:</p>
+<blockquote>
+<p>compute and state are relatively tightly coupled.</p>
+</blockquote>
+<p>Agent-generated applications increasingly want:</p>
+<blockquote>
+<p><strong>compute is disposable; state is durable.</strong></p>
+</blockquote>
+<p>That’s actually a very good architectural property.</p>
+<p>It resembles:</p>
+<ul>
+<li>
+<p>Kubernetes workloads</p>
+</li>
+<li>
+<p>serverless</p>
+</li>
+<li>
+<p>distributed job systems</p>
+</li>
+<li>
+<p>ephemeral CI runners</p>
+</li>
+</ul>
+<p>but now the <strong>application itself may be created dynamically by an agent</strong>.</p>
+<h3 id="why-it-matters-for-you">Why it matters for you<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-for-you" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is directly in your wheelhouse because it combines:</p>
+<p><strong>database architecture + agents + multi-tenancy + ephemeral compute + persistence.</strong></p>
+<p>And it raises useful questions:</p>
+<ul>
+<li>
+<p>How do you isolate tenant state?</p>
+</li>
+<li>
+<p>How do you provision databases quickly?</p>
+</li>
+<li>
+<p>How do you handle schema evolution generated by agents?</p>
+</li>
+<li>
+<p>How do you control runaway storage?</p>
+</li>
+<li>
+<p>How do you recover an agent’s work?</p>
+</li>
+<li>
+<p>What belongs in durable memory vs temporary context?</p>
+</li>
+</ul>
+<p>Those are architect-level questions.</p>
+<p>The vendor’s performance/capacity figures are vendor-reported, so I’d treat the “millions/tens of millions” claims as architecture signals rather than independently verified benchmarks. (<a href="https://portal.sina.com.hk/finance/finance-globenewswire/globenewswire/2026/08/25/1898793/kimi-ai-selects-tidb-to-power-persistent-data-infrastructure-for-next-generation-ai-agents/" title="Kimi.ai Selects TiDB to Power Persistent Data Infrastructure for Next-Generation AI Agents - 新浪香港" class="external">Sina Portal<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><a href="https://www.pingcap.com/" class="external">PingCAP — TiDB for Agentic AI<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<hr/>
+<h2 id="5-mckinseys-2026-ai-survey-gives-a-useful-reality-check-on-the-career-story">5. McKinsey’s 2026 AI survey gives a useful reality check on the career story<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-mckinseys-2026-ai-survey-gives-a-useful-reality-check-on-the-career-story" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>McKinsey &amp; Company published its <strong>State of AI in 2026: On the road to ROI</strong> survey on August 25.</p>
+<p>The useful numbers are surprisingly mixed:</p>
+<ul>
+<li>
+<p><strong>40%</strong> of respondents at organizations above $1B revenue say they are scaling AI agents, up from 27% last year.</p>
+</li>
+<li>
+<p>About <strong>31% of large enterprises</strong> report scaling software coding agents.</p>
+</li>
+<li>
+<p><strong>32%</strong> say their organization decided not to buy at least one software product or feature because they could build it internally with agentic coding tools.</p>
+</li>
+<li>
+<p><strong>20%</strong> say AI operating costs are already constraining usage.</p>
+</li>
+<li>
+<p>Yet only <strong>37%</strong> report any enterprise-level EBIT impact from AI, essentially unchanged from last year.</p>
+</li>
+<li>
+<p><strong>80%</strong> report individual productivity improvements.</p>
+</li>
+<li>
+<p>39% expect AI-related workforce declines in the coming year. (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" title="The State of AI: Global Survey 2026 | McKinsey" class="external">McKinsey &amp; Company<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h3 id="why-it-matters-3">Why it matters<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#why-it-matters-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is the important distinction:</p>
+<p><strong>individual productivity is moving much faster than organizational productivity.</strong></p>
+<p>That’s a huge architecture/engineering signal.</p>
+<p>Companies can give everyone an AI assistant relatively easily.</p>
+<p>Getting:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>AI</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>workflow redesign</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>systems integration</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>governance</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>measurement</span></span>
+<span data-line><span> ↓</span></span>
+<span data-line><span>financial impact</span></span></code></pre></figure>
+<p>is much harder.</p>
+<p>McKinsey’s high performers are differentiated by <strong>redesigning workflows around AI rather than simply inserting AI into existing workflows</strong>, along with stronger operational discipline and risk management. (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" title="The State of AI: Global Survey 2026 | McKinsey" class="external">McKinsey &amp; Company<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="what-that-means-for-you">What that means for you<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#what-that-means-for-you" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This actually reinforces the career direction we’ve been discussing.</p>
+<p>Don’t optimize for:</p>
+<blockquote>
+<p>“I know how to use Claude/Codex/Gemini.”</p>
+</blockquote>
+<p>Optimize for:</p>
+<blockquote>
+<p><strong>“I can redesign a data/engineering workflow around AI and make it reliable.”</strong></p>
+</blockquote>
+<p>That requires:</p>
+<ul>
+<li>
+<p>architecture</p>
+</li>
+<li>
+<p>data modeling</p>
+</li>
+<li>
+<p>distributed systems</p>
+</li>
+<li>
+<p>evaluation</p>
+</li>
+<li>
+<p>observability</p>
+</li>
+<li>
+<p>security</p>
+</li>
+<li>
+<p>cost engineering</p>
+</li>
+<li>
+<p>workflow orchestration</p>
+</li>
+<li>
+<p>human/agent boundaries</p>
+</li>
+</ul>
+<p>That’s much harder to commoditize.</p>
+<p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" class="external">McKinsey — State of AI in 2026<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<hr/>
+<h1 id="what-id-pay-attention-to-today">What I’d pay attention to today<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#what-id-pay-attention-to-today" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h3 id="1-nvidia-avo--deepest-technical-read">1. <strong>NVIDIA AVO — deepest technical read</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-nvidia-avo--deepest-technical-read" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is the one I’d spend serious time on.</p>
+<p>Ignore the benchmark headline initially and study the <strong>harness architecture</strong>.</p>
+<p>The question worth answering is:</p>
+<blockquote>
+<p><strong>What mechanisms allow an agent to sustain useful work for hundreds of iterations without collapsing into repetition, drift or garbage?</strong></p>
+</blockquote>
+<p>That question will matter enormously for production agents.</p>
+<h3 id="2-trace--worth-adding-to-your-architecture-vocabulary">2. <strong>TRACE — worth adding to your architecture vocabulary</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-trace--worth-adding-to-your-architecture-vocabulary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is the sleeper.</p>
+<p>You’re already looking at agents, MCP, databases, governance and infrastructure. TRACE adds the missing concept of <strong>verifiable runtime evidence</strong>.</p>
+<p>I’d keep an eye on whether TRACE gains adoption across cloud providers and confidential-computing stacks. If it does, it could become part of the standard architecture for regulated agent workloads.</p>
+<hr/>
+<h2 id="todays-bigger-signal">Today’s bigger signal<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#todays-bigger-signal" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Today’s five stories actually fit together unusually well:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>                    Agent</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>              ┌───────┴───────┐</span></span>
+<span data-line><span>              │               │</span></span>
+<span data-line><span>           Harness          Identity</span></span>
+<span data-line><span>              │               │</span></span>
+<span data-line><span>        Memory / Tools     Policy</span></span>
+<span data-line><span>              │               │</span></span>
+<span data-line><span>              └───────┬───────┘</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>              Distributed Runtime</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>          ┌───────────┼───────────┐</span></span>
+<span data-line><span>          ↓           ↓           ↓</span></span>
+<span data-line><span>      Inference     Data       Compute</span></span>
+<span data-line><span>      vLLM/Ray    TiDB/DB    GPU/Cloud</span></span>
+<span data-line><span>          │           │           │</span></span>
+<span data-line><span>          └───────────┼───────────┘</span></span>
+<span data-line><span>                      ↓</span></span>
+<span data-line><span>              Runtime Evidence</span></span>
+<span data-line><span>                 / TRACE</span></span>
+<span data-line><span>                      ↓</span></span>
+<span data-line><span>               Audit / Trust</span></span></code></pre></figure>
+<p>The interesting frontier isn’t really <strong>“better chatbots”</strong> anymore.</p>
+<p>It’s <strong>reliable autonomous computing</strong>.</p>
+<p>And that is much closer to the world you already understand: databases, distributed systems, pipelines, cloud infrastructure, testing, observability and architecture.</p>
+<p>That’s a good place to be.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-13" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#daily-tech-briefing--august-26-2026" data-for="daily-tech-briefing--august-26-2026">Daily Tech Briefing — August 26, 2026</a></li><li class="depth-1"><a href="#1-nvidias-avo-result-is-a-strong-demonstration-that-the-agent-harness-can-matter-more-than-the-model" data-for="1-nvidias-avo-result-is-a-strong-demonstration-that-the-agent-harness-can-matter-more-than-the-model">1. NVIDIA’s AVO result is a strong demonstration that the agent harness can matter more than the model</a></li><li class="depth-2"><a href="#why-it-matters-to-you" data-for="why-it-matters-to-you">Why it matters to you</a></li><li class="depth-2"><a href="#experiment-worth-doing" data-for="experiment-worth-doing">Experiment worth doing</a></li><li class="depth-1"><a href="#2-trace-gives-ai-agents-something-weve-been-missing-portable-proof-of-what-actually-ran" data-for="2-trace-gives-ai-agents-something-weve-been-missing-portable-proof-of-what-actually-ran">2. TRACE gives AI agents something we’ve been missing: portable proof of what actually ran</a></li><li class="depth-2"><a href="#why-it-matters" data-for="why-it-matters">Why it matters</a></li><li class="depth-2"><a href="#why-it-matters-for-your-architecture-goals" data-for="why-it-matters-for-your-architecture-goals">Why it matters for your architecture goals</a></li><li class="depth-1"><a href="#3-ray-summit--the-first-vllm-conference-show-that-inference-is-becoming-a-distributed-systems-discipline" data-for="3-ray-summit--the-first-vllm-conference-show-that-inference-is-becoming-a-distributed-systems-discipline">3. Ray Summit + the first vLLM Conference show that inference is becoming a distributed-systems discipline</a></li><li class="depth-2"><a href="#why-it-matters-1" data-for="why-it-matters-1">Why it matters</a></li><li class="depth-2"><a href="#why-this-matters-to-your-career" data-for="why-this-matters-to-your-career">Why this matters to your career</a></li><li class="depth-2"><a href="#what-id-learn" data-for="what-id-learn">What I’d learn</a></li><li class="depth-1"><a href="#4-kimis-database-architecture-highlights-a-new-problem-ai-generated-software-needs-persistent-state-even-when-compute-is-disposable" data-for="4-kimis-database-architecture-highlights-a-new-problem-ai-generated-software-needs-persistent-state-even-when-compute-is-disposable">4. Kimi’s database architecture highlights a new problem: AI-generated software needs persistent state even when compute is disposable</a></li><li class="depth-2"><a href="#why-it-matters-2" data-for="why-it-matters-2">Why it matters</a></li><li class="depth-2"><a href="#why-it-matters-for-you" data-for="why-it-matters-for-you">Why it matters for you</a></li><li class="depth-1"><a href="#5-mckinseys-2026-ai-survey-gives-a-useful-reality-check-on-the-career-story" data-for="5-mckinseys-2026-ai-survey-gives-a-useful-reality-check-on-the-career-story">5. McKinsey’s 2026 AI survey gives a useful reality check on the career story</a></li><li class="depth-2"><a href="#why-it-matters-3" data-for="why-it-matters-3">Why it matters</a></li><li class="depth-2"><a href="#what-that-means-for-you" data-for="what-that-means-for-you">What that means for you</a></li><li class="depth-0"><a href="#what-id-pay-attention-to-today" data-for="what-id-pay-attention-to-today">What I’d pay attention to today</a></li><li class="depth-2"><a href="#1-nvidia-avo--deepest-technical-read" data-for="1-nvidia-avo--deepest-technical-read">1. NVIDIA AVO — deepest technical read</a></li><li class="depth-2"><a href="#2-trace--worth-adding-to-your-architecture-vocabulary" data-for="2-trace--worth-adding-to-your-architecture-vocabulary">2. TRACE — worth adding to your architecture vocabulary</a></li><li class="depth-1"><a href="#todays-bigger-signal" data-for="todays-bigger-signal">Today’s bigger signal</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

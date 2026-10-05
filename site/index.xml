@@ -6,29 +6,65 @@
       <description>Last 10 notes on The Codex</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>2026-08, August</title>
+    <link>https://localhost:8080/00-Briefings/2026-08,-August/</link>
+    <guid>https://localhost:8080/00-Briefings/2026-08,-August/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 05 Oct 2026 14:05:49 GMT</pubDate>
+  </item><item>
+    <title>2026-09, September</title>
+    <link>https://localhost:8080/00-Briefings/2026-09,-September/</link>
+    <guid>https://localhost:8080/00-Briefings/2026-09,-September/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 05 Oct 2026 14:05:49 GMT</pubDate>
+  </item><item>
+    <title>2026-10, October</title>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Mon, 05 Oct 2026 14:05:49 GMT</pubDate>
+  </item><item>
     <title>Daily Briefings</title>
     <link>https://localhost:8080/00-Briefings/</link>
     <guid>https://localhost:8080/00-Briefings/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Fri, 02 Oct 2026 08:57:56 GMT</pubDate>
+    <pubDate>Mon, 05 Oct 2026 14:05:49 GMT</pubDate>
   </item><item>
     <title>The Codex</title>
     <link>https://localhost:8080/</link>
     <guid>https://localhost:8080/</guid>
     <description><![CDATA[ Personal engineering handbook — data engineering, software engineering, AI, databases and architecture notes, plus reference material, interview prep, projects and a daily briefing feed. ]]></description>
-    <pubDate>Fri, 02 Oct 2026 08:57:56 GMT</pubDate>
+    <pubDate>Mon, 05 Oct 2026 14:05:49 GMT</pubDate>
+  </item><item>
+    <title>2026-10-05</title>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-05</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-05</guid>
+    <description><![CDATA[ Daily Engineering Briefing — 5 October 2026 I filtered today’s feed pretty aggressively. ]]></description>
+    <pubDate>Sun, 04 Oct 2026 18:30:00 GMT</pubDate>
+  </item><item>
+    <title>2026-10-04</title>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-04</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-04</guid>
+    <description><![CDATA[ Daily Engineering Briefing — 4 October 2026 I filtered today’s developments for engineering substance rather than “AI company announces AI thing” noise. ]]></description>
+    <pubDate>Sat, 03 Oct 2026 18:30:00 GMT</pubDate>
+  </item><item>
+    <title>2026-10-03</title>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-03</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-03</guid>
+    <description><![CDATA[ Daily Engineering Briefing — 3 October 2026 I filtered this pretty hard. ]]></description>
+    <pubDate>Fri, 02 Oct 2026 18:30:00 GMT</pubDate>
+  </item><item>
+    <title>2026-10-02</title>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-02</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-02</guid>
+    <description><![CDATA[ Daily Engineering Briefing — 2 October 2026 I filtered this for architecture and engineering signal rather than launch noise. ]]></description>
+    <pubDate>Thu, 01 Oct 2026 18:30:00 GMT</pubDate>
   </item><item>
     <title>2026-10-01</title>
-    <link>https://localhost:8080/00-Briefings/2026-10-01</link>
-    <guid>https://localhost:8080/00-Briefings/2026-10-01</guid>
+    <link>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-01</link>
+    <guid>https://localhost:8080/00-Briefings/2026-10,-October/2026-10-01</guid>
     <description><![CDATA[ Daily Engineering Briefing — 01 October 2026 1. ]]></description>
     <pubDate>Wed, 30 Sep 2026 18:30:00 GMT</pubDate>
-  </item><item>
-    <title>2026-09-30</title>
-    <link>https://localhost:8080/00-Briefings/2026-09-30</link>
-    <guid>https://localhost:8080/00-Briefings/2026-09-30</guid>
-    <description><![CDATA[ Daily Engineering Briefing — 30 September 2026 1. ]]></description>
-    <pubDate>Tue, 29 Sep 2026 18:30:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
