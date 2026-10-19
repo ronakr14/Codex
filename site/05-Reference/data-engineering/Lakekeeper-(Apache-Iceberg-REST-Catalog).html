@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Lakekeeper (Apache Iceberg REST Catalog)</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="Lakekeeper (Apache Iceberg REST Catalog)"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Lakekeeper (Apache Iceberg REST Catalog)"/><meta name="twitter:description" content="AI Summary Comprehensive architectural analysis of Lakekeeper, an open-source Apache Iceberg REST Catalog written in Rust."/><meta property="og:description" content="AI Summary Comprehensive architectural analysis of Lakekeeper, an open-source Apache Iceberg REST Catalog written in Rust."/><meta property="og:image:alt" content="AI Summary Comprehensive architectural analysis of Lakekeeper, an open-source Apache Iceberg REST Catalog written in Rust."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/data-engineering/Lakekeeper-(Apache-Iceberg-REST-Catalog)"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/data-engineering/Lakekeeper-(Apache-Iceberg-REST-Catalog)"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AI Summary Comprehensive architectural analysis of Lakekeeper, an open-source Apache Iceberg REST Catalog written in Rust."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/data-engineering/Lakekeeper-(Apache-Iceberg-REST-Catalog)"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-190"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-190" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/data-engineering/">data engineering</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Lakekeeper (Apache Iceberg REST Catalog)</a></div></nav><h1 class="article-title">Lakekeeper (Apache Iceberg REST Catalog)</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T07:02:47.440Z">Sep 24, 2026</time><span>15 min read</span></p></div></div><article class="popover-hint"><h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Comprehensive architectural analysis of Lakekeeper, an open-source Apache Iceberg REST Catalog written in Rust. Explains how it acts as the metadata and governance control plane for Iceberg lakehouses by managing catalogs, namespaces, authentication, authorization, storage credentials, events, and multi-tenant governance. Covers repository architecture, deployment, integrations with Spark, Trino and PyIceberg, enterprise readiness, comparisons with Hive Metastore, AWS Glue and Project Nessie, interview questions, and architectural lessons for building secure, scalable lakehouse platforms.</p>
+<hr/>
+<h2 id="1-executive-summary">1. Executive Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Lakekeeper is an open-source Apache Iceberg REST Catalog written in Rust. Its job is to provide the metadata/control plane for Iceberg lakehouse tables: registering tables, managing namespaces/warehouses/projects, enforcing access control, coordinating commits, and integrating with storage and event backends. The project describes itself as “secure, fast and easy to use,” with support for OpenID Connect, Kubernetes deployment, OpenFGA-based authorization, CloudEvents, and multiple storage backends. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>The problem it solves is classic lakehouse pain: teams need a catalog that is not tied to a JVM stack, supports multi-tenant governance, works with common engines, and can centralize security and metadata operations without becoming a bottleneck. Lakekeeper explicitly positions itself around Iceberg REST Catalog functionality such as multi-table commits and server-side deconflicting. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>The target audience is data platform teams, lakehouse platform engineers, analytics infrastructure teams, and enterprises running Iceberg-based storage on AWS, Azure, GCP, or S3-compatible on-prem deployments. The repo’s README emphasizes integrations with Spark, PyIceberg, Trino, and StarRocks, plus Helm-based Kubernetes deployment. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Maturity level: this is not a toy prototype. It looks like a fairly mature, production-oriented open-source platform with 1,400 commits, 51 releases, a documented deployment path, integration testing, and a feature set that includes security, multi-tenancy, authorization, and operational controls. That said, the repo still has active feature evolution and open issues, so I would call it <strong>production-capable but still evolving</strong>, not “fully enterprise-frozen.” (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="2-repository-overview">2. Repository Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-repository-overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Main purpose: implement the Apache Iceberg REST Catalog specification and extend it with Lakekeeper-specific operational and governance features. The README states this directly, and the docs/developer guide describes the <code>lakekeeper</code> crate as the core of the catalog. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Core features and capabilities include:</p>
+<ul>
+<li>
+<p>REST catalog API for Iceberg.</p>
+</li>
+<li>
+<p>Storage access management using vended credentials and remote signing for S3.</p>
+</li>
+<li>
+<p>OIDC authentication.</p>
+</li>
+<li>
+<p>Kubernetes-native deployment via Helm.</p>
+</li>
+<li>
+<p>CloudEvents for change notification.</p>
+</li>
+<li>
+<p>Change-approval hooks for policy/data-contract enforcement.</p>
+</li>
+<li>
+<p>Multi-tenancy with projects and warehouses.</p>
+</li>
+<li>
+<p>Fine-grained authorization using OpenFGA by default.</p>
+</li>
+<li>
+<p>Support for PostgreSQL, NATS, Kafka, Vault KV2, and multiple storage providers. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Key technologies and languages:</p>
+<ul>
+<li>
+<p>Rust dominates the codebase at about 92.7% of the repo, with small amounts of Python, Open Policy Agent, CSS, HTML, and JavaScript. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>The workspace uses Rust 2024 edition and Rust 1.94. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>SQLx is used with Postgres support and migrations, which strongly suggests a database-backed metadata/control-plane design. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>The workspace includes crates for OpenFGA auth, Iceberg extensions, IO, the core Lakekeeper crate, a binary crate, Kafka/NATS event backends, integration tests, KV2 secrets, and PostgreSQL storage. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>High-level architecture inferred from the codebase:</p>
+<ul>
+<li>
+<p>A core catalog crate contains the main domain logic.</p>
+</li>
+<li>
+<p>A REST API layer exposes Iceberg and Lakekeeper endpoints.</p>
+</li>
+<li>
+<p>Backend traits abstract storage, auth, secrets, and events.</p>
+</li>
+<li>
+<p>Concrete crates provide pluggable implementations for Postgres storage, OpenFGA auth, event sinks, and secret storage. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="3-how-it-works">3. How It Works<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-how-it-works" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>In simple terms: clients like Spark or Trino talk to Lakekeeper through the Iceberg REST API. Lakekeeper authenticates the caller, checks permissions, looks up or updates catalog metadata in Postgres, and may emit events or issue signed storage access credentials. That lets compute engines operate on table metadata without directly owning the governance logic. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Major components/modules, based on the repository structure and docs:</p>
+<ul>
+<li>
+<p><code>crates/lakekeeper</code>: core catalog logic. The developer guide says this crate contains the core of the catalog and is structured into modules like <code>api</code>. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/docs/docs/developer-guide.md" title="lakekeeper/docs/docs/developer-guide.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>crates/lakekeeper-bin</code>: executable/server packaging.</p>
+</li>
+<li>
+<p><code>crates/lakekeeper-storage-postgres</code>: Postgres-backed catalog persistence.</p>
+</li>
+<li>
+<p><code>crates/authz-openfga</code>: authorization integration.</p>
+</li>
+<li>
+<p><code>crates/lakekeeper-events-kafka</code> and <code>crates/lakekeeper-events-nats</code>: event publishing backends.</p>
+</li>
+<li>
+<p><code>crates/lakekeeper-secrets-kv2</code>: secrets storage integration.</p>
+</li>
+<li>
+<p><code>crates/iceberg-ext</code> and <code>crates/io</code>: shared domain and IO utilities.</p>
+</li>
+<li>
+<p><code>crates/lakekeeper-integration-tests</code>: end-to-end validation. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Data flow and execution flow:</p>
+<ol>
+<li>
+<p>A client calls the catalog REST endpoint.</p>
+</li>
+<li>
+<p>The API layer validates request shape and identity.</p>
+</li>
+<li>
+<p>Authorization is checked through the configured auth handler, typically OpenFGA. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Catalog state is read or mutated in Postgres via the storage layer. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>If needed, Lakekeeper issues storage access credentials or remote-signing support for cloud object storage. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Changes may produce CloudEvents or be blocked by a contract-verification hook. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Compute engines then use the returned metadata/credentials to operate directly on object storage.</p>
+</li>
+</ol>
+<p>Integrations and dependencies:</p>
+<ul>
+<li>
+<p>Apache Iceberg REST Catalog spec.</p>
+</li>
+<li>
+<p><code>apache/iceberg-rust</code>.</p>
+</li>
+<li>
+<p>PostgreSQL.</p>
+</li>
+<li>
+<p>OpenFGA.</p>
+</li>
+<li>
+<p>Vault KV2.</p>
+</li>
+<li>
+<p>NATS / Kafka.</p>
+</li>
+<li>
+<p>OIDC provider.</p>
+</li>
+<li>
+<p>Spark, PyIceberg, Trino, StarRocks. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="4-why-this-project-exists">4. Why This Project Exists<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-why-this-project-exists" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Business problem: lakehouse teams need a central catalog that supports governance, security, multi-tenancy, and cross-engine interoperability without requiring a full JVM-centric platform or bespoke metadata plumbing. Lakekeeper is trying to be that neutral control plane. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Technical challenges it solves:</p>
+<ul>
+<li>
+<p>Securely brokering object-store access without embedding credentials broadly.</p>
+</li>
+<li>
+<p>Maintaining a consistent catalog state across many concurrent writers.</p>
+</li>
+<li>
+<p>Integrating authN/authZ with enterprise identity systems.</p>
+</li>
+<li>
+<p>Handling tenant/project/warehouse boundaries cleanly.</p>
+</li>
+<li>
+<p>Supporting event-driven reactions to catalog changes. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Advantages over traditional approaches:</p>
+<ul>
+<li>
+<p>Rust binary instead of JVM stack: simpler runtime footprint, no JVM required. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>REST catalog standardization instead of engine-specific catalogs.</p>
+</li>
+<li>
+<p>Trait-based extensibility rather than hard-coded auth/storage/event integrations. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Kubernetes-friendly deployment path and high-availability orientation. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Unique differentiators:</p>
+<ul>
+<li>
+<p>OpenFGA as default fine-grained authZ.</p>
+</li>
+<li>
+<p>Contract-verification hook for governance/data-contract enforcement.</p>
+</li>
+<li>
+<p>Native change events via CloudEvents.</p>
+</li>
+<li>
+<p>Explicit support for multi-project, multi-warehouse tenancy. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="5-how-it-can-be-used">5. How It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-how-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="iceberg-catalog-for-a-lakehouse">Iceberg catalog for a lakehouse<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#iceberg-catalog-for-a-lakehouse" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Use Lakekeeper as the central catalog for Iceberg tables.<br/>
+Example: Spark writes tables, Trino queries them, Lakekeeper manages the metadata and access rules.<br/>
+Benefits: one control plane, consistent governance, cross-engine compatibility.<br/>
+Complexity: Medium. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="multi-tenant-data-platform">Multi-tenant data platform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#multi-tenant-data-platform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Serve multiple teams/projects from one deployment.<br/>
+Example: Separate warehouses for marketing, finance, and ML teams.<br/>
+Benefits: operational consolidation, policy isolation, lower platform sprawl.<br/>
+Complexity: High. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="secure-object-store-access-brokering">Secure object-store access brokering<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#secure-object-store-access-brokering" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Issue vended credentials and remote-signed access to S3/GCS/Azure-like storage.<br/>
+Example: Engine requests signed access to a table location without owning permanent cloud credentials.<br/>
+Benefits: better security posture, shorter-lived credentials, cleaner least-privilege setup.<br/>
+Complexity: High. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="governance-and-change-approval-gateway">Governance and change approval gateway<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#governance-and-change-approval-gateway" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Block catalog operations unless external policy checks pass.<br/>
+Example: Prevent table schema changes that would violate a data contract.<br/>
+Benefits: policy enforcement before damage reaches production.<br/>
+Complexity: High. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="event-driven-metadata-integration">Event-driven metadata integration<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#event-driven-metadata-integration" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Publish catalog changes into event systems.<br/>
+Example: A downstream workflow reacts to a new table creation event.<br/>
+Benefits: better automation, auditability, operational awareness.<br/>
+Complexity: Medium. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="self-managed-lakehouse-platform-on-kubernetes">Self-managed lakehouse platform on Kubernetes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#self-managed-lakehouse-platform-on-kubernetes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Description: Deploy via Helm into a cluster.<br/>
+Example: Run Lakekeeper alongside compute engines and backing services in a platform namespace.<br/>
+Benefits: standardized deployment, scalable operations, cloud portability.<br/>
+Complexity: Medium to High. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="6-where-it-can-be-used">6. Where It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-where-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Data Engineering: Very relevant. It is basically a metadata and governance plane for modern lakehouse pipelines. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Analytics: Very relevant. It gives BI/query engines a shared catalog and consistent table governance. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>AI/ML: Relevant. Feature/data scientists can use Iceberg-managed datasets with governed access and reproducible table semantics. Not an ML platform by itself. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>DevOps: Relevant. Helm deployment, service integration, and operational control fit standard platform workflows. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Platform Engineering: Strong fit. This is a platform-control-plane component, not just an application library. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Cloud Engineering: Strong fit. It directly manages cloud object storage access and supports major clouds and S3-compatible setups. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Security: Strong fit. OIDC, OpenFGA, vended credentials, remote signing, and policy hooks are security-centric. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>FinOps: Moderate relevance. It can help enforce storage and access boundaries, but it is not a native cost-management tool. That said, tighter governance often reduces waste. This is an inference from the security/governance design. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Product Engineering: Moderate relevance. Product teams using analytics-heavy features could benefit from a managed catalog, but this is infrastructure, not app-level product code. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Enterprise Applications: Strong fit where enterprise data access, auditing, and multi-team governance matter. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="7-key-components-analysis">7. Key Components Analysis<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-key-components-analysis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>README.md</code>: positions the project, lists features, supported systems, quickstart, and status. It is the best executive entry point. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>Cargo.toml</code>: defines the workspace layout and dependencies. It shows the modular crate structure and confirms Rust 2024 / Rust 1.94 / SQLx / Postgres. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper</code>: core domain logic and REST API handlers. The developer guide explicitly says this crate contains the catalog core. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/docs/docs/developer-guide.md" title="lakekeeper/docs/docs/developer-guide.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper-bin</code>: runnable server binary. It likely wires config, HTTP server, and the core crate together. This is inferred from the workspace layout. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper-storage-postgres</code>: persistence layer for catalog state. The SQLx/Postgres dependency pattern strongly supports this. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/authz-openfga</code>: authZ backend integration. The README explicitly says OpenFGA is the default fine-grained auth system. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper-events-kafka</code> and <code>crates/lakekeeper-events-nats</code>: event backends for publishing change events. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper-secrets-kv2</code>: secrets backend integration. The README lists Vault KV2 as a supported secret store. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><code>crates/lakekeeper-integration-tests</code>: validates integration with Spark, PyIceberg, Trino, and StarRocks. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="8-setup-and-adoption">8. Setup and Adoption<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-setup-and-adoption" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Installation requirements:</p>
+<ul>
+<li>
+<p>Rust toolchain compatible with the workspace.</p>
+</li>
+<li>
+<p>PostgreSQL 15+ for the catalog backend. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Optional OpenFGA, Vault KV2, NATS/Kafka depending on enabled features. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Kubernetes if using the Helm-based deployment path. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Deployment options:</p>
+<ul>
+<li>
+<p>Docker image via Quay.</p>
+</li>
+<li>
+<p>docker-compose example.</p>
+</li>
+<li>
+<p>Helm chart for Kubernetes. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Infrastructure requirements:</p>
+<ul>
+<li>
+<p>Postgres database.</p>
+</li>
+<li>
+<p>Object storage backing store.</p>
+</li>
+<li>
+<p>Identity provider for OIDC if used.</p>
+</li>
+<li>
+<p>Optional event bus and secret store integrations. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Learning curve:</p>
+<ul>
+<li>
+<p>Moderate to high. Iceberg, lakehouse storage semantics, authZ concepts, and catalog behavior are not beginner material.</p>
+</li>
+<li>
+<p>The trait-based extensibility is elegant but means platform teams need Rust familiarity to customize deeply. This is an inference from the architecture and Rust-centric implementation. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Operational considerations:</p>
+<ul>
+<li>
+<p>You are operating a control plane, so DB availability and consistency matter.</p>
+</li>
+<li>
+<p>AuthZ, storage credentials, and event delivery need explicit monitoring.</p>
+</li>
+<li>
+<p>Integration testing coverage helps, but the operational blast radius is still platform-wide. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="9-strengths-and-weaknesses">9. Strengths and Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-strengths-and-weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Strengths</p>
+<p>Scalability: Stateless catalog design with horizontal scaling potential. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Maintainability: Modular workspace with backend crates and trait-based abstractions. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Extensibility: Explicit interfaces for Catalog, SecretsStore, Authorizer, CloudEventBackend, and ContractVerification. That is the right abstraction boundary. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Performance: Rust and single-binary deployment reduce runtime overhead. Reasonable inference, though actual perf depends on DB and storage backends. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Developer experience: Clear quickstart, integration examples, and strong use of Cargo/Just tooling. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Weaknesses</p>
+<p>Risk: This is a central control plane; mistakes in auth, migration, or metadata handling have platform-wide consequences.</p>
+<p>Limitations: Some features are still evolving; the README itself shows one storage target as “open” rather than done. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Missing features: Native support for every storage pattern or every governance workflow is not implied. Multi-bucket support, for example, shows up as a user-requested discussion rather than obvious core functionality. (<a href="https://github.com/lakekeeper/lakekeeper/discussions/1168" title="Adding support for more than 1 bucket/catalog #1168" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Technical debt indicators: A large number of commits and active issue tracker are normal for a growing platform, but they also signal ongoing churn. Renovate/dependency dashboard activity suggests constant dependency maintenance. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="10-enterprise-evaluation">10. Enterprise Evaluation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-enterprise-evaluation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Production readiness: <strong>8/10</strong>. Strong architecture and feature coverage, but still evolving and not fully “boring.” (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Security: <strong>8.5/10</strong>. OIDC, OpenFGA, vended credentials, remote signing, and policy hooks are serious security features. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Scalability: <strong>8/10</strong>. Stateless/horizontally scalable design is a plus; real bottlenecks will likely sit in Postgres and external systems. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Observability: <strong>6.5/10</strong>. The README mentions monitoring documentation in the changelog, but the visible repo evidence here is thinner on built-in observability primitives than on auth/storage. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/CHANGELOG.md" title="lakekeeper/CHANGELOG.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Documentation quality: <strong>7.5/10</strong>. README is strong, developer guide exists, docs site is referenced, but the repo-facing docs are not exhaustive. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Community support: <strong>7/10</strong>. Healthy repo activity, releases, issues, discussions, and stars suggest a real community, but not yet massive ecosystem scale. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Maintainability: <strong>8/10</strong>. Rust, modular crates, clear responsibilities, and test infrastructure are good signs. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="11-comparison-with-alternatives">11. Comparison with Alternatives<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-comparison-with-alternatives" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Apache Nessie: Strong alternative for Iceberg catalog semantics. Nessie is often chosen for versioned metadata and branching workflows; Lakekeeper appears more governance/control-plane focused and Rust-native. Lakekeeper likely wins on Rust/runtime simplicity; Nessie often has broader mindshare in some lakehouse setups. This comparison is informed but not sourced from the repo itself, so treat it as an architectural inference rather than a vendor claim.</p>
+<p>Hive Metastore: Older, ubiquitous, but weaker on modern REST-first workflow, fine-grained auth, and cloud-native security patterns. Lakekeeper is the more modern option. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>AWS Glue Catalog: Managed and convenient in AWS ecosystems, but less portable and less customizable. Lakekeeper is more flexible and cloud-neutral. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Databricks Unity Catalog: Strong enterprise governance, but closed ecosystem and platform coupling. Lakekeeper is open-source and more neutral. Again, this is a strategic comparison, not a repo claim.</p>
+<p>Project Nessie / custom REST catalogs: Lakekeeper’s differentiators are Kubernetes friendliness, OpenFGA integration, and extensible governance/event hooks. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="12-engineering-takeaways">12. Engineering Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-engineering-takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Design patterns used:</p>
+<ul>
+<li>
+<p>Trait-based plugin architecture.</p>
+</li>
+<li>
+<p>Separation of core domain logic from backend implementations.</p>
+</li>
+<li>
+<p>Stateless service design with external persistence.</p>
+</li>
+<li>
+<p>Standards-first API design around Apache Iceberg REST. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Architectural lessons:</p>
+<ul>
+<li>
+<p>Keep the catalog thin and push storage access to signed credentials rather than embedding permanent keys everywhere.</p>
+</li>
+<li>
+<p>Make authZ pluggable from day one; retrofitting authorization is painful and expensive.</p>
+</li>
+<li>
+<p>Separate event publication from request handling so governance automation does not get welded to the API path. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Best practices worth adopting:</p>
+<ul>
+<li>
+<p>Cargo workspace modularization.</p>
+</li>
+<li>
+<p>Explicit backend crates for storage/auth/events/secrets.</p>
+</li>
+<li>
+<p>Integration tests against real engines.</p>
+</li>
+<li>
+<p>A documented quickstart with docker-compose. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Anti-patterns:</p>
+<ul>
+<li>
+<p>Over-centralizing policy logic in one codepath without escape hatches.</p>
+</li>
+<li>
+<p>Treating the catalog as just a database table registry rather than a governance control plane.</p>
+</li>
+<li>
+<p>Letting storage credentials leak into clients. Lakekeeper’s model avoids this, which is good. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="13-interview-preparation">13. Interview Preparation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-interview-preparation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Beginner questions</p>
+<ol>
+<li>
+<p>What is an Apache Iceberg REST Catalog?</p>
+</li>
+<li>
+<p>What problem does Lakekeeper solve?</p>
+</li>
+<li>
+<p>Why is Rust a good fit for this project?</p>
+</li>
+<li>
+<p>What is the purpose of a catalog in a lakehouse?</p>
+</li>
+<li>
+<p>What is OIDC and why does Lakekeeper support it?</p>
+</li>
+<li>
+<p>What is OpenFGA?</p>
+</li>
+<li>
+<p>What does “vended credentials” mean?</p>
+</li>
+<li>
+<p>What are warehouses and projects in Lakekeeper?</p>
+</li>
+<li>
+<p>What is CloudEvents?</p>
+</li>
+<li>
+<p>Why would you use Lakekeeper instead of a metastore?</p>
+</li>
+</ol>
+<p>Intermediate questions</p>
+<ol>
+<li>
+<p>How does Lakekeeper separate API logic from backend implementations?</p>
+</li>
+<li>
+<p>Why is Postgres a sensible persistence layer for the catalog?</p>
+</li>
+<li>
+<p>How does trait-based extensibility help this system?</p>
+</li>
+<li>
+<p>How does Lakekeeper support multi-tenancy?</p>
+</li>
+<li>
+<p>What are the tradeoffs of remote signing for object storage?</p>
+</li>
+<li>
+<p>How do event backends fit into the architecture?</p>
+</li>
+<li>
+<p>How would you implement a custom authorization backend?</p>
+</li>
+<li>
+<p>What are the operational dependencies of this system?</p>
+</li>
+<li>
+<p>How does Lakekeeper integrate with Spark, Trino, and PyIceberg?</p>
+</li>
+<li>
+<p>What failure modes matter most in a catalog service?</p>
+</li>
+</ol>
+<p>Advanced architecture questions</p>
+<ol>
+<li>
+<p>How would you design HA and failover for the catalog service?</p>
+</li>
+<li>
+<p>How would you prevent split-brain or stale metadata reads under concurrent writers?</p>
+</li>
+<li>
+<p>What consistency guarantees do Iceberg REST semantics require?</p>
+</li>
+<li>
+<p>How would you evolve the authorization model without breaking tenants?</p>
+</li>
+<li>
+<p>How would you design observability for catalog mutations and denied access requests?</p>
+</li>
+<li>
+<p>How would you scale Postgres as catalog traffic grows?</p>
+</li>
+<li>
+<p>How would you support multiple storage backends per tenant or warehouse?</p>
+</li>
+<li>
+<p>How would you test contract-verification hooks safely in production?</p>
+</li>
+<li>
+<p>What is the right caching strategy for metadata and permissions?</p>
+</li>
+<li>
+<p>How would you introduce a new event bus backend without coupling it to request latency?</p>
+</li>
+</ol>
+<h2 id="14-handoff-summary">14. Handoff Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-handoff-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="1-page-executive-summary">1-page executive summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-page-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Lakekeeper is an open-source Rust implementation of the Apache Iceberg REST Catalog with serious lakehouse governance ambitions. It is built for teams that need a secure, scalable, multi-tenant metadata/control plane for Iceberg tables across Spark, Trino, PyIceberg, and similar engines. The architecture is clean: core catalog logic in Rust, Postgres-backed persistence, pluggable authZ/authN, pluggable secrets and event backends, and Kubernetes-friendly deployment. It is a strong fit for modern data platforms that want open, portable infrastructure instead of a closed catalog or an aging metastore. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="key-findings">Key findings<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#key-findings" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>The project is mature and active, not a side experiment. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Its biggest strengths are security, extensibility, and lakehouse-native integrations. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Its biggest operational risk is that it becomes a critical control plane with broad blast radius.</p>
+</li>
+<li>
+<p>The Rust workspace is well-structured and clearly split by responsibility. (<a href="https://github.com/lakekeeper/lakekeeper/blob/main/Cargo.toml" title="lakekeeper/Cargo.toml at main · lakekeeper/lakekeeper · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h3 id="recommended-adoption-scenarios">Recommended adoption scenarios<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#recommended-adoption-scenarios" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Use it when you need a governed Iceberg catalog for a multi-team lakehouse, especially on Kubernetes and especially if OpenFGA/OIDC-style security matters.<br/>
+Evaluate it carefully if you have unusual storage topologies, very strict regulatory requirements, or need a managed SaaS catalog.<br/>
+Avoid it only if your environment is not Iceberg-based or you need a very lightweight, low-governance metadata layer.</p>
+<h3 id="decision-matrix">Decision matrix<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#decision-matrix" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Use: modern Iceberg lakehouse, Kubernetes platform, multi-tenant governance, strong security posture.<br/>
+Evaluate: complex storage patterns, advanced observability needs, migration from legacy metastore.<br/>
+Avoid: non-Iceberg workloads, tiny teams without platform ownership, environments that cannot operate Postgres and supporting services reliably.</p>
+<h2 id="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-aidata-engineering-relevance" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Can this repository be used in data platforms? Yes. That is the whole point. It is a catalog/control plane for lakehouse data platforms. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Can it be integrated into a lakehouse architecture? Absolutely. It is built for exactly that, with Iceberg, Spark, Trino, PyIceberg, and cloud object storage support. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>Can it improve ETL/ELT pipelines? Indirectly, yes. It centralizes table governance, schema evolution, and safe access patterns, which makes pipeline execution more reliable.</p>
+<p>Can it be used for LLM, RAG, agents, or AI workflows? Indirectly. It is not an AI framework, but it can govern the datasets those systems depend on. That matters a lot in production AI stacks where data lineage, access control, and table consistency are non-negotiable.</p>
+<p>Suggested enterprise architecture:</p>
+<ul>
+<li>
+<p>Lakekeeper as the central Iceberg catalog.</p>
+</li>
+<li>
+<p>Postgres as metadata backend.</p>
+</li>
+<li>
+<p>OIDC for identity.</p>
+</li>
+<li>
+<p>OpenFGA for fine-grained authZ.</p>
+</li>
+<li>
+<p>NATS or Kafka for change-event propagation.</p>
+</li>
+<li>
+<p>Vault KV2 for secrets.</p>
+</li>
+<li>
+<p>Spark/Trino/PyIceberg as compute consumers.</p>
+</li>
+<li>
+<p>Object storage on AWS/Azure/GCP/S3-compatible on-prem.</p>
+</li>
+<li>
+<p>Optional policy service implementing contract verification.</p>
+</li>
+<li>
+<p>Optional observability stack collecting catalog mutation, auth, and event metrics. (<a href="https://github.com/lakekeeper/lakekeeper" title="GitHub - lakekeeper/lakekeeper: Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>If you want, I can turn this into a tighter board-ready version with a scoring table and a one-slide recommendation.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-167" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-1"><a href="#1-executive-summary" data-for="1-executive-summary">1. Executive Summary</a></li><li class="depth-1"><a href="#2-repository-overview" data-for="2-repository-overview">2. Repository Overview</a></li><li class="depth-1"><a href="#3-how-it-works" data-for="3-how-it-works">3. How It Works</a></li><li class="depth-1"><a href="#4-why-this-project-exists" data-for="4-why-this-project-exists">4. Why This Project Exists</a></li><li class="depth-1"><a href="#5-how-it-can-be-used" data-for="5-how-it-can-be-used">5. How It Can Be Used</a></li><li class="depth-2"><a href="#iceberg-catalog-for-a-lakehouse" data-for="iceberg-catalog-for-a-lakehouse">Iceberg catalog for a lakehouse</a></li><li class="depth-2"><a href="#multi-tenant-data-platform" data-for="multi-tenant-data-platform">Multi-tenant data platform</a></li><li class="depth-2"><a href="#secure-object-store-access-brokering" data-for="secure-object-store-access-brokering">Secure object-store access brokering</a></li><li class="depth-2"><a href="#governance-and-change-approval-gateway" data-for="governance-and-change-approval-gateway">Governance and change approval gateway</a></li><li class="depth-2"><a href="#event-driven-metadata-integration" data-for="event-driven-metadata-integration">Event-driven metadata integration</a></li><li class="depth-2"><a href="#self-managed-lakehouse-platform-on-kubernetes" data-for="self-managed-lakehouse-platform-on-kubernetes">Self-managed lakehouse platform on Kubernetes</a></li><li class="depth-1"><a href="#6-where-it-can-be-used" data-for="6-where-it-can-be-used">6. Where It Can Be Used</a></li><li class="depth-1"><a href="#7-key-components-analysis" data-for="7-key-components-analysis">7. Key Components Analysis</a></li><li class="depth-1"><a href="#8-setup-and-adoption" data-for="8-setup-and-adoption">8. Setup and Adoption</a></li><li class="depth-1"><a href="#9-strengths-and-weaknesses" data-for="9-strengths-and-weaknesses">9. Strengths and Weaknesses</a></li><li class="depth-1"><a href="#10-enterprise-evaluation" data-for="10-enterprise-evaluation">10. Enterprise Evaluation</a></li><li class="depth-1"><a href="#11-comparison-with-alternatives" data-for="11-comparison-with-alternatives">11. Comparison with Alternatives</a></li><li class="depth-1"><a href="#12-engineering-takeaways" data-for="12-engineering-takeaways">12. Engineering Takeaways</a></li><li class="depth-1"><a href="#13-interview-preparation" data-for="13-interview-preparation">13. Interview Preparation</a></li><li class="depth-1"><a href="#14-handoff-summary" data-for="14-handoff-summary">14. Handoff Summary</a></li><li class="depth-2"><a href="#1-page-executive-summary" data-for="1-page-executive-summary">1-page executive summary</a></li><li class="depth-2"><a href="#key-findings" data-for="key-findings">Key findings</a></li><li class="depth-2"><a href="#recommended-adoption-scenarios" data-for="recommended-adoption-scenarios">Recommended adoption scenarios</a></li><li class="depth-2"><a href="#decision-matrix" data-for="decision-matrix">Decision matrix</a></li><li class="depth-1"><a href="#15-aidata-engineering-relevance" data-for="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

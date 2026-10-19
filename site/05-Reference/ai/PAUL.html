@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>PAUL</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="PAUL"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="PAUL"/><meta name="twitter:description" content="AI Summary PAUL (Plan → Apply → Unify Loop) is an AI-assisted development framework for Claude Code that transforms ad hoc prompting into a structured, stateful workflow."/><meta property="og:description" content="AI Summary PAUL (Plan → Apply → Unify Loop) is an AI-assisted development framework for Claude Code that transforms ad hoc prompting into a structured, stateful workflow."/><meta property="og:image:alt" content="AI Summary PAUL (Plan → Apply → Unify Loop) is an AI-assisted development framework for Claude Code that transforms ad hoc prompting into a structured, stateful workflow."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/ai/PAUL"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/ai/PAUL"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AI Summary PAUL (Plan → Apply → Unify Loop) is an AI-assisted development framework for Claude Code that transforms ad hoc prompting into a structured, stateful workflow."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/ai/PAUL"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-176"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-176" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/ai/">AI Tools Catalog</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>PAUL</a></div></nav><h1 class="article-title">PAUL</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T07:02:47.424Z">Sep 24, 2026</time><span>14 min read</span></p></div></div><article class="popover-hint"><h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>PAUL (Plan → Apply → Unify Loop) is an AI-assisted development framework for Claude Code that transforms ad hoc prompting into a structured, stateful workflow. The note analyzes its command-based architecture, workflow lifecycle, durable project state, verification model, optional BASE v2 and SonarQube integrations, engineering trade-offs, enterprise readiness, and practical applications. It serves as a comprehensive reference for building disciplined AI development processes centered around planning, execution, verification, reconciliation, and long-term project continuity rather than traditional chat-based coding.</p>
+<hr/>
+<h1 id="repository-analysis-christopherkahlerpaul">Repository Analysis: <code>ChristopherKahler/paul</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#repository-analysis-christopherkahlerpaul" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="1-executive-summary">1. Executive Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>What is this project?</strong><br/>
+PAUL is a command-driven AI workflow framework for Claude Code built around a strict <strong>Plan → Apply → Unify</strong> loop. It is positioned as a structured development system that turns AI-assisted work into a traceable, stateful process instead of a loose chat session. The repository describes it as “Structured AI-assisted development for Claude Code” and ships as an npm package named <code>paul-framework</code>. (<a href="https://github.com/ChristopherKahler/paul/blob/main/README.md" title="README.md - ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>What problem does it solve?</strong><br/>
+It targets the classic failure modes of AI coding workflows: context rot, orphaned plans, missing verification, inconsistent execution, and lost decisions across sessions. The framework tries to make AI work more reliable by forcing explicit planning, execution qualification, and end-of-loop reconciliation. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Who is the target audience?</strong><br/>
+Primary users are Claude Code users, especially builders who want structured AI-assisted development. The repo also claims applicability beyond software, including campaigns, workflows, and automations, but the implementation is clearly centered on developer workflows. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maturity level</strong><br/>
+This looks like a <strong>production-adjacent developer tool</strong> rather than an enterprise platform. It has a published npm package, documented install flow, command set, and release tagging, which suggests real usage. But it is still a specialized workflow framework with limited visible community/process depth, so I would rate it as <strong>mature open-source tooling / not enterprise-ready out of the box</strong>. The repo shows 44 commits, one release, 1.1k stars, and 116 forks. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h2 id="2-repository-overview">2. Repository Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-repository-overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Main purpose</strong><br/>
+The repo packages a CLI/installable command set for Claude Code that enforces a structured development lifecycle: initialize a project, create an executable plan, apply it with verification, and unify outcomes back into persistent state. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Core features and capabilities</strong></p>
+<ul>
+<li>
+<p>Command suite: <code>/paul:init</code>, <code>/paul:plan</code>, <code>/paul:apply</code>, <code>/paul:unify</code>, <code>/paul:progress</code>, <code>/paul:resume</code>, <code>/paul:verify</code>, <code>/paul:map-codebase</code>, and more. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Plan structure with objective, context, acceptance criteria, tasks, and boundaries. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Execute/Qualify loop with task-level verification. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Stateful project tracking through <code>.paul/STATE.md</code>, <code>.paul/ROADMAP.md</code>, <code>.paul/ledger.toml</code>, and <code>.paul/paul.toml</code>. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Optional BASE v2 integration for graph-based context and tagging. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Key technologies, frameworks, and programming languages</strong></p>
+<ul>
+<li>
+<p><strong>JavaScript</strong> only, per GitHub language stats and package layout. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Node.js >= 16.7.0</strong>. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>npm-distributed CLI package with <code>bin/install.js</code> as the entrypoint. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Claude Code slash-command ecosystem, with project-local or global installation paths. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>High-level architecture inferred from the codebase</strong><br/>
+The architecture is not a classic application architecture. It is a <strong>workflow framework architecture</strong>:</p>
+<ol>
+<li>
+<p>Installer/bootstrapping layer (<code>bin/install.js</code>) installs commands into Claude Code.</p>
+</li>
+<li>
+<p>Command layer (<code>src/commands</code>) exposes operational actions like init, plan, apply, unify, etc.</p>
+</li>
+<li>
+<p>Workflow layer (<code>src/workflows</code>) encodes state transitions and enforcement logic.</p>
+</li>
+<li>
+<p>Template/reference/rules layer (<code>src/templates</code>, <code>src/references</code>, <code>src/rules</code>) provides the content and guardrails used by workflows. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<hr/>
+<h2 id="3-how-it-works">3. How It Works<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-how-it-works" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Workflow in simple terms</strong><br/>
+You install PAUL, initialize a project, and then use it like a disciplined AI operating system:</p>
+<ul>
+<li>
+<p>Define what you want.</p>
+</li>
+<li>
+<p>Convert it into a plan with acceptance criteria.</p>
+</li>
+<li>
+<p>Execute the plan task by task.</p>
+</li>
+<li>
+<p>Verify each task against the spec.</p>
+</li>
+<li>
+<p>Reconcile what actually happened and persist the result. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Major components/modules</strong></p>
+<ul>
+<li>
+<p><strong>Installer</strong>: <code>bin/install.js</code> is the CLI entrypoint from <code>package.json</code>. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Commands</strong>: exposed slash commands for project lifecycle and support operations. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Workflows</strong>: markdown-based workflow definitions such as <code>src/workflows/apply-phase.md</code>, which define execution rules and checkpoint behavior. (<a href="https://github.com/ChristopherKahler/paul/blob/main/src/workflows/apply-phase.md" title="paul/src/workflows/apply-phase.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Project state files</strong>: <code>.paul/STATE.md</code>, <code>.paul/PROJECT.md</code>, <code>.paul/ROADMAP.md</code>, <code>.paul/paul.toml</code>, <code>.paul/ledger.toml</code>, and milestone/summaries for durable memory. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Data flow and execution flow</strong></p>
+<ol>
+<li>
+<p><code>npx paul-framework</code> installs the framework. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>/paul:init</code> gathers project requirements into <code>.paul/PROJECT.md</code>. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>/paul:plan</code> creates a task plan with acceptance criteria, boundaries, and verification steps. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>/paul:apply</code> executes tasks using an Execute → Qualify loop and records status. (<a href="https://github.com/ChristopherKahler/paul/blob/main/src/workflows/apply-phase.md" title="paul/src/workflows/apply-phase.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>/paul:unify</code> reconciles plan vs actual, updates summaries and state, and closes the loop. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<p><strong>Integrations and dependencies</strong></p>
+<ul>
+<li>
+<p>Claude Code slash-command environment is the primary runtime dependency. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Optional <strong>BASE v2</strong> integration for knowledge-graph context, domain matching, and cost attribution. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Optional <strong>SonarQube</strong> integration for code quality metrics. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="4-why-this-project-exists">4. Why This Project Exists<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-why-this-project-exists" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Business problem</strong><br/>
+It exists to make AI-assisted work more predictable, auditable, and less wasteful. The pitch is basically: stop letting the model freestyle its way into half-finished work and hidden drift. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Technical challenges it solves</strong></p>
+<ul>
+<li>
+<p>Context drift across long sessions.</p>
+</li>
+<li>
+<p>Weak or implicit definitions of “done.”</p>
+</li>
+<li>
+<p>Missing verification after AI execution.</p>
+</li>
+<li>
+<p>Loss of decisions and blockers between sessions.</p>
+</li>
+<li>
+<p>Need for durable, machine-readable state. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Advantages over traditional approaches</strong></p>
+<ul>
+<li>
+<p>More explicit than ad-hoc prompting.</p>
+</li>
+<li>
+<p>More execution-oriented than documentation-first planning.</p>
+</li>
+<li>
+<p>More stateful than plain chat-based coding.</p>
+</li>
+<li>
+<p>More verification-heavy than “generate and pray.” (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Unique innovations / differentiators</strong><br/>
+The strongest differentiators are:</p>
+<ul>
+<li>
+<p>mandatory loop closure through UNIFY,</p>
+</li>
+<li>
+<p>task-level Execute/Qualify verification,</p>
+</li>
+<li>
+<p>persistent project state in <code>.paul/</code>,</p>
+</li>
+<li>
+<p>and the claim that implementation should stay in-session rather than fragmenting into subagents. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="5-how-it-can-be-used">5. How It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-how-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>1) Structured AI coding</strong><br/>
+Description: Use PAUL to govern feature work with explicit plans and verification.<br/>
+Scenario: You are building a FastAPI auth flow and want AI to implement it with acceptance criteria and checkpoints.<br/>
+Benefits: Better traceability, fewer false completions, less context loss.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>2) Multi-session project continuity</strong><br/>
+Description: Persist decisions, blockers, and progress across sessions.<br/>
+Scenario: You pause an AI session on Friday and resume Monday without re-explaining everything.<br/>
+Benefits: Faster resumption, fewer regressions, better audit trail.<br/>
+Complexity: <strong>Low to Medium</strong>. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>3) Spec-driven execution for non-code work</strong><br/>
+Description: Apply the same plan/apply/unify discipline to campaigns, workflows, or automations.<br/>
+Scenario: Marketing launch planning with defined deliverables and checkpoints.<br/>
+Benefits: Clearer execution, better closure, fewer loose ends.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>4) AI workflow governance</strong><br/>
+Description: Use it as a guardrail layer for agentic coding.<br/>
+Scenario: A team wants every AI-generated task to have ACs and verification before merge.<br/>
+Benefits: Reduced randomness and more consistent quality.<br/>
+Complexity: <strong>High</strong> if adapted into an org-wide standard. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h2 id="6-where-it-can-be-used">6. Where It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-where-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Data Engineering</strong><br/>
+Relevant as a workflow discipline layer for ETL/ELT tasks, especially where specs, verification, and handoffs matter. It is not a data platform itself. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Analytics</strong><br/>
+Useful for structured analytics requests, metric definition, and reproducible analysis plans. Mostly workflow/process value, not analytical engine value. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>AI/ML</strong><br/>
+Highly relevant for AI engineering workflows: prompt/spec discipline, agent orchestration, and task qualification. The repo is explicitly AI-assisted development focused. (<a href="https://github.com/ChristopherKahler/paul/blob/main/README.md" title="README.md - ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>DevOps</strong><br/>
+Useful for planning and executing operational changes with explicit guardrails and verification. Not a replacement for CI/CD tooling. (<a href="https://github.com/ChristopherKahler/paul/blob/main/src/workflows/apply-phase.md" title="paul/src/workflows/apply-phase.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Platform Engineering</strong><br/>
+Relevant as a standardization layer for how platform work gets planned and closed. Helps make AI-assisted platform tasks less chaotic. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Cloud Engineering</strong><br/>
+Useful for infrastructure change planning, especially where state and approval matter. Again, process aid rather than cloud-native runtime. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security</strong><br/>
+Moderately relevant because it encourages explicit boundaries and verification, but it is not a security tool. SonarQube integration suggests some quality/security adjacency. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>FinOps</strong><br/>
+Potentially useful for tracking work cost through ledger-style session records, but that is more about AI session economics than cloud spend management. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Product Engineering</strong><br/>
+Very relevant. It formalizes feature execution, acceptance criteria, and handoff quality. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Enterprise Applications</strong><br/>
+Useful as a team workflow standard, but not enterprise-ready infrastructure software. Needs governance, permissions, telemetry, and policy integration before serious enterprise adoption. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h2 id="7-key-components-analysis">7. Key Components Analysis<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-key-components-analysis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Because the public repo view exposes mostly top-level structure and workflow docs, this analysis is necessarily inferred from the visible layout. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>bin/install.js</code></strong><br/>
+Purpose: installer entrypoint.<br/>
+Responsibility: installs the framework into Claude Code’s expected command locations.<br/>
+Interaction: bootstraps all the command and workflow assets. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/commands</code></strong><br/>
+Purpose: slash-command implementations.<br/>
+Responsibility: user-facing operations like init, plan, apply, unify, progress, resume, verify, and codebase mapping.<br/>
+Interaction: orchestrates reading and writing <code>.paul/</code> state. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/workflows</code></strong><br/>
+Purpose: workflow rules and execution semantics.<br/>
+Responsibility: define how phases run and how checkpoints behave.<br/>
+Important example: <code>src/workflows/apply-phase.md</code> describes task execution, qualification, checkpoint handling, and state syncing. (<a href="https://github.com/ChristopherKahler/paul/blob/main/src/workflows/apply-phase.md" title="paul/src/workflows/apply-phase.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/templates</code></strong><br/>
+Purpose: reusable content templates for generated artifacts.<br/>
+Responsibility: standardize plans, summaries, and project artifacts.<br/>
+Interaction: feeds <code>/paul:init</code> and <code>/paul:plan</code>. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/references</code></strong><br/>
+Purpose: supporting docs and rule references.<br/>
+Responsibility: define verification, quality, loop phases, and synchronization conventions.<br/>
+Interaction: referenced by workflows during execution and state sync. (<a href="https://github.com/ChristopherKahler/paul/blob/main/src/workflows/apply-phase.md" title="paul/src/workflows/apply-phase.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/rules</code></strong><br/>
+Purpose: rule packs for behavior enforcement.<br/>
+Responsibility: encode policy, boundaries, and quality expectations.<br/>
+Interaction: loaded as part of command execution and possibly Claude Code configuration. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>.paul/</code> project state files</strong><br/>
+Purpose: durable per-project memory.<br/>
+Responsibility: store project context, roadmap, state, milestones, ledger, and generated phase artifacts.<br/>
+Interaction: central data plane for the framework. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h2 id="8-setup-and-adoption">8. Setup and Adoption<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-setup-and-adoption" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Installation requirements</strong></p>
+<ul>
+<li>
+<p>Node.js 16.7.0 or newer. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Claude Code environment. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Install via <code>npx paul-framework</code>, optionally <code>--global</code> or <code>--local</code>. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Deployment options</strong></p>
+<ul>
+<li>
+<p>Global install into <code>~/.claude/</code></p>
+</li>
+<li>
+<p>Local install into <code>./.claude/</code> (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Infrastructure requirements</strong></p>
+<ul>
+<li>
+<p>No heavy external runtime is obvious from the public repo.</p>
+</li>
+<li>
+<p>Optional BASE v2 integration requires the separate Rust binary. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Learning curve</strong><br/>
+Moderate. The command model is simple, but the discipline is not. Users must internalize the Plan/Apply/Unify lifecycle, acceptance criteria, and state artifacts. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Operational considerations</strong></p>
+<ul>
+<li>
+<p>Teams need to agree on when to use PAUL and when not to.</p>
+</li>
+<li>
+<p>The framework is only as good as the plans and acceptance criteria fed into it.</p>
+</li>
+<li>
+<p>If users ignore UNIFY, the whole point degrades fast. That is the whole game here. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="9-strengths-and-weaknesses">9. Strengths and Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-strengths-and-weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Strengths</strong></p>
+<p><strong>Scalability</strong><br/>
+Scales well as a workflow convention because it is mostly file- and command-driven, not runtime-heavy. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maintainability</strong><br/>
+The explicit separation into commands, workflows, templates, and state artifacts is maintainable conceptually. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Extensibility</strong><br/>
+Pretty good. The repo already supports optional integrations, specialized flows, and external ecosystem hooks. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Performance</strong><br/>
+Likely lightweight in compute terms; the real cost is process overhead and user discipline. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Developer Experience</strong><br/>
+Strong for users who like structure. Weak for people who want frictionless, minimal process. That tradeoff is intentional. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Weaknesses</strong></p>
+<p><strong>Risks</strong></p>
+<ul>
+<li>
+<p>Depends heavily on user discipline and accurate task specs.</p>
+</li>
+<li>
+<p>Could be overkill for tiny ad hoc tasks.</p>
+</li>
+<li>
+<p>Tightly coupled to Claude Code’s command ecosystem. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Limitations</strong></p>
+<ul>
+<li>
+<p>Not a general-purpose application framework.</p>
+</li>
+<li>
+<p>Not a substitute for CI/CD, testing, observability, or project management systems. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Missing features</strong></p>
+<ul>
+<li>
+<p>No obvious enterprise-grade permission model, audit backend, or integration breadth visible in the repo snapshot.</p>
+</li>
+<li>
+<p>No strong evidence of broad ecosystem adoption beyond its own community. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Technical debt indicators</strong></p>
+<ul>
+<li>
+<p>Markdown-driven workflow assets can become brittle if conventions drift.</p>
+</li>
+<li>
+<p>Heavy reliance on state files means schema drift could become annoying if not rigorously maintained. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="10-enterprise-evaluation">10. Enterprise Evaluation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-enterprise-evaluation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th style="text-align:right;">Rating (1-10)</th><th>Reasoning</th></tr></thead><tbody><tr><td>Production readiness</td><td style="text-align:right;">6</td><td>Usable and packaged, but not a full enterprise platform. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Security</td><td style="text-align:right;">4</td><td>No visible enterprise security model; relies on host environment and process discipline. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Scalability</td><td style="text-align:right;">7</td><td>Workflow scaling is decent; organizational scaling depends on adoption discipline. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Observability</td><td style="text-align:right;">5</td><td>Ledger/state files help traceability, but there is no visible full observability stack. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Documentation quality</td><td style="text-align:right;">8</td><td>Strong, detailed, opinionated docs. Very explicit about behavior. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Community support</td><td style="text-align:right;">5</td><td>Some activity, stars, forks, issues, and discussions, but not a broad ecosystem. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr><tr><td>Maintainability</td><td style="text-align:right;">7</td><td>Good structure, but success depends on keeping workflow contracts tight. (<a href="https://github.com/ChristopherKahler/paul/blob/main/package.json" title="paul/package.json at main · ChristopherKahler/paul · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</td></tr></tbody></table></div>
+<hr/>
+<h2 id="11-comparison-with-alternatives">11. Comparison with Alternatives<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-comparison-with-alternatives" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Likely alternatives</strong></p>
+<ul>
+<li>
+<p>Ad hoc Claude Code prompting</p>
+</li>
+<li>
+<p>Spec-driven development workflows</p>
+</li>
+<li>
+<p>GSD-style AI coding frameworks</p>
+</li>
+<li>
+<p>Traditional issue tracker + docs + CI/CD process</p>
+</li>
+<li>
+<p>Agentic orchestration frameworks in broader AI tooling ecosystems (<a href="https://github.com/ChristopherKahler/paul/blob/main/PAUL-VS-GSD.md" title="paul/PAUL-VS-GSD.md at main · ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Comparison</strong></p>
+<ul>
+<li>
+<p><strong>Features:</strong> PAUL is stronger on enforced closure and state management than most casual AI coding setups. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Complexity:</strong> Higher than plain prompting, lower than full enterprise workflow systems. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Performance:</strong> Fine for workflow overhead; not optimized for raw speed. (<a href="https://github.com/ChristopherKahler/paul/blob/main/PAUL-VS-GSD.md" title="paul/PAUL-VS-GSD.md at main · ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Cost:</strong> Low software cost, but human process cost is real. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Ecosystem:</strong> Narrow but opinionated; strongest value is inside the Chris AI Systems stack and Claude Code usage. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>The blunt take: PAUL is not trying to beat Jira, GitHub Projects, or a generic agent framework on breadth. It is trying to make AI work less sloppy. That is a narrower, more defensible claim. (<a href="https://github.com/ChristopherKahler/paul/blob/main/PAUL-VS-GSD.md" title="paul/PAUL-VS-GSD.md at main · ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h2 id="12-engineering-takeaways">12. Engineering Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-engineering-takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Important design patterns used</strong></p>
+<ul>
+<li>
+<p>State machine / lifecycle orchestration</p>
+</li>
+<li>
+<p>Spec-first execution</p>
+</li>
+<li>
+<p>Task-level verification gates</p>
+</li>
+<li>
+<p>Durable session memory</p>
+</li>
+<li>
+<p>Convention over configuration (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Architectural lessons</strong></p>
+<ul>
+<li>
+<p>AI workflows need explicit closure.</p>
+</li>
+<li>
+<p>Verification should sit beside execution, not after the fact.</p>
+</li>
+<li>
+<p>Durable state matters more than clever prompting.</p>
+</li>
+<li>
+<p>Narrow, opinionated systems often beat “general” ones for actual use. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Best practices worth adopting</strong></p>
+<ul>
+<li>
+<p>Always define acceptance criteria before implementation.</p>
+</li>
+<li>
+<p>Preserve session state and decisions.</p>
+</li>
+<li>
+<p>Separate planning, execution, and reconciliation.</p>
+</li>
+<li>
+<p>Make verification a first-class step. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Anti-patterns</strong></p>
+<ul>
+<li>
+<p>Treating AI output as automatically done.</p>
+</li>
+<li>
+<p>Skipping reconciliation because it feels slow.</p>
+</li>
+<li>
+<p>Letting plans exist without a closure mechanism.</p>
+</li>
+<li>
+<p>Using subagents for work that actually needs shared context. (<a href="https://github.com/ChristopherKahler/paul/blob/main/PAUL-VS-GSD.md" title="paul/PAUL-VS-GSD.md at main · ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="13-interview-preparation">13. Interview Preparation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-interview-preparation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Beginner questions</strong></p>
+<ol>
+<li>
+<p>What does PAUL stand for?</p>
+</li>
+<li>
+<p>What problem does the Plan → Apply → Unify loop solve?</p>
+</li>
+<li>
+<p>Why does PAUL require acceptance criteria?</p>
+</li>
+<li>
+<p>What is <code>.paul/STATE.md</code> used for?</p>
+</li>
+<li>
+<p>What happens during <code>/paul:init</code>?</p>
+</li>
+<li>
+<p>What is the difference between <code>/paul:plan</code> and <code>/paul:apply</code>?</p>
+</li>
+<li>
+<p>Why is <code>/paul:unify</code> mandatory?</p>
+</li>
+<li>
+<p>What are the main command groups?</p>
+</li>
+<li>
+<p>What is the role of <code>paul.toml</code>?</p>
+</li>
+<li>
+<p>How does PAUL differ from ad hoc AI prompting? (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<p><strong>Intermediate questions</strong></p>
+<ol>
+<li>
+<p>How does the Execute/Qualify loop improve quality?</p>
+</li>
+<li>
+<p>Why are escalation statuses better than binary pass/fail?</p>
+</li>
+<li>
+<p>How does PAUL prevent state drift across sessions?</p>
+</li>
+<li>
+<p>How would you adapt PAUL for non-code workflows?</p>
+</li>
+<li>
+<p>What are the tradeoffs of in-session execution vs subagents?</p>
+</li>
+<li>
+<p>How does PAUL use boundaries in planning?</p>
+</li>
+<li>
+<p>Why is BDD-style acceptance criteria useful here?</p>
+</li>
+<li>
+<p>What is the role of <code>.paul/ledger.toml</code>?</p>
+</li>
+<li>
+<p>How would you integrate SonarQube with the workflow?</p>
+</li>
+<li>
+<p>How does BASE v2 enhance PAUL? (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<p><strong>Advanced architecture questions</strong></p>
+<ol>
+<li>
+<p>How would you redesign PAUL for multi-user enterprise collaboration?</p>
+</li>
+<li>
+<p>What failure modes emerge if the state files drift from reality?</p>
+</li>
+<li>
+<p>How would you version the plan schema to maintain backward compatibility?</p>
+</li>
+<li>
+<p>What telemetry would you add to measure loop effectiveness?</p>
+</li>
+<li>
+<p>How would you secure the workflow against malicious plan injection?</p>
+</li>
+<li>
+<p>How would you represent PAUL state in a database instead of markdown/TOML files?</p>
+</li>
+<li>
+<p>What would it take to generalize PAUL beyond Claude Code?</p>
+</li>
+<li>
+<p>How would you make the Qualify step independently testable?</p>
+</li>
+<li>
+<p>Where would you insert policy enforcement for regulated environments?</p>
+</li>
+<li>
+<p>What parts of the system belong in code, and what parts should remain in docs/config? (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<hr/>
+<h2 id="14-handoff-summary">14. Handoff Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-handoff-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="executive-summary">Executive summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>PAUL is a niche but well-articulated AI workflow framework for Claude Code. Its central idea is simple and useful: force AI-assisted work through a disciplined Plan → Apply → Unify loop, with acceptance criteria, verification, and durable state. That makes it valuable as a process layer for developers who are tired of context rot and half-finished AI work. It is not a platform, not a runtime, and not enterprise software in the full sense. It is a workflow constitution. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h3 id="key-findings">Key findings<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#key-findings" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Strong documentation and clear operational philosophy. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Real stateful workflow design with durable artifacts. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Best suited to Claude Code users and disciplined builders. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Limited evidence of enterprise-scale hardening. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h3 id="recommended-adoption-scenarios">Recommended adoption scenarios<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#recommended-adoption-scenarios" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Individual developers using Claude Code for feature work.</p>
+</li>
+<li>
+<p>Small teams wanting a shared AI execution discipline.</p>
+</li>
+<li>
+<p>AI engineers building structured agent workflows.</p>
+</li>
+<li>
+<p>Product teams that need strong traceability around AI-generated work. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h3 id="decision-matrix">Decision matrix<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#decision-matrix" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>Use</strong></p>
+<ul>
+<li>
+<p>You already use Claude Code.</p>
+</li>
+<li>
+<p>You want strict task/acceptance/verification discipline.</p>
+</li>
+<li>
+<p>You care about session continuity and decision logs. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Evaluate</strong></p>
+<ul>
+<li>
+<p>You want to adapt it for team workflows.</p>
+</li>
+<li>
+<p>You need integration with internal governance or observability.</p>
+</li>
+<li>
+<p>You want to use it beyond software development. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Avoid</strong></p>
+<ul>
+<li>
+<p>You need a broad enterprise workflow platform.</p>
+</li>
+<li>
+<p>You need strong multi-user security and access control.</p>
+</li>
+<li>
+<p>You want minimal process overhead. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h2 id="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-aidata-engineering-relevance" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Can this repository be used in data platforms?</strong><br/>
+Yes, as a workflow discipline layer. It can help structure data engineering tasks, but it does not provide data platform primitives itself. (<a href="https://github.com/ChristopherKahler/paul" title="ChristopherKahler/paul: Plan-Apply-Unify Loop — ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be integrated into a lakehouse architecture?</strong><br/>
+Indirectly, yes. It could govern the work process around lakehouse changes, but it is not part of the storage/query/compute stack. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it improve ETL/ELT pipelines?</strong><br/>
+Yes, by enforcing requirements, acceptance criteria, and verification around pipeline work. It would improve process quality, not pipeline execution semantics. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be used for LLM, RAG, agents, or AI workflows?</strong><br/>
+Absolutely. This is the most natural fit. The repo is already framed around AI-assisted development and agentic workflow discipline. (<a href="https://github.com/ChristopherKahler/paul/blob/main/README.md" title="README.md - ChristopherKahler/paul" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Suggested enterprise architecture incorporating this project</strong><br/>
+Use PAUL as the <strong>workflow orchestration layer</strong> on top of existing tools:</p>
+<ul>
+<li>
+<p>Claude Code for implementation.</p>
+</li>
+<li>
+<p>PAUL for plan/execute/unify discipline.</p>
+</li>
+<li>
+<p>GitHub for source control and code review.</p>
+</li>
+<li>
+<p>CI/CD for automated validation.</p>
+</li>
+<li>
+<p>Data catalog / lakehouse / API platform underneath.</p>
+</li>
+<li>
+<p>Optional BASE v2 for cross-project context and state graphing.</p>
+</li>
+<li>
+<p>Observability and security tooling outside PAUL for production governance. (<a href="https://github.com/ChristopherKahler/paul" title="GitHub - ChristopherKahler/paul: Plan-Apply-Unify Loop — Structured AI-assisted development for Claude Code. Quality over speed-for-speed's-sake. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>That is the cleanest fit: PAUL as the operating protocol for AI-assisted work, not the system of record for business logic.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-153" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-0"><a href="#repository-analysis-christopherkahlerpaul" data-for="repository-analysis-christopherkahlerpaul">Repository Analysis: ChristopherKahler/paul</a></li><li class="depth-1"><a href="#1-executive-summary" data-for="1-executive-summary">1. Executive Summary</a></li><li class="depth-1"><a href="#2-repository-overview" data-for="2-repository-overview">2. Repository Overview</a></li><li class="depth-1"><a href="#3-how-it-works" data-for="3-how-it-works">3. How It Works</a></li><li class="depth-1"><a href="#4-why-this-project-exists" data-for="4-why-this-project-exists">4. Why This Project Exists</a></li><li class="depth-1"><a href="#5-how-it-can-be-used" data-for="5-how-it-can-be-used">5. How It Can Be Used</a></li><li class="depth-1"><a href="#6-where-it-can-be-used" data-for="6-where-it-can-be-used">6. Where It Can Be Used</a></li><li class="depth-1"><a href="#7-key-components-analysis" data-for="7-key-components-analysis">7. Key Components Analysis</a></li><li class="depth-1"><a href="#8-setup-and-adoption" data-for="8-setup-and-adoption">8. Setup and Adoption</a></li><li class="depth-1"><a href="#9-strengths-and-weaknesses" data-for="9-strengths-and-weaknesses">9. Strengths and Weaknesses</a></li><li class="depth-1"><a href="#10-enterprise-evaluation" data-for="10-enterprise-evaluation">10. Enterprise Evaluation</a></li><li class="depth-1"><a href="#11-comparison-with-alternatives" data-for="11-comparison-with-alternatives">11. Comparison with Alternatives</a></li><li class="depth-1"><a href="#12-engineering-takeaways" data-for="12-engineering-takeaways">12. Engineering Takeaways</a></li><li class="depth-1"><a href="#13-interview-preparation" data-for="13-interview-preparation">13. Interview Preparation</a></li><li class="depth-1"><a href="#14-handoff-summary" data-for="14-handoff-summary">14. Handoff Summary</a></li><li class="depth-2"><a href="#executive-summary" data-for="executive-summary">Executive summary</a></li><li class="depth-2"><a href="#key-findings" data-for="key-findings">Key findings</a></li><li class="depth-2"><a href="#recommended-adoption-scenarios" data-for="recommended-adoption-scenarios">Recommended adoption scenarios</a></li><li class="depth-2"><a href="#decision-matrix" data-for="decision-matrix">Decision matrix</a></li><li class="depth-1"><a href="#15-aidata-engineering-relevance" data-for="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-2" class="overflow"><li><a href="../../05-Reference/ai/" class="internal">AI Tools Catalog</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

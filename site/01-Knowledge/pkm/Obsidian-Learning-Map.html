@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Obsidian Learning Map</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="Obsidian Learning Map"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Obsidian Learning Map"/><meta name="twitter:description" content="Absolutely."/><meta property="og:description" content="Absolutely."/><meta property="og:image:alt" content="Absolutely."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/01-Knowledge/pkm/Obsidian-Learning-Map"/><meta property="twitter:url" content="https://localhost:8080/01-Knowledge/pkm/Obsidian-Learning-Map"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="Absolutely."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="01-Knowledge/pkm/Obsidian-Learning-Map"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-113"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-113" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../01-Knowledge/">Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../01-Knowledge/pkm/">pkm</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Obsidian Learning Map</a></div></nav><h1 class="article-title">Obsidian Learning Map</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-09T06:23:54.068Z">Sep 09, 2026</time><span>9 min read</span></p></div></div><article class="popover-hint"><p>Absolutely. And I think your diagnosis is right: <strong>you’re currently using Obsidian as a Markdown editor + Git sync</strong>, while Obsidian can function much more like a <strong>local-first personal knowledge system</strong>.</p>
+<p>Given how you already think about PKM, technical notes, Git, and your Akashic Records project, I’d approach this as a <strong>progressive Obsidian learning program</strong>, not a giant “learn every Obsidian feature” dump.</p>
+<p>The key is: <strong>learn the platform only when it solves a real problem in your workflow.</strong></p>
+<h2 id="the-obsidian-capability-map">The Obsidian capability map<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#the-obsidian-capability-map" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Think of Obsidian as roughly 8 layers:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Layer</th><th>What you currently use</th><th>What you could learn</th></tr></thead><tbody><tr><td>1. Markdown</td><td>Yes</td><td>Advanced Markdown patterns</td></tr><tr><td>2. Organization</td><td>Probably folders</td><td>Tags, properties, links, aliases</td></tr><tr><td>3. Navigation</td><td>Basic</td><td>Backlinks, outgoing links, local graph, search</td></tr><tr><td>4. Structured data</td><td>Limited</td><td>Properties + Bases</td></tr><tr><td>5. Automation</td><td>Git sync</td><td>Templates, Templater, QuickAdd, commands</td></tr><tr><td>6. Knowledge graph</td><td>Some linking</td><td>MOCs, Maps of Content, graph thinking</td></tr><tr><td>7. Visualization</td><td>Probably little</td><td>Canvas, Graph, Bases</td></tr><tr><td>8. Intelligence</td><td>External/your own AI work</td><td>AI/RAG/agents over your vault</td></tr></tbody></table></div>
+<p>And then there is a <strong>9th layer</strong> that I think is particularly interesting for you:</p>
+<blockquote>
+<p><strong>Obsidian as a local-first data platform.</strong></p>
+</blockquote>
+<p>That’s where your Data Engineering background starts becoming an unfair advantage.</p>
+<hr/>
+<h1 id="the-learning-plan-id-recommend">The learning plan I’d recommend<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#the-learning-plan-id-recommend" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>I’d structure this into <strong>6 phases over roughly 6–8 weeks</strong>.</p>
+<p>Not because you need 8 weeks to learn Obsidian. You don’t.</p>
+<p>The time is mostly for <strong>actually changing how you use it</strong>.</p>
+<hr/>
+<h2 id="phase-1--master-the-obsidian-fundamentals">Phase 1 — Master the Obsidian fundamentals<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-1--master-the-obsidian-fundamentals" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Goal:</strong> Stop thinking of Obsidian as “a place where Markdown files live.”</p>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Vaults</p>
+</li>
+<li>
+<p>Markdown</p>
+</li>
+<li>
+<p>Folders</p>
+</li>
+<li>
+<p>Notes</p>
+</li>
+<li>
+<p>Links</p>
+</li>
+<li>
+<p>Wikilinks</p>
+</li>
+<li>
+<p>Backlinks</p>
+</li>
+<li>
+<p>Outgoing links</p>
+</li>
+<li>
+<p>Unlinked mentions</p>
+</li>
+<li>
+<p>Aliases</p>
+</li>
+<li>
+<p>Tags</p>
+</li>
+<li>
+<p>Search</p>
+</li>
+<li>
+<p>Command palette</p>
+</li>
+<li>
+<p>File explorer</p>
+</li>
+<li>
+<p>Bookmarks</p>
+</li>
+<li>
+<p>Properties</p>
+</li>
+<li>
+<p>Daily notes</p>
+</li>
+</ul>
+<h3 id="the-important-conceptual-shift">The important conceptual shift<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#the-important-conceptual-shift" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Don’t organize everything around folders.</p>
+<p>Instead of:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Data Engineering/</span></span>
+<span data-line><span>    Spark/</span></span>
+<span data-line><span>        Partitioning.md</span></span>
+<span data-line><span>        Z-Ordering.md</span></span>
+<span data-line><span>        Shuffle.md</span></span></code></pre></figure>
+<p>start thinking:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Z-Ordering</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Databricks</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Data Layout</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Query Optimization</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Lakehouse</span></span></code></pre></figure>
+<p>The filesystem stores the notes.</p>
+<p><strong>Links represent your knowledge.</strong></p>
+<p>That’s a very important distinction.</p>
+<h3 id="exercise">Exercise<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#exercise" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Take 20 existing notes and deliberately connect them.</p>
+<p>For example:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Apache Spark</span></span>
+<span data-line><span>Partitioning</span></span>
+<span data-line><span>Shuffle</span></span>
+<span data-line><span>Z-Ordering</span></span>
+<span data-line><span>Delta Lake</span></span>
+<span data-line><span>Query Optimization</span></span></code></pre></figure>
+<p>Don’t worry about making it perfect.</p>
+<p>You’re learning how Obsidian behaves when the vault becomes interconnected.</p>
+<hr/>
+<h1 id="phase-2--properties--bases">Phase 2 — Properties + Bases<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-2--properties--bases" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>This should be your next major focus.</p>
+<p>You recently asked about Bases and Dataview, and this is probably one of the biggest gaps in your current Obsidian usage.</p>
+<p>Learn:</p>
+<h3 id="properties">Properties<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#properties" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>For example:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="yaml" data-theme="github-light github-dark"><code data-language="yaml" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">---</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">concept</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">domain</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">data-engineering</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">status</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">evergreen</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">level</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">advanced</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">confidence</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">4</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">importance</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">5</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">created</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">2026-08-19</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">---</span></span></code></pre></figure>
+<p>Then learn how Obsidian can use these properties.</p>
+<h3 id="bases">Bases<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bases" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Bases essentially let you treat your Markdown files as a <strong>queryable dataset</strong>.</p>
+<p>Imagine:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>All Data Engineering Notes</span></span>
+<span data-line> </span>
+<span data-line><span>Domain       Status       Level       Confidence</span></span>
+<span data-line><span>--------------------------------------------------</span></span>
+<span data-line><span>Spark        Evergreen    Advanced       5</span></span>
+<span data-line><span>Kafka        Reference    Intermediate   3</span></span>
+<span data-line><span>Delta Lake   Curated      Advanced       4</span></span>
+<span data-line><span>Iceberg      Draft        Advanced       2</span></span></code></pre></figure>
+<p>This is where your data-engineering brain should start smiling.</p>
+<p>You’re effectively turning:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Markdown files</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Properties</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Structured metadata</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Views</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Queryable knowledge system</span></span></code></pre></figure>
+<h3 id="exercise-1">Exercise<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#exercise-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Create a Base for:</p>
+<p><strong>All technical notes</strong></p>
+<p>Then add views such as:</p>
+<ul>
+<li>
+<p>By domain</p>
+</li>
+<li>
+<p>By status</p>
+</li>
+<li>
+<p>By difficulty</p>
+</li>
+<li>
+<p>Recently updated</p>
+</li>
+<li>
+<p>Low confidence</p>
+</li>
+<li>
+<p>Missing properties</p>
+</li>
+<li>
+<p>Needs review</p>
+</li>
+</ul>
+<p>Don’t start with Dataview.</p>
+<p><strong>Learn native Bases first.</strong></p>
+<p>Then learn Dataview when you encounter something Bases can’t conveniently express.</p>
+<hr/>
+<h1 id="phase-3--build-an-actual-knowledge-architecture">Phase 3 — Build an actual knowledge architecture<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-3--build-an-actual-knowledge-architecture" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Now we move from:</p>
+<blockquote>
+<p>“How does Obsidian work?”</p>
+</blockquote>
+<p>to:</p>
+<blockquote>
+<p>“How should my knowledge work?”</p>
+</blockquote>
+<p>This is probably the most important phase for you.</p>
+<p>Learn these concepts:</p>
+<h3 id="1-atomic-notes">1. Atomic notes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-atomic-notes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>One note should ideally represent one meaningful concept.</p>
+<p>Bad:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Spark Everything</span></span></code></pre></figure>
+<p>Better:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Spark Shuffle</span></span>
+<span data-line><span>Spark Partitioning</span></span>
+<span data-line><span>Spark Catalyst Optimizer</span></span>
+<span data-line><span>Spark Adaptive Query Execution</span></span>
+<span data-line><span>Spark Broadcast Join</span></span></code></pre></figure>
+<hr/>
+<h3 id="2-mocs">2. MOCs<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-mocs" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Maps of Content.</p>
+<p>Instead of relying exclusively on folders:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Data Engineering</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Lakehouse</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Delta Lake</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Optimization</span></span></code></pre></figure>
+<p>you create an intentional navigation layer.</p>
+<p>For example:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Data Engineering MOC</span></span>
+<span data-line><span>│</span></span>
+<span data-line><span>├── Distributed Processing</span></span>
+<span data-line><span>│   ├── Spark</span></span>
+<span data-line><span>│   ├── Flink</span></span>
+<span data-line><span>│   └── Ray</span></span>
+<span data-line><span>│</span></span>
+<span data-line><span>├── Storage</span></span>
+<span data-line><span>│   ├── Delta Lake</span></span>
+<span data-line><span>│   ├── Iceberg</span></span>
+<span data-line><span>│   └── Hudi</span></span>
+<span data-line><span>│</span></span>
+<span data-line><span>├── Query Engines</span></span>
+<span data-line><span>│   ├── Spark SQL</span></span>
+<span data-line><span>│   ├── Trino</span></span>
+<span data-line><span>│   └── DuckDB</span></span>
+<span data-line><span>│</span></span>
+<span data-line><span>└── Architecture</span></span>
+<span data-line><span>    ├── Lakehouse</span></span>
+<span data-line><span>    ├── Medallion Architecture</span></span>
+<span data-line><span>    └── Data Mesh</span></span></code></pre></figure>
+<hr/>
+<h3 id="3-hub-notes">3. Hub notes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-hub-notes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>A hub note answers:</p>
+<blockquote>
+<p>“Where should I go from here?”</p>
+</blockquote>
+<p>This is different from simply having a folder.</p>
+<hr/>
+<h3 id="4-progressive-summarization">4. Progressive summarization<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-progressive-summarization" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn how to turn:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>raw information</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>notes</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>important ideas</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>distilled concepts</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>your own understanding</span></span></code></pre></figure>
+<p>This is what turns a collection of saved information into actual knowledge.</p>
+<hr/>
+<h1 id="phase-4--automation">Phase 4 — Automation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-4--automation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>This is where Obsidian starts becoming interesting for you.</p>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Templates</p>
+</li>
+<li>
+<p>Daily Notes</p>
+</li>
+<li>
+<p>Template variables</p>
+</li>
+<li>
+<p>Templater</p>
+</li>
+<li>
+<p>QuickAdd</p>
+</li>
+<li>
+<p>Commands</p>
+</li>
+<li>
+<p>Hotkeys</p>
+</li>
+<li>
+<p>URI</p>
+</li>
+<li>
+<p>Community plugins</p>
+</li>
+<li>
+<p>Automated metadata</p>
+</li>
+</ul>
+<p>You should eventually be able to create something like:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Ctrl + Shift + N</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>New technical note</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Template selected</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Metadata generated</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Created date populated</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Domain selected</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Status = draft</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Ready to write</span></span></code></pre></figure>
+<p>Instead of manually creating frontmatter every time.</p>
+<hr/>
+<h2 id="your-daily-note-could-become-much-more-useful">Your Daily Note could become much more useful<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#your-daily-note-could-become-much-more-useful" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Instead of:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="markdown" data-theme="github-light github-dark"><code data-language="markdown" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;"># 2026-08-19</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">Today I worked on Spark.</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">Read about AQE.</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">Need to investigate Z-Ordering.</span></span></code></pre></figure>
+<p>you could have:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="markdown" data-theme="github-light github-dark"><code data-language="markdown" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;"># 2026-08-19</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Work</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Learning</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Ideas</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Questions</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Decisions</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Things to revisit</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Created today</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Modified today</span></span></code></pre></figure>
+<p>And Bases/Dataview can populate parts automatically.</p>
+<p>That starts making the Daily Note a <strong>control center</strong>, rather than just a diary.</p>
+<hr/>
+<h1 id="phase-5--advanced-obsidian">Phase 5 — Advanced Obsidian<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-5--advanced-obsidian" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Once the fundamentals are comfortable, learn:</p>
+<h3 id="graph-view">Graph View<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#graph-view" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Not because pretty graphs are inherently useful.</p>
+<p>They aren’t.</p>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Global graph</p>
+</li>
+<li>
+<p>Local graph</p>
+</li>
+<li>
+<p>Filters</p>
+</li>
+<li>
+<p>Groups</p>
+</li>
+<li>
+<p>Link density</p>
+</li>
+<li>
+<p>Orphan notes</p>
+</li>
+<li>
+<p>Clusters</p>
+</li>
+</ul>
+<p>The interesting question isn’t:</p>
+<blockquote>
+<p>“Does my graph look cool?”</p>
+</blockquote>
+<p>It’s:</p>
+<blockquote>
+<p>“What does the graph tell me about the structure of my knowledge?”</p>
+</blockquote>
+<hr/>
+<h3 id="canvas">Canvas<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#canvas" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn how to visually model:</p>
+<ul>
+<li>
+<p>Architecture</p>
+</li>
+<li>
+<p>System designs</p>
+</li>
+<li>
+<p>Learning paths</p>
+</li>
+<li>
+<p>Research</p>
+</li>
+<li>
+<p>Projects</p>
+</li>
+<li>
+<p>Concept relationships</p>
+</li>
+</ul>
+<p>For example:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>             Lakehouse</span></span>
+<span data-line><span>                 │</span></span>
+<span data-line><span>        ┌────────┴────────┐</span></span>
+<span data-line><span>        ↓                 ↓</span></span>
+<span data-line><span>   Storage Layer      Compute Layer</span></span>
+<span data-line><span>        │                 │</span></span>
+<span data-line><span>   Delta/Iceberg      Spark/Trino</span></span>
+<span data-line><span>        │                 │</span></span>
+<span data-line><span>        └────────┬────────┘</span></span>
+<span data-line><span>                 ↓</span></span>
+<span data-line><span>          Query Optimization</span></span>
+<span data-line><span>                 ↓</span></span>
+<span data-line><span>             Cost Control</span></span></code></pre></figure>
+<p>This maps extremely well to architecture work.</p>
+<hr/>
+<h1 id="phase-6--turn-obsidian-into-your-personal-knowledge-platform">Phase 6 — Turn Obsidian into your personal knowledge platform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#phase-6--turn-obsidian-into-your-personal-knowledge-platform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>This is where I think your setup could become genuinely interesting.</p>
+<p>Instead of:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Obsidian</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Notes</span></span></code></pre></figure>
+<p>build toward:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>                    ┌──────────────┐</span></span>
+<span data-line><span>                    │   Obsidian   │</span></span>
+<span data-line><span>                    │     Vault    │</span></span>
+<span data-line><span>                    └──────┬───────┘</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>          ┌────────────────┼────────────────┐</span></span>
+<span data-line><span>          ↓                ↓                ↓</span></span>
+<span data-line><span>       Notes           Metadata           Links</span></span>
+<span data-line><span>          │                │                │</span></span>
+<span data-line><span>          └────────────────┼────────────────┘</span></span>
+<span data-line><span>                           ↓</span></span>
+<span data-line><span>                    Knowledge Graph</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>          ┌────────────────┼────────────────┐</span></span>
+<span data-line><span>          ↓                ↓                ↓</span></span>
+<span data-line><span>       Search           Analytics          AI</span></span>
+<span data-line><span>          │                │                │</span></span>
+<span data-line><span>          ↓                ↓                ↓</span></span>
+<span data-line><span>      Retrieval       Quality Scores       RAG</span></span>
+<span data-line><span>                                             │</span></span>
+<span data-line><span>                                      ┌──────┴──────┐</span></span>
+<span data-line><span>                                      ↓             ↓</span></span>
+<span data-line><span>                                  Agents        Recommendations</span></span></code></pre></figure>
+<p>And <strong>you are already building pieces of this outside Obsidian</strong> with your Akashic Records project.</p>
+<p>That means I wouldn’t treat Obsidian and Akashic as competing systems.</p>
+<p>I’d treat them as:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Obsidian</span></span>
+<span data-line><span>   =</span></span>
+<span data-line><span>Human knowledge interface</span></span>
+<span data-line> </span>
+<span data-line><span>Akashic</span></span>
+<span data-line><span>   =</span></span>
+<span data-line><span>Machine intelligence layer</span></span></code></pre></figure>
+<p>That’s a much more interesting architecture.</p>
+<hr/>
+<h1 id="a-practical-8-week-roadmap">A practical 8-week roadmap<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#a-practical-8-week-roadmap" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Here’s the sequence I’d actually follow.</p>
+<h3 id="week-1--obsidian-fundamentals">Week 1 — Obsidian fundamentals<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-1--obsidian-fundamentals" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Markdown</p>
+</li>
+<li>
+<p>Links</p>
+</li>
+<li>
+<p>Backlinks</p>
+</li>
+<li>
+<p>Tags</p>
+</li>
+<li>
+<p>Aliases</p>
+</li>
+<li>
+<p>Search</p>
+</li>
+<li>
+<p>Properties</p>
+</li>
+<li>
+<p>Daily Notes</p>
+</li>
+<li>
+<p>Command Palette</p>
+</li>
+</ul>
+<p><strong>Outcome:</strong> You understand the core Obsidian model.</p>
+<hr/>
+<h3 id="week-2--knowledge-organization">Week 2 — Knowledge organization<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-2--knowledge-organization" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Atomic notes</p>
+</li>
+<li>
+<p>MOCs</p>
+</li>
+<li>
+<p>Hub notes</p>
+</li>
+<li>
+<p>Linking strategies</p>
+</li>
+<li>
+<p>Folder strategy</p>
+</li>
+<li>
+<p>Tags vs folders</p>
+</li>
+<li>
+<p>Aliases</p>
+</li>
+<li>
+<p>Orphan notes</p>
+</li>
+<li>
+<p>Unlinked mentions</p>
+</li>
+</ul>
+<p><strong>Outcome:</strong> You stop treating Obsidian like a traditional folder-based note application.</p>
+<hr/>
+<h3 id="week-3--properties--bases">Week 3 — Properties + Bases<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-3--properties--bases" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Property types</p>
+</li>
+<li>
+<p>Property design</p>
+</li>
+<li>
+<p>Bases</p>
+</li>
+<li>
+<p>Filters</p>
+</li>
+<li>
+<p>Sorting</p>
+</li>
+<li>
+<p>Grouping</p>
+</li>
+<li>
+<p>Multiple views</p>
+</li>
+</ul>
+<p>Build:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Technical Notes Base</span></span>
+<span data-line><span>Learning Base</span></span>
+<span data-line><span>Projects Base</span></span>
+<span data-line><span>ADRs Base</span></span>
+<span data-line><span>Review Base</span></span></code></pre></figure>
+<p><strong>Outcome:</strong> Your vault becomes queryable.</p>
+<hr/>
+<h3 id="week-4--daily-workflow">Week 4 — Daily workflow<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-4--daily-workflow" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Build:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Daily Note</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Capture</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Process</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Link</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Promote</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Review</span></span></code></pre></figure>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Templates</p>
+</li>
+<li>
+<p>Daily notes</p>
+</li>
+<li>
+<p>Weekly reviews</p>
+</li>
+<li>
+<p>Periodic notes</p>
+</li>
+<li>
+<p>Quick capture</p>
+</li>
+<li>
+<p>Command shortcuts</p>
+</li>
+</ul>
+<p><strong>Outcome:</strong> Obsidian becomes part of your daily workflow instead of a place you visit occasionally.</p>
+<hr/>
+<h3 id="week-5--automation">Week 5 — Automation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-5--automation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Templater</p>
+</li>
+<li>
+<p>QuickAdd</p>
+</li>
+<li>
+<p>Dataview</p>
+</li>
+<li>
+<p>Buttons/commands</p>
+</li>
+<li>
+<p>Metadata automation</p>
+</li>
+</ul>
+<p>Build things like:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>New Note</span></span>
+<span data-line><span>New Project</span></span>
+<span data-line><span>New ADR</span></span>
+<span data-line><span>New Concept</span></span>
+<span data-line><span>New Book Note</span></span>
+<span data-line><span>New Meeting Note</span></span></code></pre></figure>
+<p>with one command.</p>
+<hr/>
+<h3 id="week-6--visual-knowledge">Week 6 — Visual knowledge<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-6--visual-knowledge" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Learn:</p>
+<ul>
+<li>
+<p>Graph</p>
+</li>
+<li>
+<p>Local Graph</p>
+</li>
+<li>
+<p>Canvas</p>
+</li>
+<li>
+<p>MOCs</p>
+</li>
+<li>
+<p>Architecture maps</p>
+</li>
+</ul>
+<p>Build:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Data Engineering Knowledge Map</span></span>
+<span data-line><span>AI/LLM Knowledge Map</span></span>
+<span data-line><span>Architecture Knowledge Map</span></span></code></pre></figure>
+<hr/>
+<h3 id="week-7--vault-analytics">Week 7 — Vault analytics<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-7--vault-analytics" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This is where I’d lean heavily into your data-engineering background.</p>
+<p>Build metrics such as:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Total Notes</span></span>
+<span data-line><span>Notes by Domain</span></span>
+<span data-line><span>Notes by Type</span></span>
+<span data-line><span>Notes by Status</span></span>
+<span data-line><span>Orphan Notes</span></span>
+<span data-line><span>Broken Links</span></span>
+<span data-line><span>Missing Properties</span></span>
+<span data-line><span>Recently Modified</span></span>
+<span data-line><span>Stale Notes</span></span>
+<span data-line><span>Low Confidence</span></span>
+<span data-line><span>Incomplete Notes</span></span>
+<span data-line><span>Highly Connected Notes</span></span></code></pre></figure>
+<p>And eventually:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Knowledge Quality Score</span></span></code></pre></figure>
+<p>This connects directly to the system you’re already building.</p>
+<hr/>
+<h3 id="week-8--ai--obsidian">Week 8 — AI + Obsidian<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#week-8--ai--obsidian" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Finally explore:</p>
+<ul>
+<li>
+<p>Local embeddings</p>
+</li>
+<li>
+<p>RAG</p>
+</li>
+<li>
+<p>Semantic search</p>
+</li>
+<li>
+<p>LLM-assisted note creation</p>
+</li>
+<li>
+<p>Related-note discovery</p>
+</li>
+<li>
+<p>Knowledge graph enrichment</p>
+</li>
+<li>
+<p>AI note classification</p>
+</li>
+<li>
+<p>AI summarization</p>
+</li>
+<li>
+<p>Automatic tagging</p>
+</li>
+<li>
+<p>Note quality analysis</p>
+</li>
+<li>
+<p>Personalized learning recommendations</p>
+</li>
+</ul>
+<p>Your eventual architecture could become:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>              ┌───────────────┐</span></span>
+<span data-line><span>              │    Obsidian   │</span></span>
+<span data-line><span>              │ Human Interface│</span></span>
+<span data-line><span>              └───────┬───────┘</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>              Markdown / Metadata</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>                      ↓</span></span>
+<span data-line><span>              ┌───────────────┐</span></span>
+<span data-line><span>              │    Akashic    │</span></span>
+<span data-line><span>              │ Intelligence  │</span></span>
+<span data-line><span>              └───────┬───────┘</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>          ┌───────────┼───────────┐</span></span>
+<span data-line><span>          ↓           ↓           ↓</span></span>
+<span data-line><span>       SQLite       Vector      Graph</span></span>
+<span data-line><span>          │           DB          │</span></span>
+<span data-line><span>          ↓           ↓           ↓</span></span>
+<span data-line><span>       Metrics       RAG      Relationships</span></span>
+<span data-line><span>          │           │           │</span></span>
+<span data-line><span>          └───────────┼───────────┘</span></span>
+<span data-line><span>                      ↓</span></span>
+<span data-line><span>                   Agents</span></span>
+<span data-line><span>                      │</span></span>
+<span data-line><span>        ┌─────────────┼──────────────┐</span></span>
+<span data-line><span>        ↓             ↓              ↓</span></span>
+<span data-line><span>   Career Agent   Learning Agent   PKM Agent</span></span></code></pre></figure>
+<p>That’s much closer to a <strong>personal knowledge operating system</strong> than “a note-taking app.”</p>
+<hr/>
+<h1 id="one-important-warning">One important warning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#one-important-warning" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Don’t install 40 plugins.</p>
+<p>That’s probably the easiest way to turn Obsidian into a maintenance project.</p>
+<p>I’d use a <strong>progressive plugin strategy</strong>:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Native Obsidian</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Properties</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Bases</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Templates</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Dataview</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Templater</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>QuickAdd</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Only then additional plugins</span></span></code></pre></figure>
+<p>For every plugin, ask:</p>
+<blockquote>
+<p><strong>What recurring problem does this solve that native Obsidian cannot?</strong></p>
+</blockquote>
+<p>If the answer is “it looks cool,” don’t install it.</p>
+<hr/>
+<h1 id="what-i-think-you-should-learn-first">What I think you should learn first<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#what-i-think-you-should-learn-first" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Based on your current usage, I’d prioritize these <strong>10 skills</strong>:</p>
+<ol>
+<li>
+<p><strong>Properties</strong></p>
+</li>
+<li>
+<p><strong>Bases</strong></p>
+</li>
+<li>
+<p><strong>Links &amp; backlinks</strong></p>
+</li>
+<li>
+<p><strong>MOCs / knowledge architecture</strong></p>
+</li>
+<li>
+<p><strong>Search</strong></p>
+</li>
+<li>
+<p><strong>Daily Notes</strong></p>
+</li>
+<li>
+<p><strong>Templates</strong></p>
+</li>
+<li>
+<p><strong>Dataview</strong></p>
+</li>
+<li>
+<p><strong>Templater / automation</strong></p>
+</li>
+<li>
+<p><strong>Canvas + Graph</strong></p>
+</li>
+</ol>
+<p>Then move into:</p>
+<ol start="11">
+<li>
+<p>QuickAdd</p>
+</li>
+<li>
+<p>Advanced Dataview</p>
+</li>
+<li>
+<p>Community plugin architecture</p>
+</li>
+<li>
+<p>Local-first automation</p>
+</li>
+<li>
+<p>Obsidian URI</p>
+</li>
+<li>
+<p>Git workflows</p>
+</li>
+<li>
+<p>REST/API integrations</p>
+</li>
+<li>
+<p>Embeddings/RAG</p>
+</li>
+<li>
+<p>Knowledge graphs</p>
+</li>
+<li>
+<p>AI agents over the vault</p>
+</li>
+</ol>
+<hr/>
+<h2 id="and-id-change-one-thing-about-your-current-approach">And I’d change one thing about your current approach<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#and-id-change-one-thing-about-your-current-approach" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Don’t try to <strong>“learn Obsidian.”</strong></p>
+<p>That’s too broad.</p>
+<p>Instead, build an <strong>Obsidian laboratory</strong>.</p>
+<p>Create a small test vault containing maybe:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>10 concepts</span></span>
+<span data-line><span>3 projects</span></span>
+<span data-line><span>2 ADRs</span></span>
+<span data-line><span>2 books</span></span>
+<span data-line><span>2 daily notes</span></span>
+<span data-line><span>1 MOC</span></span>
+<span data-line><span>1 architecture diagram</span></span></code></pre></figure>
+<p>Then deliberately experiment with each capability.</p>
+<p>That gives you a safe environment to answer:</p>
+<blockquote>
+<p>“What can Obsidian actually do?”</p>
+</blockquote>
+<p>without accidentally turning your real PKM into a plugin-testing graveyard.</p>
+<p>If you want, I can take this further and turn it into a <strong>structured Obsidian Mastery curriculum</strong>, where we go <strong>Phase 1 → Phase 2 → Phase 3</strong>, and for every phase I give you <strong>what to learn, why it matters, a hands-on exercise, and a small project to build</strong>. That would be much more useful than another generic Obsidian feature list.</p>
+<h2 id="related">Related<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#related" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>Vault Vision — the system this vault is being built toward</li>
+<li>Dataview &amp; Bases Dashboards — the Phase 2/3 query layer, planned concretely for this vault</li>
+<li>Vault Dashboard — the Dataview views that layer actually shipped</li>
+<li>PKM Knowledge Refresh System – Review &amp; Enhancements — the Phase 6 “knowledge platform” design</li>
+<li>Akashic Engine Build Checklist — the intelligence layer beyond Obsidian itself</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-90" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-1"><a href="#the-obsidian-capability-map" data-for="the-obsidian-capability-map">The Obsidian capability map</a></li><li class="depth-0"><a href="#the-learning-plan-id-recommend" data-for="the-learning-plan-id-recommend">The learning plan I’d recommend</a></li><li class="depth-1"><a href="#phase-1--master-the-obsidian-fundamentals" data-for="phase-1--master-the-obsidian-fundamentals">Phase 1 — Master the Obsidian fundamentals</a></li><li class="depth-2"><a href="#the-important-conceptual-shift" data-for="the-important-conceptual-shift">The important conceptual shift</a></li><li class="depth-2"><a href="#exercise" data-for="exercise">Exercise</a></li><li class="depth-0"><a href="#phase-2--properties--bases" data-for="phase-2--properties--bases">Phase 2 — Properties + Bases</a></li><li class="depth-2"><a href="#properties" data-for="properties">Properties</a></li><li class="depth-2"><a href="#bases" data-for="bases">Bases</a></li><li class="depth-2"><a href="#exercise-1" data-for="exercise-1">Exercise</a></li><li class="depth-0"><a href="#phase-3--build-an-actual-knowledge-architecture" data-for="phase-3--build-an-actual-knowledge-architecture">Phase 3 — Build an actual knowledge architecture</a></li><li class="depth-2"><a href="#1-atomic-notes" data-for="1-atomic-notes">1. Atomic notes</a></li><li class="depth-2"><a href="#2-mocs" data-for="2-mocs">2. MOCs</a></li><li class="depth-2"><a href="#3-hub-notes" data-for="3-hub-notes">3. Hub notes</a></li><li class="depth-2"><a href="#4-progressive-summarization" data-for="4-progressive-summarization">4. Progressive summarization</a></li><li class="depth-0"><a href="#phase-4--automation" data-for="phase-4--automation">Phase 4 — Automation</a></li><li class="depth-1"><a href="#your-daily-note-could-become-much-more-useful" data-for="your-daily-note-could-become-much-more-useful">Your Daily Note could become much more useful</a></li><li class="depth-0"><a href="#phase-5--advanced-obsidian" data-for="phase-5--advanced-obsidian">Phase 5 — Advanced Obsidian</a></li><li class="depth-2"><a href="#graph-view" data-for="graph-view">Graph View</a></li><li class="depth-2"><a href="#canvas" data-for="canvas">Canvas</a></li><li class="depth-0"><a href="#phase-6--turn-obsidian-into-your-personal-knowledge-platform" data-for="phase-6--turn-obsidian-into-your-personal-knowledge-platform">Phase 6 — Turn Obsidian into your personal knowledge platform</a></li><li class="depth-0"><a href="#a-practical-8-week-roadmap" data-for="a-practical-8-week-roadmap">A practical 8-week roadmap</a></li><li class="depth-2"><a href="#week-1--obsidian-fundamentals" data-for="week-1--obsidian-fundamentals">Week 1 — Obsidian fundamentals</a></li><li class="depth-2"><a href="#week-2--knowledge-organization" data-for="week-2--knowledge-organization">Week 2 — Knowledge organization</a></li><li class="depth-2"><a href="#week-3--properties--bases" data-for="week-3--properties--bases">Week 3 — Properties + Bases</a></li><li class="depth-2"><a href="#week-4--daily-workflow" data-for="week-4--daily-workflow">Week 4 — Daily workflow</a></li><li class="depth-2"><a href="#week-5--automation" data-for="week-5--automation">Week 5 — Automation</a></li><li class="depth-2"><a href="#week-6--visual-knowledge" data-for="week-6--visual-knowledge">Week 6 — Visual knowledge</a></li><li class="depth-2"><a href="#week-7--vault-analytics" data-for="week-7--vault-analytics">Week 7 — Vault analytics</a></li><li class="depth-2"><a href="#week-8--ai--obsidian" data-for="week-8--ai--obsidian">Week 8 — AI + Obsidian</a></li><li class="depth-0"><a href="#one-important-warning" data-for="one-important-warning">One important warning</a></li><li class="depth-0"><a href="#what-i-think-you-should-learn-first" data-for="what-i-think-you-should-learn-first">What I think you should learn first</a></li><li class="depth-1"><a href="#and-id-change-one-thing-about-your-current-approach" data-for="and-id-change-one-thing-about-your-current-approach">And I’d change one thing about your current approach</a></li><li class="depth-1"><a href="#related" data-for="related">Related</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

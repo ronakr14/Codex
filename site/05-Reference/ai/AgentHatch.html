@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>AgentHatch</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="AgentHatch"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="AgentHatch"/><meta name="twitter:description" content="title: style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel) minLevel: 0 # Include headings from the specified level maxLevel: 0 # Include headings up to the specified level include: exclude: includeLinks: true # Make headings clickable hideWhenEmpty: false # Hide TOC if no h..."/><meta property="og:description" content="title: style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel) minLevel: 0 # Include headings from the specified level maxLevel: 0 # Include headings up to the specified level include: exclude: includeLinks: true # Make headings clickable hideWhenEmpty: false # Hide TOC if no h..."/><meta property="og:image:alt" content="title: style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel) minLevel: 0 # Include headings from the specified level maxLevel: 0 # Include headings up to the specified level include: exclude: includeLinks: true # Make headings clickable hideWhenEmpty: false # Hide TOC if no h..."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/ai/AgentHatch"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/ai/AgentHatch"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="title: style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel) minLevel: 0 # Include headings from the specified level maxLevel: 0 # Include headings up to the specified level include: exclude: includeLinks: true # Make headings clickable hideWhenEmpty: false # Hide TOC if no h..."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/ai/AgentHatch"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-135"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-135" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/ai/">AI Tools Catalog</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>AgentHatch</a></div></nav><h1 class="article-title">AgentHatch</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-08T15:47:55.491Z">Sep 08, 2026</time><span>16 min read</span></p></div></div><article class="popover-hint"><figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="table-of-contents" data-theme="github-light github-dark"><code data-language="table-of-contents" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>title: </span></span>
+<span data-line><span>style: nestedList # TOC style (nestedList|nestedOrderedList|inlineFirstLevel)</span></span>
+<span data-line><span>minLevel: 0 # Include headings from the specified level</span></span>
+<span data-line><span>maxLevel: 0 # Include headings up to the specified level</span></span>
+<span data-line><span>include: </span></span>
+<span data-line><span>exclude: </span></span>
+<span data-line><span>includeLinks: true # Make headings clickable</span></span>
+<span data-line><span>hideWhenEmpty: false # Hide TOC if no headings are found</span></span>
+<span data-line><span>debugInConsole: false # Print debug info in Obsidian console</span></span></code></pre></figure>
+<h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>AgentHatch is an agent compiler that treats <code>SKILL.md</code> as source code rather than a runtime prompt. Its core architecture separates deterministic parsing, multi-pass LLM inference, a structured intermediate representation (AHSSPEC), validation, code generation, and runtime execution. The key architectural idea is the compiler boundary: probabilistic LLM inference transforms prose into a typed specification, after which conventional software-engineering mechanisms can validate, generate, test, package, and execute the resulting agent. Current releases also include post-generation repair, subprocess sandboxing, MCP integration, context compaction, and knowledge-base/RAG capabilities. It is a useful architectural reference, but not something to adopt wholesale.</p>
+<h1 id="agenthatch">AgentHatch<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#agenthatch" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="1-what-it-is">1. What It Is<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-what-it-is" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="https://github.com/agenthatch/agenthatch" class="external">AgentHatch<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> is a compiler-like framework for turning a <code>SKILL.md</code> into a standalone, runnable Python agent.</p>
+<p>The central thesis is simple:</p>
+<blockquote>
+<p>A skill should be treated more like source code than like a prompt.</p>
+</blockquote>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>SKILL.md</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Deterministic Parse</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>ContextPack</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>6 specialized LLM harnesses</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>AHSSPEC</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Validation / normalization</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Jinja2 code generation</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Standalone Python agent</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Runtime + tools + MCP + knowledge + state machine</span></span></code></pre></figure>
+<p>The important shift is from <strong>runtime prompt interpretation</strong> to <strong>compile-time agent construction</strong>.</p>
+<hr/>
+<h2 id="2-problem-being-solved">2. Problem Being Solved<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-problem-being-solved" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>AgentHatch targets weaknesses in raw <code>SKILL.md</code> systems:</p>
+<ul>
+<li>skills can leak instructions into one another through shared context</li>
+<li>long skills are treated as loose reference material rather than contracts</li>
+<li>every active skill consumes context space</li>
+<li>tool interfaces are expressed as prose rather than typed contracts</li>
+<li>ambiguities and tool-definition errors are discovered late</li>
+<li>scaling from a few skills to many becomes difficult without isolation and indexing</li>
+</ul>
+<p>The deeper problem is not Markdown. It is the lack of a <strong>compilation and validation boundary</strong>.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Raw skill system</span></span>
+<span data-line><span>Human prose → LLM interpretation → runtime behavior</span></span>
+<span data-line> </span>
+<span data-line><span>AgentHatch</span></span>
+<span data-line><span>Human prose → structured specification → generated software → runtime behavior</span></span></code></pre></figure>
+<hr/>
+<h2 id="3-architecture">3. Architecture<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-architecture" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="31-phase-1--deterministic-parse">3.1 Phase 1 — Deterministic Parse<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#31-phase-1--deterministic-parse" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Phase 1 performs no semantic AI interpretation. The implementation builds a <code>ContextPack</code> containing frontmatter, Markdown body, file manifest, file hashes, readable contents, entrypoint information and parse warnings.</p>
+<p><code>FileEntry</code> records relative path, SHA-256 hash, size and content. This deliberately separates filesystem facts from semantic interpretation.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Filesystem facts ──────────────► deterministic layer</span></span>
+<span data-line><span>Meaning / intent / interfaces ─► LLM layer</span></span></code></pre></figure>
+<p>This is one of the strongest design choices in the project.</p>
+<h3 id="32-phase-2--six-harness-llm-pipeline">3.2 Phase 2 — Six-Harness LLM Pipeline<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#32-phase-2--six-harness-llm-pipeline" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>The current implementation defines six specialized harnesses:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Harness</th><th>Responsibility</th></tr></thead><tbody><tr><td>A — Identity</td><td>Extract identity, name, version and description</td></tr><tr><td>B — Intent</td><td>Infer triggers and user intents</td></tr><tr><td>C — Interface</td><td>Infer capabilities, parameters and return schemas</td></tr><tr><td>D — Base</td><td>Detect runtime/base class and instruction structure</td></tr><tr><td>E — Assembly</td><td>Cross-validate and assemble the unified specification</td></tr><tr><td>F — MCP</td><td>Infer MCP server connections</td></tr></tbody></table></div>
+<p>Harnesses use bounded Analyze → Infer → Self-Validate → Correct loops and expose confidence, retries and token-usage information.</p>
+<p>The architectural lesson is more important than the exact six roles:</p>
+<blockquote>
+<p>Large ambiguous LLM tasks can be decomposed into smaller inference contracts that are independently validated and then assembled.</p>
+</blockquote>
+<h3 id="33-ahsspec--intermediate-representation">3.3 AHSSPEC — Intermediate Representation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#33-ahsspec--intermediate-representation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>AHSSPEC</code> is the most important architectural concept in AgentHatch.</p>
+<p>The current implementation defines an AHS v1.1 Pydantic specification containing concepts such as:</p>
+<ul>
+<li>identity</li>
+<li>intent</li>
+<li>capabilities</li>
+<li>input/output schemas</li>
+<li>requirements</li>
+<li>MCP servers</li>
+<li>API templates</li>
+<li>environment variables</li>
+<li>workflow steps</li>
+<li>safety rules</li>
+<li>runtime/base configuration</li>
+<li>dependencies</li>
+<li>resources</li>
+<li>composition/event listeners</li>
+<li>confidence information</li>
+</ul>
+<p>Conceptually:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>SKILL.md → ContextPack → LLM inference → AHSSPEC → generated agent</span></span></code></pre></figure>
+<p>AHSSPEC is effectively an <strong>intermediate representation (IR)</strong> between natural-language intent and executable software.</p>
+<p>Without an IR:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>LLM → code</span></span></code></pre></figure>
+<p>With an IR:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>LLM → structured contract → validation → code</span></span></code></pre></figure>
+<p>The second architecture creates a proper place for validation, auditing, versioning, diffing, policy enforcement and deterministic generation.</p>
+<h3 id="34-defensive-schema-handling">3.4 Defensive Schema Handling<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#34-defensive-schema-handling" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>The schema layer explicitly handles common LLM mistakes such as strings where lists are expected, invalid runtime values, numeric timeouts, malformed dependency/environment structures and invalid identity values.</p>
+<p>This reinforces an important principle:</p>
+<blockquote>
+<p><strong>Structured LLM output is still probabilistic input and needs defensive validation.</strong></p>
+</blockquote>
+<p>Pydantic supplies the contract; coercion attempts to recover predictable model formatting mistakes before rejecting the result.</p>
+<hr/>
+<h2 id="4-code-generation">4. Code Generation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-code-generation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Jinja2 templates convert AHSSPEC into a standalone Python package containing artifacts such as:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>hatched-agent/</span></span>
+<span data-line><span>├── pyproject.toml</span></span>
+<span data-line><span>├── runtime.toml</span></span>
+<span data-line><span>├── README.md</span></span>
+<span data-line><span>├── agenthatch.yaml</span></span>
+<span data-line><span>└── src/&lt;package_name>/</span></span>
+<span data-line><span>    ├── __init__.py</span></span>
+<span data-line><span>    ├── agent.py</span></span>
+<span data-line><span>    ├── tools.py</span></span>
+<span data-line><span>    └── references.py</span></span></code></pre></figure>
+<p>The output can be inspected, tested, packaged, versioned and debugged using conventional software-engineering workflows.</p>
+<p>That makes the generated agent a <strong>software supply-chain artifact</strong>, which is both a strength and a new security concern.</p>
+<hr/>
+<h2 id="5-post-generation-self-review">5. Post-Generation Self-Review<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-post-generation-self-review" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>After generation, AgentHatch can inspect <code>tools.py</code>, execute tools with mock parameters and repair detected defects for a bounded number of rounds.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Generate → Inspect → Test → Repair → Inspect</span></span></code></pre></figure>
+<p>The review targets issues such as undefined variables, <code>None</code> attribute failures, semantic stubs, runtime failures and exception-swallowing patterns.</p>
+<p>This should not be confused with formal verification. It is better described as:</p>
+<blockquote>
+<p><strong>LLM-generated code + automated checks + bounded LLM repair.</strong></p>
+</blockquote>
+<p>The approach improves practical reliability but does not prove correctness.</p>
+<hr/>
+<h2 id="6-runtime--planlayer">6. Runtime — PlanLayer<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-runtime--planlayer" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Generated agents use a six-state planning model:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>STARTING</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>PLANNING</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>EXECUTING</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>VERIFYING</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>REPLANNING ──┐</span></span>
+<span data-line><span>   └─────────┘</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>DONE</span></span></code></pre></figure>
+<p>The runtime can adapt to failures, merge completed steps and handle tool timeouts.</p>
+<p>The architectural significance is that the LLM is not the whole execution engine:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>LLM reasoning</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Plan / intent</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Runtime state machine</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Tool execution</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Verification</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Replanning when necessary</span></span></code></pre></figure>
+<p>This creates explicit control points for retries, timeouts, observability and policy enforcement.</p>
+<hr/>
+<h2 id="7-mcp-as-a-compiled-capability">7. MCP as a Compiled Capability<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-mcp-as-a-compiled-capability" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>MCP is represented in AHSSPEC through structured server definitions. Harness F detects MCP servers and Harness E incorporates them into the assembled interface.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>SKILL.md</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>MCP detection</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>MCPServerEntry</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>AHSSPEC</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Generated runtime configuration</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>MCP tools</span></span></code></pre></figure>
+<p>The benefit is less manual wiring. The risk is an expanded trust boundary.</p>
+<p>A mature implementation needs explicit answers to:</p>
+<ul>
+<li>Which tools are allowed?</li>
+<li>Who authorizes them?</li>
+<li>Can a skill request excessive permissions?</li>
+<li>How are MCP credentials isolated?</li>
+<li>Can untrusted skills cause unsafe connections?</li>
+<li>Are tool capabilities represented as policy objects?</li>
+</ul>
+<p>Automatic tool discovery is therefore a security-sensitive compilation output, not merely a convenience feature.</p>
+<hr/>
+<h2 id="8-sandbox-and-security">8. Sandbox and Security<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-sandbox-and-security" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>The project includes a subprocess sandbox with command-whitelist tiers in <code>agenthatch-core</code>. Its roadmap identifies Docker-backed isolation as a future improvement for stronger filesystem and network isolation.</p>
+<p>This matters because AgentHatch combines:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>LLM-derived specification</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Generated executable code</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Tool / MCP access</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>External side effects</span></span></code></pre></figure>
+<p>A subprocess whitelist is useful containment, but it is not equivalent to a hardened container or VM boundary.</p>
+<p>For production use, stronger isolation, capability-based permissions, secret isolation and network policy would be important.</p>
+<hr/>
+<h2 id="9-knowledge--rag-layer">9. Knowledge / RAG Layer<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-knowledge--rag-layer" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>AgentHatch has evolved beyond pure agent generation. The v1.0 line introduced knowledge-backed agents through <code>KnowledgeBaseBrick</code>.</p>
+<p>The current direction includes:</p>
+<ul>
+<li>SQLite FTS5</li>
+<li>BM25 keyword retrieval</li>
+<li>generated <code>retrieve()</code> functionality</li>
+<li>skill-derived retrieval configuration</li>
+<li>optional semantic search</li>
+<li>runtime knowledge-base integration</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Skill + knowledge files</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>     Hatch time</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Knowledge-base artifact</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Generated retrieve()</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Runtime query</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>BM25 / optional embeddings</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Relevant references</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Agent response</span></span></code></pre></figure>
+<p>This is interesting because the compiler is no longer compiling only <strong>behavior</strong>. It is also compiling <strong>knowledge-access behavior</strong>.</p>
+<p>Current roadmap gaps include LLM reranking, shared cross-agent KB memory and automated stale-entry maintenance.</p>
+<hr/>
+<h2 id="10-current-capabilities">10. Current Capabilities<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-current-capabilities" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>The project currently documents these capabilities:</p>
+<ul>
+<li>6-harness LLM pipeline with self-validation</li>
+<li>AHSSPEC structured specification</li>
+<li>MCP auto-detection</li>
+<li>PlanLayer state machine</li>
+<li>context auto-compaction</li>
+<li>subprocess sandbox with command whitelist</li>
+<li>hatch reports in human-readable and JSON forms</li>
+<li>post-generation inspect/test/repair loop</li>
+<li>SQLite FTS5 + BM25 knowledge retrieval</li>
+<li>optional semantic retrieval</li>
+<li>confidence scoring and retry penalties</li>
+<li>JSON Schema constraint mapping to Pydantic types</li>
+<li>exception-swallow antipattern detection</li>
+<li>skillhouse indexing and management</li>
+</ul>
+<p>The CLI includes operations such as <code>init</code>, <code>skills add/list/delete</code>, <code>hatch</code>, <code>run</code>, <code>search</code>, <code>doctor</code> and <code>assemble</code>.</p>
+<hr/>
+<h2 id="11-the-real-architectural-differentiator">11. The Real Architectural Differentiator<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-the-real-architectural-differentiator" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>The important idea is not “generate an agent from Markdown.” The important idea is the <strong>compiler boundary</strong>.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Human-authored intent</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Probabilistic interpretation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Structured intermediate representation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Validation / normalization</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Code generation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Executable artifact</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Controlled runtime</span></span></code></pre></figure>
+<p>This creates a useful separation of responsibility:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Concern</th><th>Preferred mechanism</th></tr></thead><tbody><tr><td>Natural-language interpretation</td><td>LLM</td></tr><tr><td>Schema validation</td><td>Conventional code</td></tr><tr><td>Type checking</td><td>Conventional code</td></tr><tr><td>Policy validation</td><td>Conventional code</td></tr><tr><td>Code generation</td><td>Templates / compiler</td></tr><tr><td>Runtime state</td><td>Deterministic state machine</td></tr><tr><td>Tool execution</td><td>Runtime</td></tr><tr><td>Semantic reasoning</td><td>LLM</td></tr><tr><td>Artifact packaging</td><td>Conventional tooling</td></tr></tbody></table></div>
+<p>This is the main idea worth preserving from the project.</p>
+<hr/>
+<h2 id="12-architecture-tradeoffs">12. Architecture Tradeoffs<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-architecture-tradeoffs" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>AgentHatch makes several deliberate tradeoffs. The compiler model improves structure and governance opportunities, but it also introduces a build lifecycle that simpler agent frameworks do not need.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Decision</th><th>Benefit</th><th>Cost / Risk</th></tr></thead><tbody><tr><td>Compile skills into agents</td><td>Better isolation, inspectable artifacts, conventional testing</td><td>Build step, generated-code lifecycle, artifact drift</td></tr><tr><td>Use AHSSPEC as an IR</td><td>Validation, diffing, policy enforcement and multiple generation targets become possible</td><td>Another schema that must evolve and remain backward-compatible</td></tr><tr><td>Multiple LLM harnesses</td><td>Smaller reasoning problems, targeted retries and better diagnostics</td><td>More inference calls, latency, token cost and orchestration complexity</td></tr><tr><td>Generate Python</td><td>Easy integration with the Python ecosystem</td><td>Python becomes a runtime constraint and generated code becomes a supply-chain concern</td></tr><tr><td>Explicit PlanLayer</td><td>Better control over retries, timeouts and verification</td><td>More runtime machinery and state-management complexity</td></tr><tr><td>Infer MCP configuration</td><td>Less manual wiring</td><td>Tool discovery becomes part of the security boundary</td></tr><tr><td>Post-generation LLM repair</td><td>Can recover from common generated-code defects</td><td>Repair can introduce new defects; still not verification</td></tr><tr><td>Compile knowledge access</td><td>Makes retrieval a first-class capability</td><td>Knowledge freshness, indexing and rebuild lifecycle become compiler concerns</td></tr><tr><td>Skill composition</td><td>Enables larger agent systems</td><td>Dependency, capability, authorization and conflict resolution become much harder</td></tr></tbody></table></div>
+<p>The core tradeoff is:</p>
+<blockquote>
+<p><strong>AgentHatch exchanges runtime simplicity for build-time structure and control.</strong></p>
+</blockquote>
+<p>That is a reasonable trade for governed agent systems, but unnecessary overhead for a small one-off agent.</p>
+<hr/>
+<h2 id="13-what-agenthatch-gets-right">13. What AgentHatch Gets Right<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-what-agenthatch-gets-right" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="deterministic-and-probabilistic-work-are-separated">Deterministic and probabilistic work are separated<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#deterministic-and-probabilistic-work-are-separated" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>The parser does not ask an LLM to rediscover filesystem facts.</p>
+<h3 id="specialized-inference-passes">Specialized inference passes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#specialized-inference-passes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Large ambiguous tasks are decomposed into smaller contracts that can be independently validated and retried.</p>
+<h3 id="intermediate-representation">Intermediate representation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#intermediate-representation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>AHSSPEC gives the system a stable boundary between inference and generation.</p>
+<h3 id="generated-artifacts-are-real-software">Generated artifacts are real software<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#generated-artifacts-are-real-software" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>The output can use ordinary debugging, testing, packaging and CI practices.</p>
+<h3 id="runtime-state-is-explicit">Runtime state is explicit<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#runtime-state-is-explicit" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>PlanLayer provides control points that are missing from unconstrained agent loops.</p>
+<h3 id="failure-handling-is-first-class">Failure handling is first-class<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#failure-handling-is-first-class" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Schema coercion, retry penalties, confidence, post-generation inspection and bounded repair acknowledge LLM unreliability.</p>
+<h3 id="knowledge-is-becoming-a-compiled-capability">Knowledge is becoming a compiled capability<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#knowledge-is-becoming-a-compiled-capability" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>The KB layer extends the compiler from behavior into retrieval and knowledge access.</p>
+<hr/>
+<h2 id="14-what-needs-improvement">14. What Needs Improvement<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-what-needs-improvement" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="reproducibility-is-still-conditional">Reproducibility is still conditional<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#reproducibility-is-still-conditional" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Low-temperature inference and schema validation improve repeatability, but LLM inference remains probabilistic.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Same input → likely similar output</span></span></code></pre></figure>
+<p>is not equivalent to:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Same input → identical artifact</span></span></code></pre></figure>
+<p>A stronger build manifest should record provider, model/version, temperature, prompt/schema versions, source hashes and dependency versions.</p>
+<h3 id="security-needs-a-stronger-boundary">Security needs a stronger boundary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#security-needs-a-stronger-boundary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>LLM-generated executable code plus MCP connectivity is a serious trust boundary. Docker isolation, capability permissions, secret isolation and network policies should be considered baseline for untrusted workloads.</p>
+<h3 id="observability-is-incomplete">Observability is incomplete<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#observability-is-incomplete" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Useful production signals would include per-harness latency, token/cost accounting, repair diffs, artifact lineage, tool traces, state transitions, retrieval quality, retry/failure metrics and policy violations.</p>
+<h3 id="self-review-is-not-verification">Self-review is not verification<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#self-review-is-not-verification" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Generated code should still pass conventional tests, static analysis, dependency scanning and explicit policy checks for higher-risk workloads.</p>
+<h3 id="artifact-governance-needs-to-mature">Artifact governance needs to mature<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#artifact-governance-needs-to-mature" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>A production system should answer:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Which skill version produced this agent?</span></span>
+<span data-line><span>Which model produced AHSSPEC?</span></span>
+<span data-line><span>Which schema/prompt version was used?</span></span>
+<span data-line><span>Which dependencies were installed?</span></span>
+<span data-line><span>Which MCP servers were authorized?</span></span>
+<span data-line><span>Can the artifact be rebuilt?</span></span>
+<span data-line><span>Can two builds be meaningfully diffed?</span></span></code></pre></figure>
+<h3 id="composition-is-substantially-harder-than-single-skill-compilation">Composition is substantially harder than single-skill compilation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#composition-is-substantially-harder-than-single-skill-compilation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Skill fusion and meta-agents introduce capability conflicts, dependency resolution, authorization conflicts, shared state and failure propagation. A stronger capability/dependency graph will be required for this to scale safely.</p>
+<hr/>
+<h2 id="15-enterprise-readiness-scorecard">15. Enterprise Readiness Scorecard<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-enterprise-readiness-scorecard" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Dimension</th><th>Assessment</th><th>Why</th></tr></thead><tbody><tr><td>Architecture</td><td><strong>Strong</strong></td><td>Clear separation between parsing, inference, IR, generation and runtime</td></tr><tr><td>LLM reliability</td><td><strong>Moderate</strong></td><td>Multi-pass validation helps, but the semantic layer remains probabilistic</td></tr><tr><td>Security</td><td><strong>Weak–Moderate</strong></td><td>Generated code and MCP access create a significant trust boundary</td></tr><tr><td>Sandbox</td><td><strong>Moderate</strong></td><td>Subprocess containment exists; stronger container isolation is still important</td></tr><tr><td>Observability</td><td><strong>Moderate</strong></td><td>Reports and usage information exist, but deeper runtime telemetry is needed</td></tr><tr><td>Testing</td><td><strong>Moderate</strong></td><td>Post-generation inspection/testing exists; it is not equivalent to comprehensive verification</td></tr><tr><td>Reproducibility</td><td><strong>Moderate</strong></td><td>Structured compilation helps, but model/provider changes can affect output</td></tr><tr><td>Governance</td><td><strong>Weak–Moderate</strong></td><td>Artifact lineage, authorization and policy lifecycle need more maturity</td></tr><tr><td>Deployment</td><td><strong>Moderate–Strong</strong></td><td>Generated Python packages fit conventional deployment workflows</td></tr><tr><td>Extensibility</td><td><strong>Strong</strong></td><td>The IR provides a useful extension boundary</td></tr><tr><td>Composition</td><td><strong>Immature</strong></td><td>Skill fusion introduces dependency, capability and authorization conflicts</td></tr><tr><td>Enterprise readiness</td><td><strong>Not yet</strong></td><td>The architecture is promising, but operational and security controls need more maturity</td></tr></tbody></table></div>
+<h3 id="bottom-line">Bottom line<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bottom-line" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>AgentHatch looks more like <strong>promising agent-platform infrastructure</strong> than a finished enterprise agent platform.</p>
+<p>Its strongest enterprise property is the compiler boundary. Its largest enterprise gap is the governance and security lifecycle around generated artifacts and external capabilities.</p>
+<hr/>
+<h2 id="16-comparison-with-adjacent-agent-architectures">16. Comparison With Adjacent Agent Architectures<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#16-comparison-with-adjacent-agent-architectures" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>AgentHatch should not be evaluated as simply another agent runtime. Its distinctive position is closer to an <strong>agent compiler</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Architecture</th><th>Primary abstraction</th><th>Where it is strongest</th><th>AgentHatch difference</th></tr></thead><tbody><tr><td>Raw <code>SKILL.md</code> systems</td><td>Prompt/instruction bundle</td><td>Simple reusable behavior</td><td>Compiles the skill into a structured artifact instead of interpreting it only at runtime</td></tr><tr><td>LangGraph-style orchestration</td><td>Graph/stateful execution</td><td>Explicit workflows, state and branching</td><td>Focuses earlier in the lifecycle: compiling a skill into an executable agent</td></tr><tr><td>OpenAI Agents SDK-style runtimes</td><td>Agent + tools + handoffs</td><td>Building and running agent applications</td><td>Adds a compilation/IR layer between authoring and runtime</td></tr><tr><td>CrewAI-style multi-agent frameworks</td><td>Roles/tasks/agent collaboration</td><td>Multi-agent orchestration</td><td>More concerned with constructing the individual agent artifact</td></tr><tr><td>AutoGen-style agent systems</td><td>Conversational/multi-agent interaction</td><td>Agent-to-agent workflows</td><td>Emphasizes deterministic build structure and generated artifacts</td></tr><tr><td>MCP-native agent architectures</td><td>Tool/resource interoperability</td><td>Standardized external capabilities</td><td>Treats MCP configuration as something that can be inferred and compiled into the agent</td></tr><tr><td>Traditional compiler / DSL architecture</td><td>Source → IR → artifact</td><td>Reproducible transformation and tooling</td><td>Applies the same architectural pattern while retaining probabilistic LLM inference</td></tr></tbody></table></div>
+<h3 id="the-architectural-distinction">The architectural distinction<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#the-architectural-distinction" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Most agent frameworks primarily answer:</p>
+<blockquote>
+<p><strong>How should an agent execute?</strong></p>
+</blockquote>
+<p>AgentHatch is trying to answer:</p>
+<blockquote>
+<p><strong>How should an agent be compiled from a declarative specification?</strong></p>
+</blockquote>
+<p>That gives AgentHatch a different lifecycle:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Traditional agent framework</span></span>
+<span data-line> </span>
+<span data-line><span>Author → Configure → Run → Observe</span></span>
+<span data-line> </span>
+<span data-line><span>AgentHatch</span></span>
+<span data-line> </span>
+<span data-line><span>Author skill</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Compile</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Validate</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Generate artifact</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Test / repair</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Package</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Run</span></span>
+<span data-line><span>    ↓</span></span>
+<span data-line><span>Observe</span></span></code></pre></figure>
+<p>This makes build-time concerns first-class:</p>
+<ul>
+<li>schema evolution</li>
+<li>artifact versioning</li>
+<li>provenance</li>
+<li>reproducibility</li>
+<li>generated-code review</li>
+<li>policy enforcement</li>
+<li>dependency resolution</li>
+<li>incremental rebuilds</li>
+</ul>
+<p>The downside is equally important: a compiler lifecycle adds complexity that a lightweight runtime-only agent may not need.</p>
+<h3 id="architectural-positioning">Architectural positioning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#architectural-positioning" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>                    Runtime orchestration</span></span>
+<span data-line><span>                           ↑</span></span>
+<span data-line><span>          LangGraph / Agents SDK / CrewAI / AutoGen</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>                     AgentHatch</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>                           ↓</span></span>
+<span data-line><span>                Agent compilation layer</span></span>
+<span data-line><span>                           │</span></span>
+<span data-line><span>                           ↓</span></span>
+<span data-line><span>                 Compiler / DSL model</span></span></code></pre></figure>
+<p>AgentHatch therefore sits between <strong>agent runtime frameworks</strong> and <strong>compiler/DSL systems</strong>.</p>
+<p>That is the most useful way to position it in a technical landscape.</p>
+<hr/>
+<h2 id="17-lessons-worth-reusing">17. Lessons Worth Reusing<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#17-lessons-worth-reusing" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="1-introduce-an-intermediate-representation">1. Introduce an intermediate representation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-introduce-an-intermediate-representation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Do not go directly from natural language to executable behavior.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Natural language</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Semantic IR</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Validation</span></span>
+<span data-line><span>      ↓</span></span>
+<span data-line><span>Artifact</span></span></code></pre></figure>
+<h3 id="2-push-deterministic-work-outside-the-llm">2. Push deterministic work outside the LLM<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-push-deterministic-work-outside-the-llm" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Parsing, validation, indexing, state management and policy enforcement should be conventional code wherever possible.</p>
+<h3 id="3-split-inference-by-responsibility">3. Split inference by responsibility<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-split-inference-by-responsibility" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Specialized inference passes are easier to validate, retry and observe than one giant agent-building prompt.</p>
+<h3 id="4-treat-generated-agents-as-build-artifacts">4. Treat generated agents as build artifacts<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-treat-generated-agents-as-build-artifacts" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Once generated code exists, ordinary software-engineering controls should apply.</p>
+<h3 id="5-make-runtime-state-explicit">5. Make runtime state explicit<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-make-runtime-state-explicit" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>State machines create useful control points for retries, timeouts, verification and policy.</p>
+<h3 id="6-assume-llm-output-is-unreliable">6. Assume LLM output is unreliable<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-assume-llm-output-is-unreliable" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Structured output, coercion, validation, confidence and post-generation checks are fundamental infrastructure.</p>
+<h3 id="7-security-follows-the-artifact">7. Security follows the artifact<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-security-follows-the-artifact" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Once an LLM can generate executable code or tool configuration, the generated artifact becomes part of the security boundary.</p>
+<hr/>
+<h2 id="18-relevance-to-akashic-records">18. Relevance to Akashic Records<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#18-relevance-to-akashic-records" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>AgentHatch maps surprisingly well onto the direction of the Akashic Intelligence Engine.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>Akashic note</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Deterministic parsing</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Structured note representation</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>LLM semantic analysis</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Validated intermediate representation</span></span>
+<span data-line><span>   ↓</span></span>
+<span data-line><span>Derived intelligence / agents</span></span></code></pre></figure>
+<p>Useful parallels:</p>
+<ul>
+<li><strong>Note model ↔ AHSSPEC</strong> — structured representation between raw content and intelligence.</li>
+<li><strong>Knowledge grading ↔ confidence reporting</strong> — AI-derived decisions become explicit and inspectable.</li>
+<li><strong>Knowledge graph ↔ capability/dependency graph</strong> — relationships become first-class data.</li>
+<li><strong>Specialized agents ↔ specialized harnesses</strong> — narrow responsibilities are easier to validate.</li>
+<li><strong>Retrieval ↔ AgentHatch KB layer</strong> — retrieval becomes an explicit capability.</li>
+<li><strong>Agent workspace ↔ generated artifacts</strong> — agents can have defined capabilities, inputs, outputs and provenance.</li>
+</ul>
+<p>The strongest idea to borrow is <strong>not AgentHatch itself</strong>. It is the principle of an explicit semantic IR between unstructured knowledge and executable intelligence.</p>
+<hr/>
+<h2 id="19-what-i-would-borrow-vs-avoid">19. What I Would Borrow vs Avoid<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#19-what-i-would-borrow-vs-avoid" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="borrow">Borrow<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#borrow" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>compiler-style architecture</li>
+<li>explicit intermediate representation</li>
+<li>deterministic parsing before LLM inference</li>
+<li>specialized inference passes</li>
+<li>schema/Pydantic validation</li>
+<li>confidence and provenance metadata</li>
+<li>generated artifacts</li>
+<li>explicit runtime state machine</li>
+<li>post-generation validation</li>
+<li>capability-oriented tool definitions</li>
+<li>knowledge retrieval as a first-class capability</li>
+</ul>
+<h3 id="avoid-copying-blindly">Avoid Copying Blindly<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#avoid-copying-blindly" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>treating low-temperature inference as true determinism</li>
+<li>assuming self-review equals correctness</li>
+<li>executing generated code without strong isolation</li>
+<li>automatically trusting inferred MCP configuration</li>
+<li>composing skills without explicit capability and authorization models</li>
+<li>making generated Python the only representation of agent behavior</li>
+</ul>
+<hr/>
+<h2 id="20-open-questions">20. Open Questions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#20-open-questions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>Can AHSSPEC become a stable, independently versioned agent contract?</li>
+<li>Can compilation become reproducible enough for meaningful artifact diffs?</li>
+<li>How should model/provider versions be included in provenance?</li>
+<li>Can generated agents be safely sandboxed at enterprise scale?</li>
+<li>How should tool permissions be represented in the specification?</li>
+<li>How should skills declare dependencies and conflicts?</li>
+<li>How should composition resolve capability and authorization conflicts?</li>
+<li>Can agents be incrementally rebuilt when only part of a skill changes?</li>
+<li>Can the same IR generate multiple runtime targets rather than only Python?</li>
+<li>Can knowledge, behavior and tools be versioned independently?</li>
+<li>How should stale knowledge be detected and rebuilt?</li>
+<li>Can the compiler support fully local/offline inference for sensitive skills?</li>
+</ul>
+<hr/>
+<h2 id="21-adoption-verdict">21. Adoption Verdict<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#21-adoption-verdict" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Interesting architecture:</strong> Yes<br/>
+<strong>Worth experimenting with:</strong> Yes<br/>
+<strong>Ready to become core enterprise infrastructure:</strong> Not yet<br/>
+<strong>Worth borrowing architectural ideas from:</strong> Definitely<br/>
+<strong>Worth adopting wholesale into Akashic:</strong> No</p>
+<p><strong>Most valuable idea:</strong> the compiler boundary and AHSSPEC-style intermediate representation.</p>
+<p><strong>Biggest architectural risk:</strong> LLM-derived executable artifacts and tool configurations crossing security boundaries.</p>
+<p><strong>Biggest opportunity:</strong> extending the compiler model from agent behavior into a governed system for compiling knowledge, capabilities, tools, policies and retrieval into agent artifacts.</p>
+<hr/>
+<h2 id="22-current-project-direction">22. Current Project Direction<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#22-current-project-direction" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>The roadmap shows a progression roughly like:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>6-Harness Compilation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Structured AHSSPEC</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Code Generation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Post-generation Repair</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Runtime Planning</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Knowledge-backed Agents</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Skill Fusion / Meta-agent</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Marketplace / Channels</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>Stronger Docker Isolation</span></span>
+<span data-line><span>        ↓</span></span>
+<span data-line><span>One-sentence → runnable agent</span></span></code></pre></figure>
+<p>The final milestone effectively turns AgentHatch into a higher-level programming language for agents.</p>
+<p>That direction makes the IR, provenance, testing, permissions and sandboxing layers increasingly important rather than less important.</p>
+<hr/>
+<h2 id="23-source-and-evidence">23. Source and Evidence<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#23-source-and-evidence" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Primary source reviewed:</p>
+<ul>
+<li>Repository: <a href="https://github.com/agenthatch/agenthatch" class="external">https://github.com/agenthatch/agenthatch<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><code>README.md</code>: architecture, CLI, pipeline and runtime</li>
+<li><code>src/agenthatch/skill/spec.py</code>: AHSSPEC/AHS v1.1 models and harness contracts</li>
+<li><code>ROADMAP.md</code>: implemented capabilities and planned direction</li>
+<li><code>SECURITY.md</code>: security reporting and stated security process</li>
+<li><code>agenthatch-core</code>: runtime and sandbox components</li>
+</ul>
+<h3 id="evidence-model">Evidence model<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#evidence-model" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>This note uses three evidence levels:</p>
+<ul>
+<li><strong>Implementation evidence</strong> — directly supported by inspected repository files.</li>
+<li><strong>Project/documentation claim</strong> — stated by AgentHatch but not independently verified through exhaustive source inspection.</li>
+<li><strong>Architectural analysis</strong> — interpretation or recommendation derived from the observed implementation.</li>
+</ul>
+<p>The note intentionally does not treat project documentation claims as equivalent to independently verified behavior.</p>
+<h3 id="evidence-boundary">Evidence boundary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#evidence-boundary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Implementation files were inspected selectively rather than exhaustively. Direct repository behavior is treated as implementation evidence. Conclusions about enterprise readiness, security maturity and long-term architecture are analysis rather than claims made by the project.</p>
+<p><strong>Last reviewed:</strong> 2026-08-12
+<strong>Analysis confidence:</strong> High</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-112" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-0"><a href="#agenthatch" data-for="agenthatch">AgentHatch</a></li><li class="depth-1"><a href="#1-what-it-is" data-for="1-what-it-is">1. What It Is</a></li><li class="depth-1"><a href="#2-problem-being-solved" data-for="2-problem-being-solved">2. Problem Being Solved</a></li><li class="depth-1"><a href="#3-architecture" data-for="3-architecture">3. Architecture</a></li><li class="depth-2"><a href="#31-phase-1--deterministic-parse" data-for="31-phase-1--deterministic-parse">3.1 Phase 1 — Deterministic Parse</a></li><li class="depth-2"><a href="#32-phase-2--six-harness-llm-pipeline" data-for="32-phase-2--six-harness-llm-pipeline">3.2 Phase 2 — Six-Harness LLM Pipeline</a></li><li class="depth-2"><a href="#33-ahsspec--intermediate-representation" data-for="33-ahsspec--intermediate-representation">3.3 AHSSPEC — Intermediate Representation</a></li><li class="depth-2"><a href="#34-defensive-schema-handling" data-for="34-defensive-schema-handling">3.4 Defensive Schema Handling</a></li><li class="depth-1"><a href="#4-code-generation" data-for="4-code-generation">4. Code Generation</a></li><li class="depth-1"><a href="#5-post-generation-self-review" data-for="5-post-generation-self-review">5. Post-Generation Self-Review</a></li><li class="depth-1"><a href="#6-runtime--planlayer" data-for="6-runtime--planlayer">6. Runtime — PlanLayer</a></li><li class="depth-1"><a href="#7-mcp-as-a-compiled-capability" data-for="7-mcp-as-a-compiled-capability">7. MCP as a Compiled Capability</a></li><li class="depth-1"><a href="#8-sandbox-and-security" data-for="8-sandbox-and-security">8. Sandbox and Security</a></li><li class="depth-1"><a href="#9-knowledge--rag-layer" data-for="9-knowledge--rag-layer">9. Knowledge / RAG Layer</a></li><li class="depth-1"><a href="#10-current-capabilities" data-for="10-current-capabilities">10. Current Capabilities</a></li><li class="depth-1"><a href="#11-the-real-architectural-differentiator" data-for="11-the-real-architectural-differentiator">11. The Real Architectural Differentiator</a></li><li class="depth-1"><a href="#12-architecture-tradeoffs" data-for="12-architecture-tradeoffs">12. Architecture Tradeoffs</a></li><li class="depth-1"><a href="#13-what-agenthatch-gets-right" data-for="13-what-agenthatch-gets-right">13. What AgentHatch Gets Right</a></li><li class="depth-2"><a href="#deterministic-and-probabilistic-work-are-separated" data-for="deterministic-and-probabilistic-work-are-separated">Deterministic and probabilistic work are separated</a></li><li class="depth-2"><a href="#specialized-inference-passes" data-for="specialized-inference-passes">Specialized inference passes</a></li><li class="depth-2"><a href="#intermediate-representation" data-for="intermediate-representation">Intermediate representation</a></li><li class="depth-2"><a href="#generated-artifacts-are-real-software" data-for="generated-artifacts-are-real-software">Generated artifacts are real software</a></li><li class="depth-2"><a href="#runtime-state-is-explicit" data-for="runtime-state-is-explicit">Runtime state is explicit</a></li><li class="depth-2"><a href="#failure-handling-is-first-class" data-for="failure-handling-is-first-class">Failure handling is first-class</a></li><li class="depth-2"><a href="#knowledge-is-becoming-a-compiled-capability" data-for="knowledge-is-becoming-a-compiled-capability">Knowledge is becoming a compiled capability</a></li><li class="depth-1"><a href="#14-what-needs-improvement" data-for="14-what-needs-improvement">14. What Needs Improvement</a></li><li class="depth-2"><a href="#reproducibility-is-still-conditional" data-for="reproducibility-is-still-conditional">Reproducibility is still conditional</a></li><li class="depth-2"><a href="#security-needs-a-stronger-boundary" data-for="security-needs-a-stronger-boundary">Security needs a stronger boundary</a></li><li class="depth-2"><a href="#observability-is-incomplete" data-for="observability-is-incomplete">Observability is incomplete</a></li><li class="depth-2"><a href="#self-review-is-not-verification" data-for="self-review-is-not-verification">Self-review is not verification</a></li><li class="depth-2"><a href="#artifact-governance-needs-to-mature" data-for="artifact-governance-needs-to-mature">Artifact governance needs to mature</a></li><li class="depth-2"><a href="#composition-is-substantially-harder-than-single-skill-compilation" data-for="composition-is-substantially-harder-than-single-skill-compilation">Composition is substantially harder than single-skill compilation</a></li><li class="depth-1"><a href="#15-enterprise-readiness-scorecard" data-for="15-enterprise-readiness-scorecard">15. Enterprise Readiness Scorecard</a></li><li class="depth-2"><a href="#bottom-line" data-for="bottom-line">Bottom line</a></li><li class="depth-1"><a href="#16-comparison-with-adjacent-agent-architectures" data-for="16-comparison-with-adjacent-agent-architectures">16. Comparison With Adjacent Agent Architectures</a></li><li class="depth-2"><a href="#the-architectural-distinction" data-for="the-architectural-distinction">The architectural distinction</a></li><li class="depth-2"><a href="#architectural-positioning" data-for="architectural-positioning">Architectural positioning</a></li><li class="depth-1"><a href="#17-lessons-worth-reusing" data-for="17-lessons-worth-reusing">17. Lessons Worth Reusing</a></li><li class="depth-2"><a href="#1-introduce-an-intermediate-representation" data-for="1-introduce-an-intermediate-representation">1. Introduce an intermediate representation</a></li><li class="depth-2"><a href="#2-push-deterministic-work-outside-the-llm" data-for="2-push-deterministic-work-outside-the-llm">2. Push deterministic work outside the LLM</a></li><li class="depth-2"><a href="#3-split-inference-by-responsibility" data-for="3-split-inference-by-responsibility">3. Split inference by responsibility</a></li><li class="depth-2"><a href="#4-treat-generated-agents-as-build-artifacts" data-for="4-treat-generated-agents-as-build-artifacts">4. Treat generated agents as build artifacts</a></li><li class="depth-2"><a href="#5-make-runtime-state-explicit" data-for="5-make-runtime-state-explicit">5. Make runtime state explicit</a></li><li class="depth-2"><a href="#6-assume-llm-output-is-unreliable" data-for="6-assume-llm-output-is-unreliable">6. Assume LLM output is unreliable</a></li><li class="depth-2"><a href="#7-security-follows-the-artifact" data-for="7-security-follows-the-artifact">7. Security follows the artifact</a></li><li class="depth-1"><a href="#18-relevance-to-akashic-records" data-for="18-relevance-to-akashic-records">18. Relevance to Akashic Records</a></li><li class="depth-1"><a href="#19-what-i-would-borrow-vs-avoid" data-for="19-what-i-would-borrow-vs-avoid">19. What I Would Borrow vs Avoid</a></li><li class="depth-2"><a href="#borrow" data-for="borrow">Borrow</a></li><li class="depth-2"><a href="#avoid-copying-blindly" data-for="avoid-copying-blindly">Avoid Copying Blindly</a></li><li class="depth-1"><a href="#20-open-questions" data-for="20-open-questions">20. Open Questions</a></li><li class="depth-1"><a href="#21-adoption-verdict" data-for="21-adoption-verdict">21. Adoption Verdict</a></li><li class="depth-1"><a href="#22-current-project-direction" data-for="22-current-project-direction">22. Current Project Direction</a></li><li class="depth-1"><a href="#23-source-and-evidence" data-for="23-source-and-evidence">23. Source and Evidence</a></li><li class="depth-2"><a href="#evidence-model" data-for="evidence-model">Evidence model</a></li><li class="depth-2"><a href="#evidence-boundary" data-for="evidence-boundary">Evidence boundary</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-2" class="overflow"><li><a href="../../05-Reference/ai/" class="internal">AI Tools Catalog</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

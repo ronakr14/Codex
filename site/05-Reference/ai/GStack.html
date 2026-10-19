@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>GStack</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="GStack"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="GStack"/><meta name="twitter:description" content="AI Summary Comprehensive architectural analysis of GStack, an opinionated AI engineering workflow platform for Claude Code and other AI coding agents."/><meta property="og:description" content="AI Summary Comprehensive architectural analysis of GStack, an opinionated AI engineering workflow platform for Claude Code and other AI coding agents."/><meta property="og:image:alt" content="AI Summary Comprehensive architectural analysis of GStack, an opinionated AI engineering workflow platform for Claude Code and other AI coding agents."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/ai/GStack"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/ai/GStack"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AI Summary Comprehensive architectural analysis of GStack, an opinionated AI engineering workflow platform for Claude Code and other AI coding agents."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/ai/GStack"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-154"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-154" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/ai/">AI Tools Catalog</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>GStack</a></div></nav><h1 class="article-title">GStack</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T07:02:47.396Z">Sep 24, 2026</time><span>17 min read</span></p></div></div><article class="popover-hint"><h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Comprehensive architectural analysis of GStack, an opinionated AI engineering workflow platform for Claude Code and other AI coding agents. Explains how GStack standardizes software delivery through role-based skills for planning, architecture review, code review, QA, security, release management, documentation, and browser automation. Covers layered architecture, installation workflow, multi-host support, enterprise evaluation, engineering patterns, comparisons with prompt libraries and agent frameworks, interview questions, and adoption strategies. Positions GStack as an AI workflow operating system that improves how developers and AI agents collaborate from planning through production.</p>
+<hr/>
+<p>Here’s a deep read of <code>garrytan/gstack</code> based on the repository content, README, key skill docs, setup script, and package metadata. This is an opinionated AI-workflow distribution for Claude Code and related agents — not a generic library, and definitely not a “small helper repo.” It is closer to a workflow operating system for agentic software delivery. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="1-executive-summary">1. Executive Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>What is this project?</strong><br/>
+gstack is a packaged set of Claude Code skills, browser tooling, and setup automation that turns AI coding sessions into role-based workflows: CEO, engineering manager, designer, reviewer, QA, security, release, and documentation functions. The repository advertises itself as “Garry’s Stack — Claude Code skills + fast headless browser” and exposes command-like skills such as <code>/office-hours</code>, <code>/review</code>, <code>/ship</code>, <code>/qa</code>, <code>/browse</code>, and many more. (<a href="https://github.com/garrytan/gstack/blob/main/package.json" title="gstack/package.json at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>What problem does it solve?</strong><br/>
+It solves the “blank prompt problem” in AI-assisted development. Instead of asking a model to improvise every time, gstack gives it structured operating procedures, review checklists, browser automation, deployment setup, memory/retention, and planning rituals. In plain terms: it reduces chaos, increases consistency, and makes the agent behave more like a team with a process. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Who is the target audience?</strong><br/>
+Founders, technical CEOs, staff engineers, tech leads, and anyone using Claude Code or compatible agents to ship real software. The repo explicitly calls out founders/CEOs, first-time Claude Code users, and tech leads/staff engineers as primary users. It also supports a wider set of AI agents and hosts beyond Claude. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maturity level</strong><br/>
+This is a <strong>highly mature open-source workflow platform</strong>, but not a “production app” in the conventional sense. It appears actively maintained, widely adopted, versioned, and operationally opinionated, with a substantial installation and update story. The project is best classified as <strong>production-grade developer tooling / workflow infrastructure</strong>, not a research prototype. It still has the rough edges you expect from fast-moving infra: host-specific behavior, browser bootstrap complexity, and ongoing issue churn. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="2-repository-overview">2. Repository Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-repository-overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Main purpose</strong><br/>
+A distributable AI engineering workflow stack for agentic coding systems. The repo packages:</p>
+<ul>
+<li>
+<p>slash-command skills</p>
+</li>
+<li>
+<p>browser automation</p>
+</li>
+<li>
+<p>setup/bootstrap scripts</p>
+</li>
+<li>
+<p>team-mode onboarding</p>
+</li>
+<li>
+<p>documentation generation</p>
+</li>
+<li>
+<p>host adapters for multiple AI tools and agents (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Core features and capabilities</strong></p>
+<ul>
+<li>
+<p>Role-based skills for planning, design, review, QA, security, retrospectives, shipping, and documentation. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Browser tooling (<code>/browse</code>, <code>/open-gstack-browser</code>) for real web interaction, screenshots, and page cleanup. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Setup automation that installs skills into Claude Code, Codex, Cursor, OpenCode, Hermes, and others. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Team-mode support to keep shared repos on a consistent workflow baseline. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Documentation templates and generated skill docs. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Support for gbrain integration and other adjacent tooling. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Key technologies, frameworks, and languages</strong></p>
+<ul>
+<li>
+<p><strong>TypeScript</strong> is the dominant language.</p>
+</li>
+<li>
+<p><strong>Shell</strong> is used heavily for setup and orchestration.</p>
+</li>
+<li>
+<p><strong>JavaScript</strong>, <strong>Go Template</strong>, <strong>CSS</strong>, and <strong>Swift</strong> appear in smaller amounts.</p>
+</li>
+<li>
+<p>The runtime package depends on <strong>Bun</strong>, <strong>Node.js</strong> on Windows, <strong>Git</strong>, and <strong>Claude Code</strong>.</p>
+</li>
+<li>
+<p>Browser automation is built on <strong>Playwright / Chromium</strong>. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>High-level architecture inferred from the codebase</strong><br/>
+The repo looks like a layered system:</p>
+<ol>
+<li>
+<p><strong>Bootstrap/install layer</strong> — <code>setup</code> script, environment checks, host detection, skill installation, browser bootstrapping. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Skill layer</strong> — many <code>SKILL.md</code> files that encode role-specific workflows and rules. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Browser/tooling layer</strong> — <code>browse</code> and <code>make-pdf</code> binaries. (<a href="https://github.com/garrytan/gstack/blob/main/package.json" title="gstack/package.json at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Docs/templates layer</strong> — deep docs and skill templates under <code>docs/</code> and <code>*.tmpl</code> files. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Host adapters / integrations</strong> — Claude, Codex, OpenClaw, Hermes, GBrain, etc. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<h2 id="3-how-it-works">3. How It Works<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-how-it-works" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Workflow in simple terms</strong><br/>
+You install gstack, it registers a large set of structured skills into your AI agent environment, and then you invoke the relevant role command for the task. Example: start with <code>/office-hours</code> to turn a vague idea into a sharper spec, use <code>/review</code> to inspect changes, <code>/qa</code> to test a staging URL, and <code>/ship</code> to land the work. The system is designed so the agent follows a repeatable pipeline instead of freelancing. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Major components/modules</strong></p>
+<ul>
+<li>
+<p><strong><code>setup</code></strong>: installs/builds the browser binary, registers skills, handles host-specific installation paths, and manages Windows quirks. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong><code>package.json</code></strong>: declares the package as a module, sets the CLI binaries, and wires build scripts. (<a href="https://github.com/garrytan/gstack/blob/main/package.json" title="gstack/package.json at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong><code>docs/skills.md</code></strong>: entry point for skill deep dives and workflow explanations. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong><code>review/SKILL.md</code></strong>: diff-based code review methodology focused on structural issues, trust boundaries, and safety. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong><code>qa/SKILL.md</code></strong>: browser and test validation workflow, including CI/CD awareness. (<a href="https://github.com/garrytan/gstack/blob/main/qa/SKILL.md" title="gstack/qa/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong><code>setup-deploy/SKILL.md.tmpl</code></strong> and <strong><code>health/SKILL.md.tmpl</code></strong>: templates for environment discovery and validation. (<a href="https://github.com/garrytan/gstack/blob/main/setup-deploy/SKILL.md.tmpl" title="gstack/setup-deploy/SKILL.md.tmpl at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Data flow / execution flow</strong><br/>
+Typical flow:</p>
+<ol>
+<li>
+<p>A user asks for a task in natural language.</p>
+</li>
+<li>
+<p>Claude Code or another supported agent routes into a gstack skill.</p>
+</li>
+<li>
+<p>The skill reads repo context, docs, diff, tests, or live browser state.</p>
+</li>
+<li>
+<p>It outputs a plan, review, checklist, or action sequence.</p>
+</li>
+<li>
+<p>In some flows, browser actions or deployment steps are executed, and artifacts are produced. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<p><strong>Integrations and dependencies</strong></p>
+<ul>
+<li>
+<p>Claude Code is the main target, but the repo also supports Codex, Cursor, OpenCode, Factory Droid, Slate, Kiro, Hermes, and GBrain-related installs. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Playwright/Chromium is required for browser-based QA. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Bun is required for setup/build on most systems; Node.js is required on Windows for browser compatibility. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="4-why-this-project-exists">4. Why This Project Exists<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-why-this-project-exists" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Business problem</strong><br/>
+AI coding tools are powerful but inconsistent. Teams waste time re-deriving process, review discipline, QA checks, and release hygiene on every project. gstack standardizes that operating model so the agent behaves like a staffed engineering org instead of a clever autocomplete. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Technical challenges it solves</strong></p>
+<ul>
+<li>
+<p>Prompt inconsistency across sessions and users</p>
+</li>
+<li>
+<p>Lack of structured review and QA in agent workflows</p>
+</li>
+<li>
+<p>Browser interaction gaps</p>
+</li>
+<li>
+<p>Cross-host skill portability</p>
+</li>
+<li>
+<p>Keeping AI tooling current without vendoring chaos (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Advantages over traditional approaches</strong></p>
+<ul>
+<li>
+<p>Replaces ad hoc prompting with explicit operational procedures</p>
+</li>
+<li>
+<p>Encodes best practices into reusable workflows</p>
+</li>
+<li>
+<p>Makes browser QA and release documentation first-class</p>
+</li>
+<li>
+<p>Works across multiple agent hosts, not just one vendor stack (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Unique differentiators</strong></p>
+<ul>
+<li>
+<p>Strong “AI engineering org” metaphor baked into the product design.</p>
+</li>
+<li>
+<p>Broad host support.</p>
+</li>
+<li>
+<p>Opinionated skill routing and team-mode deployment model.</p>
+</li>
+<li>
+<p>A real browser as part of the workflow, not just text-only reasoning. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="5-how-it-can-be-used">5. How It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-how-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>1) Feature planning / product discovery</strong><br/>
+Description: Turn an idea into a concrete plan using CEO-style interrogation.<br/>
+Example: A founder has “we need a dashboard” and runs <code>/office-hours</code> or <code>/plan-ceo-review</code>.<br/>
+Benefits: Better requirements, less thrash, fewer wasted cycles.<br/>
+Complexity: <strong>Low</strong>. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>2) Architecture review / design validation</strong><br/>
+Description: Stress-test the proposed design before implementation.<br/>
+Example: A tech lead runs <code>/plan-eng-review</code> or <code>/plan-design-review</code>.<br/>
+Benefits: Catches structural flaws early; improves architecture quality.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/garrytan/gstack/blob/main/plan-eng-review/SKILL.md" title="gstack/plan-eng-review/SKILL.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>3) Code review automation</strong><br/>
+Description: Use <code>/review</code> to inspect diffs for safety and correctness.<br/>
+Example: Before merging a PR, the team runs review against the branch.<br/>
+Benefits: Better merge quality, fewer latent bugs, stronger guardrails.<br/>
+Complexity: <strong>Low to Medium</strong>. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>4) QA and browser validation</strong><br/>
+Description: Use a real browser to verify behavior, screenshots, and flows.<br/>
+Example: Test a staging URL with <code>/qa</code>.<br/>
+Benefits: Higher-fidelity validation than static reasoning alone.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/garrytan/gstack/blob/main/qa/SKILL.md" title="gstack/qa/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>5) Release and documentation generation</strong><br/>
+Description: Create release notes, handoff docs, and shipping artifacts.<br/>
+Example: <code>/document-release</code> or <code>/ship</code> after implementation.<br/>
+Benefits: Better handoff, stronger operational readiness.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>6) Security and governance review</strong><br/>
+Description: Use security-focused workflows like <code>/cso</code>.<br/>
+Example: Audit a PR for trust-boundary issues and unsafe side effects.<br/>
+Benefits: Stronger guardrails for AI-assisted coding.<br/>
+Complexity: <strong>Medium to High</strong>. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="6-where-it-can-be-used">6. Where It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-where-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Data Engineering</strong><br/>
+Relevant for pipeline planning, PR review, test validation, and release hygiene. Good fit for teams that want AI-assisted development with process discipline. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Analytics</strong><br/>
+Useful for building analytics apps, dashboards, and data-product workflows where documentation and QA matter. Not analytics-specific, but operationally helpful. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>AI/ML</strong><br/>
+Strong fit. It is literally designed for AI-assisted coding workflows, including multi-agent operations, memory, and planning. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>DevOps</strong><br/>
+Good for release, deployment setup, and CI-aware workflows. The repo explicitly encodes deployment discovery and test-runner detection. (<a href="https://github.com/garrytan/gstack/blob/main/setup-deploy/SKILL.md.tmpl" title="gstack/setup-deploy/SKILL.md.tmpl at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Platform Engineering</strong><br/>
+Useful as a standardization layer for agentic development across teams and repos. The team-mode mechanism is especially platform-minded. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Cloud Engineering</strong><br/>
+Relevant where browser-based validation, deployment configuration, and CI/CD glue matter. (<a href="https://github.com/garrytan/gstack/blob/main/qa/SKILL.md" title="gstack/qa/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security</strong><br/>
+The repo includes security-oriented review workflows and trust-boundary analysis. That said, it is not a security platform; it is a workflow aid. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>FinOps</strong><br/>
+Indirectly relevant. It can reduce rework and review churn, but it is not cost-management software. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Product Engineering</strong><br/>
+Very relevant. It helps product teams move from idea to implementation with better planning, design, QA, and shipping discipline. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Enterprise Applications</strong><br/>
+Potentially useful as developer tooling in enterprise teams, especially if standardized AI coding workflows are desired. Enterprise fit depends on policy, security posture, and tooling governance. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="7-key-components-analysis">7. Key Components Analysis<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-key-components-analysis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>I do not have a full file tree dump here, so I am limiting this to the high-signal files/directories that are clearly visible from the repo pages.</p>
+<p><strong><code>package.json</code></strong><br/>
+Purpose: package metadata, CLI binary registration, build scripts.<br/>
+Responsibilities: defines installable tool surface and project type.<br/>
+Important items: <code>browse</code>, <code>make-pdf</code>, <code>build</code> script.<br/>
+Interactions: consumed by setup/build process and command installation. (<a href="https://github.com/garrytan/gstack/blob/main/package.json" title="gstack/package.json at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>setup</code></strong><br/>
+Purpose: install and register gstack.<br/>
+Responsibilities: environment validation, browser bootstrap, skill registration, host detection, Windows handling, safe install behavior.<br/>
+Important logic: Bun check, Playwright browser validation, host-specific install paths, team-mode support.<br/>
+Interactions: ties together browser tooling, Claude skills, and host adapters. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>docs/skills.md</code></strong><br/>
+Purpose: hub for skill documentation.<br/>
+Responsibilities: explain philosophy and usage of each skill.<br/>
+Interactions: points users to concrete workflows and operational patterns. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>review/SKILL.md</code></strong><br/>
+Purpose: code review skill.<br/>
+Responsibilities: diff analysis, safety checks, trust-boundary checks.<br/>
+Interactions: uses repository changes as input and outputs review guidance. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>qa/SKILL.md</code></strong><br/>
+Purpose: QA execution skill.<br/>
+Responsibilities: browser testing, test-runner detection, CI/CD validation.<br/>
+Interactions: ties into browser tooling and project-specific test setup. (<a href="https://github.com/garrytan/gstack/blob/main/qa/SKILL.md" title="gstack/qa/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>setup-deploy/SKILL.md.tmpl</code> / <code>health/SKILL.md.tmpl</code></strong><br/>
+Purpose: generic project-adaptation templates.<br/>
+Responsibilities: detect project type, deployment workflow, test runner.<br/>
+Interactions: used to generate project-specific skill files. (<a href="https://github.com/garrytan/gstack/blob/main/setup-deploy/SKILL.md.tmpl" title="gstack/setup-deploy/SKILL.md.tmpl at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="8-setup-and-adoption">8. Setup and Adoption<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-setup-and-adoption" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Installation requirements</strong></p>
+<ul>
+<li>
+<p>Claude Code for the primary path</p>
+</li>
+<li>
+<p>Git</p>
+</li>
+<li>
+<p>Bun</p>
+</li>
+<li>
+<p>Node.js on Windows</p>
+</li>
+<li>
+<p>Playwright/Chromium support</p>
+</li>
+<li>
+<p>A repo where you want the skills applied (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Deployment options</strong></p>
+<ul>
+<li>
+<p>Global install into user skill directories</p>
+</li>
+<li>
+<p>Team mode for shared repos</p>
+</li>
+<li>
+<p>Host-specific install for tools like Codex, Cursor, OpenCode, etc. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Infrastructure requirements</strong></p>
+<ul>
+<li>
+<p>Local developer workstation</p>
+</li>
+<li>
+<p>Network access for install/update checks and browser dependencies</p>
+</li>
+<li>
+<p>A supported shell environment</p>
+</li>
+<li>
+<p>Browser-capable runtime for QA workflows (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Learning curve</strong><br/>
+Moderate. The install is simple, but the operating model is opinionated. Real value shows up when teams adopt the process consistently rather than cherry-picking commands. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Operational considerations</strong></p>
+<ul>
+<li>
+<p>Keeping skills in sync across team repos matters.</p>
+</li>
+<li>
+<p>Windows support exists, but there are explicit caveats.</p>
+</li>
+<li>
+<p>Browser and dependency bootstrap can fail if prerequisites are missing.</p>
+</li>
+<li>
+<p>The repo is highly dynamic, so version drift and updates matter. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="9-strengths-and-weaknesses">9. Strengths and Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-strengths-and-weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Strengths</strong></p>
+<p><strong>Scalability</strong><br/>
+Scales organizationally better than ad hoc prompting because the model is given a repeatable system. The team-mode install model is a real scaling move. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maintainability</strong><br/>
+Centralized workflows and templates make the system easier to evolve than scattered prompt snippets. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Extensibility</strong><br/>
+Very high. The repo is built around skills, templates, and host adapters. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Performance</strong><br/>
+Adequate for tooling. Browser automation and AI workflows are not “fast” in absolute terms, but the repo is optimized for leverage, not microseconds. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Developer Experience</strong><br/>
+Strong if you buy into the model. Weak if you want a minimalist, low-opinion toolchain. This repo has opinions for breakfast. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Weaknesses</strong></p>
+<p><strong>Risks</strong><br/>
+High coupling to specific agent runtimes and host conventions. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Limitations</strong><br/>
+Not a general-purpose app framework. It is a workflow harness. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Missing features</strong><br/>
+No indication of enterprise policy management, RBAC, audit controls, or centralized governance primitives in the repo surface I reviewed. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Technical debt indicators</strong><br/>
+The issue backlog and Windows/Bun/browser edge cases suggest active maintenance pressure. That is normal for a fast-evolving tool, but it is still debt. (<a href="https://github.com/garrytan/gstack/pulls" title="Pull requests · garrytan/gstack" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="10-enterprise-evaluation">10. Enterprise Evaluation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-enterprise-evaluation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Production readiness: 8/10</strong><br/>
+It is very usable and operationally mature for developer tooling, but not packaged like regulated enterprise platform software. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security: 6/10</strong><br/>
+There are security-oriented workflows, but the repo itself is not a security-hardening product. Also, agentic automation always needs governance around secrets, permissions, and execution trust. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Scalability: 8/10</strong><br/>
+Strong for many developers and many repos because the model is standardized and automatable. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Observability: 5/10</strong><br/>
+Some workflows are explicit and reproducible, but I did not see enterprise observability primitives such as centralized telemetry, audit logs, or usage dashboards in the reviewed surface. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Documentation quality: 8/10</strong><br/>
+High. The README and skill deep dives are substantial, and the repo explains both install and philosophy well. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Community support: 9/10</strong><br/>
+Exceptionally strong adoption signals, stars, forks, and active issue/PR traffic. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maintainability: 7/10</strong><br/>
+Good structure, but the breadth of host support and the rapid pace create moving parts. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="11-comparison-with-alternatives">11. Comparison with Alternatives<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-comparison-with-alternatives" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Likely alternatives</strong></p>
+<ul>
+<li>
+<p>DIY Claude Code prompt library</p>
+</li>
+<li>
+<p>Generic agent frameworks</p>
+</li>
+<li>
+<p>Other AI coding assistants with built-in workflows</p>
+</li>
+<li>
+<p>In-house internal AI engineering playbooks</p>
+</li>
+</ul>
+<p><strong>Compared with a DIY prompt library</strong></p>
+<ul>
+<li>
+<p><strong>Features</strong>: gstack is far richer.</p>
+</li>
+<li>
+<p><strong>Complexity</strong>: higher.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: similar at runtime, but better operational leverage.</p>
+</li>
+<li>
+<p><strong>Cost</strong>: free repo, but adoption cost is higher.</p>
+</li>
+<li>
+<p><strong>Ecosystem</strong>: much stronger because it is a full workflow stack. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Compared with generic agent frameworks</strong></p>
+<ul>
+<li>
+<p><strong>Features</strong>: less abstract, more practical and opinionated.</p>
+</li>
+<li>
+<p><strong>Complexity</strong>: lower to adopt, because the workflows are already encoded.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: depends on host, but the architecture favors usability.</p>
+</li>
+<li>
+<p><strong>Cost</strong>: lower immediate setup cost.</p>
+</li>
+<li>
+<p><strong>Ecosystem</strong>: narrower, but more focused on actual software delivery. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Compared with in-house playbooks</strong></p>
+<ul>
+<li>
+<p><strong>Features</strong>: gstack is more complete out of the box.</p>
+</li>
+<li>
+<p><strong>Complexity</strong>: much lower than writing your own from scratch.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: comparable, but more standardized.</p>
+</li>
+<li>
+<p><strong>Cost</strong>: much cheaper to start.</p>
+</li>
+<li>
+<p><strong>Ecosystem</strong>: broader, because it already supports multiple agent hosts. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="12-engineering-takeaways">12. Engineering Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-engineering-takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Important design patterns</strong></p>
+<ul>
+<li>
+<p>Role-based workflow decomposition</p>
+</li>
+<li>
+<p>Skill-based command routing</p>
+</li>
+<li>
+<p>Template-driven specialization</p>
+</li>
+<li>
+<p>Host abstraction / adapter pattern</p>
+</li>
+<li>
+<p>“Install once, reuse everywhere” distribution model (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Architectural lessons</strong></p>
+<ul>
+<li>
+<p>AI tools get much better when you constrain them with process.</p>
+</li>
+<li>
+<p>Browser automation is a practical supplement to model reasoning.</p>
+</li>
+<li>
+<p>Shared workflow artifacts beat undocumented tribal knowledge.</p>
+</li>
+<li>
+<p>Cross-host portability matters if the ecosystem is moving fast. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Best practices worth adopting</strong></p>
+<ul>
+<li>
+<p>Encode review and QA checklists directly into the workflow.</p>
+</li>
+<li>
+<p>Keep install/update paths explicit and scripted.</p>
+</li>
+<li>
+<p>Generate docs from templates where possible.</p>
+</li>
+<li>
+<p>Treat AI workflow conventions as repo-level assets, not personal hacks. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Anti-patterns</strong></p>
+<ul>
+<li>
+<p>Over-trusting the agent without review gates</p>
+</li>
+<li>
+<p>Allowing prompt sprawl instead of a standard workflow</p>
+</li>
+<li>
+<p>Ignoring host/runtime quirks, especially on Windows</p>
+</li>
+<li>
+<p>Treating this as “just another npm package” instead of an operating model (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="13-interview-preparation">13. Interview Preparation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-interview-preparation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Beginner questions</strong></p>
+<ol>
+<li>
+<p>What is gstack?</p>
+</li>
+<li>
+<p>What problem does it solve?</p>
+</li>
+<li>
+<p>What is a Claude Code skill?</p>
+</li>
+<li>
+<p>Why does the repo emphasize role-based workflows?</p>
+</li>
+<li>
+<p>What is the purpose of <code>/review</code>?</p>
+</li>
+<li>
+<p>Why is <code>/qa</code> browser-based?</p>
+</li>
+<li>
+<p>What does the <code>setup</code> script do?</p>
+</li>
+<li>
+<p>Why does gstack need Bun?</p>
+</li>
+<li>
+<p>What is team mode?</p>
+</li>
+<li>
+<p>What is the difference between a template and a skill?</p>
+</li>
+</ol>
+<p><strong>Intermediate questions</strong></p>
+<ol>
+<li>
+<p>How does gstack standardize AI-assisted development?</p>
+</li>
+<li>
+<p>Why is browser automation included in the stack?</p>
+</li>
+<li>
+<p>What are the tradeoffs of host-specific installation?</p>
+</li>
+<li>
+<p>How does the repo support multiple AI agents?</p>
+</li>
+<li>
+<p>What does the <code>review</code> skill protect against?</p>
+</li>
+<li>
+<p>How does <code>qa</code> integrate with CI/CD assumptions?</p>
+</li>
+<li>
+<p>What makes gstack more operational than a prompt library?</p>
+</li>
+<li>
+<p>How would you extend gstack for a new project type?</p>
+</li>
+<li>
+<p>How would you deploy gstack in a shared engineering team?</p>
+</li>
+<li>
+<p>What are the risks of letting AI agents run these workflows unattended?</p>
+</li>
+</ol>
+<p><strong>Advanced architecture questions</strong></p>
+<ol>
+<li>
+<p>How would you redesign gstack for policy enforcement and auditability?</p>
+</li>
+<li>
+<p>What would a plugin architecture look like for skill registration?</p>
+</li>
+<li>
+<p>How would you separate agent-agnostic logic from host-specific adapters?</p>
+</li>
+<li>
+<p>How would you add observability for skill usage and success rates?</p>
+</li>
+<li>
+<p>What would be required to make gstack enterprise-governed?</p>
+</li>
+<li>
+<p>How would you secure browser automation and secret handling?</p>
+</li>
+<li>
+<p>How would you make skill generation deterministic and reproducible?</p>
+</li>
+<li>
+<p>What failure modes emerge when prompt-routing and host detection drift?</p>
+</li>
+<li>
+<p>How would you test cross-host compatibility at scale?</p>
+</li>
+<li>
+<p>How would you evolve gstack into a platform for non-coding enterprise workflows?</p>
+</li>
+</ol>
+<h2 id="14-handoff-summary">14. Handoff Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-handoff-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>1-page executive summary</strong><br/>
+gstack is a highly opinionated AI engineering workflow platform for Claude Code and related agents. It packages role-based skills, browser automation, setup orchestration, and documentation templates into a reusable system for planning, coding, reviewing, testing, shipping, and documenting software. The core value is standardization: it makes AI-assisted engineering look less like improvisation and more like a staffed delivery org. It is strongest for founders, technical leads, and teams who want a repeatable operating model for agentic development. It is mature and widely adopted as developer tooling, but it is not an enterprise governance platform. The biggest strengths are workflow quality, extensibility, and host breadth. The biggest risks are operational complexity, host/runtime fragility, and the need for human oversight in agentic execution. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Key findings</strong></p>
+<ul>
+<li>
+<p>Strong opinionated workflow stack, not a generic library. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Excellent documentation and concrete skill design. (<a href="https://github.com/garrytan/gstack/blob/main/docs/skills.md" title="gstack/docs/skills.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Browser QA and review discipline are first-class. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Broad host support is a serious differentiator. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Windows/Bun/browser compatibility is the most obvious operational friction. (<a href="https://github.com/garrytan/gstack/blob/main/setup" title="gstack/setup at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Recommended adoption scenarios</strong></p>
+<ul>
+<li>
+<p>Individual founders or staff engineers using Claude Code daily</p>
+</li>
+<li>
+<p>Small teams wanting a shared AI development operating model</p>
+</li>
+<li>
+<p>Platform teams standardizing agentic workflows across repos</p>
+</li>
+<li>
+<p>Teams that value review, QA, and release discipline over raw flexibility (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Decision matrix</strong></p>
+<ul>
+<li>
+<p><strong>Use</strong>: if you are building with AI coding agents and want a serious workflow system.</p>
+</li>
+<li>
+<p><strong>Evaluate</strong>: if you need enterprise governance, strict security controls, or full platform observability.</p>
+</li>
+<li>
+<p><strong>Avoid</strong>: if you want a minimal, low-opinion helper library with almost no operational overhead. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-aidata-engineering-relevance" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Can this repository be used in data platforms?</strong><br/>
+Yes, as developer workflow infrastructure. It can help data teams with design reviews, PR review, QA discipline, and release workflows. It is not a data platform itself. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be integrated into a lakehouse architecture?</strong><br/>
+Indirectly, yes. It can help build and validate lakehouse-related tooling, pipelines, and product layers, but it does not manage data storage, orchestration, or cataloging. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it improve ETL/ELT pipelines?</strong><br/>
+Yes, by improving the software lifecycle around them: planning, code review, QA, and release documentation. It will not replace Airflow, dbt, Dagster, or Spark. (<a href="https://github.com/garrytan/gstack/blob/main/review/SKILL.md" title="gstack/review/SKILL.md at main · garrytan/gstack · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be used for LLM, RAG, agents, or AI workflows?</strong><br/>
+Absolutely. This is one of its strongest fit areas. It is already designed around agentic coding and multi-agent workflows. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Suggested enterprise architecture incorporating this project</strong><br/>
+Use gstack as the <strong>AI developer workflow layer</strong> on top of your engineering stack:</p>
+<ul>
+<li>
+<p>Source control: GitHub/GitLab</p>
+</li>
+<li>
+<p>CI/CD: GitHub Actions or equivalent</p>
+</li>
+<li>
+<p>Developer copilots: Claude Code / Codex / supported agents</p>
+</li>
+<li>
+<p>Workflow governance: gstack skills for planning, review, QA, shipping</p>
+</li>
+<li>
+<p>Browser validation: gstack browser tooling / Playwright</p>
+</li>
+<li>
+<p>Platform controls: internal policy, secrets management, audit logging outside gstack</p>
+</li>
+<li>
+<p>Data platform: dbt/Airflow/Dagster/Spark/lakehouse tools underneath</p>
+</li>
+<li>
+<p>Documentation and release ops: gstack-generated artifacts and handoff docs</p>
+</li>
+</ul>
+<p>The right mental model is: <strong>gstack sits above your delivery tooling, not inside your data plane</strong>. It improves how humans and agents move code from idea to production, but it should not be treated as your control plane or compliance layer. (<a href="https://github.com/garrytan/gstack" title="GitHub - garrytan/gstack: Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-131" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-1"><a href="#1-executive-summary" data-for="1-executive-summary">1. Executive Summary</a></li><li class="depth-1"><a href="#2-repository-overview" data-for="2-repository-overview">2. Repository Overview</a></li><li class="depth-1"><a href="#3-how-it-works" data-for="3-how-it-works">3. How It Works</a></li><li class="depth-1"><a href="#4-why-this-project-exists" data-for="4-why-this-project-exists">4. Why This Project Exists</a></li><li class="depth-1"><a href="#5-how-it-can-be-used" data-for="5-how-it-can-be-used">5. How It Can Be Used</a></li><li class="depth-1"><a href="#6-where-it-can-be-used" data-for="6-where-it-can-be-used">6. Where It Can Be Used</a></li><li class="depth-1"><a href="#7-key-components-analysis" data-for="7-key-components-analysis">7. Key Components Analysis</a></li><li class="depth-1"><a href="#8-setup-and-adoption" data-for="8-setup-and-adoption">8. Setup and Adoption</a></li><li class="depth-1"><a href="#9-strengths-and-weaknesses" data-for="9-strengths-and-weaknesses">9. Strengths and Weaknesses</a></li><li class="depth-1"><a href="#10-enterprise-evaluation" data-for="10-enterprise-evaluation">10. Enterprise Evaluation</a></li><li class="depth-1"><a href="#11-comparison-with-alternatives" data-for="11-comparison-with-alternatives">11. Comparison with Alternatives</a></li><li class="depth-1"><a href="#12-engineering-takeaways" data-for="12-engineering-takeaways">12. Engineering Takeaways</a></li><li class="depth-1"><a href="#13-interview-preparation" data-for="13-interview-preparation">13. Interview Preparation</a></li><li class="depth-1"><a href="#14-handoff-summary" data-for="14-handoff-summary">14. Handoff Summary</a></li><li class="depth-1"><a href="#15-aidata-engineering-relevance" data-for="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-2" class="overflow"><li><a href="../../05-Reference/ai/" class="internal">AI Tools Catalog</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

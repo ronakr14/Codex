@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Kami AI Document Generation Platform</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="Kami AI Document Generation Platform"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Kami AI Document Generation Platform"/><meta name="twitter:description" content="AI Summary Comprehensive analysis of the Kami AI document generation platform."/><meta property="og:description" content="AI Summary Comprehensive analysis of the Kami AI document generation platform."/><meta property="og:image:alt" content="AI Summary Comprehensive analysis of the Kami AI document generation platform."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/ai/Kami-AI-Document-Generation-Platform"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/ai/Kami-AI-Document-Generation-Platform"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AI Summary Comprehensive analysis of the Kami AI document generation platform."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/ai/Kami-AI-Document-Generation-Platform"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-160"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-160" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/ai/">AI Tools Catalog</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Kami AI Document Generation Platform</a></div></nav><h1 class="article-title">Kami AI Document Generation Platform</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T07:02:47.396Z">Sep 24, 2026</time><span>15 min read</span></p></div></div><article class="popover-hint"><h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Comprehensive analysis of the Kami AI document generation platform. Explains how the system combines prompt routing, structured templates, rendering pipelines, multilingual support, and agent packaging to produce polished documents, presentations, resumes, landing pages, and reports. Covers repository architecture, workflow, design principles, enterprise evaluation, comparisons, interview questions, and guidance for integrating Kami into AI, developer productivity, and documentation workflows.</p>
+<hr/>
+<p>Here is the repo analysis based on the repository’s README, skill files, templates, and project guidance.</p>
+<h2 id="1-executive-summary">1. Executive Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>What this project is</strong><br/>
+Kami is a document-generation skill and template system for AI-assisted authoring. It turns natural-language requests into polished, branded documents and landing pages with a strict visual and structural system. The project explicitly positions itself as “good content deserves good paper,” i.e. high-quality output needs a strong layout system. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>What problem it solves</strong><br/>
+It solves the common failure mode of AI-generated documents: content may be fine, but the output looks generic, inconsistent, and hard to ship. Kami provides constraints, templates, and packaging so agents can produce consistent resumes, one-pagers, long docs, letters, portfolios, slide decks, and landing pages without drifting stylistically. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Target audience</strong><br/>
+It is aimed at AI users, Claude Code / Codex users, generic agent runtimes, and people who need professional document output from prompts. The examples show use for resumes, white papers, slide decks, portfolios, letters, and landing pages. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maturity level</strong><br/>
+This is a fairly mature, production-oriented open-source project for its niche, not a research prototype. It has a repo-wide operating guide, generated plugin metadata, packaged release assets, templates, validation checks, and explicit release instructions. It looks like a maintained productized skill system rather than a one-off demo. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="2-repository-overview">2. Repository Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-repository-overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Main purpose</strong><br/>
+The repository is the source of truth for Kami’s visual language, document templates, skill instructions, plugin packaging, demo assets, and website-style showcase pages. The repo map in <code>AGENTS.md</code> shows that it contains both the skill package and the website/source rendering stack. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Core features and capabilities</strong><br/>
+It supports:</p>
+<ul>
+<li>
+<p>document types like one-pager, long doc, letter, portfolio, resume, slides, equity report, changelog, and landing pages;</p>
+</li>
+<li>
+<p>multilingual support, with English, Chinese, Japanese, and Korean paths;</p>
+</li>
+<li>
+<p>agent/tool integrations for Claude Code, Codex, Claude Desktop, and generic <code>~/.agents/</code>-based runtimes;</p>
+</li>
+<li>
+<p>demo PDFs and showcase assets;</p>
+</li>
+<li>
+<p>brand and visual constraints so outputs stay coherent. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Key technologies, frameworks, and languages</strong><br/>
+From the surfaced files and docs, the stack appears to include HTML/CSS for templates and site surfaces, Python scripts for packaging and normalization, Mermaid for diagrams, Pygments-based syntax highlighting, WeasyPrint-safe rendering paths, and bundled fonts. The repo also produces a lightweight skill archive (<code>kami.zip</code>) and plugin metadata for Claude Code and Codex. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>High-level architecture inferred from the codebase</strong><br/>
+The architecture is a three-layer system:</p>
+<ol>
+<li>
+<p><strong>Prompt/skill layer</strong>: <code>SKILL.md</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and reference guides define routing, rules, and content constraints.</p>
+</li>
+<li>
+<p><strong>Template/render layer</strong>: <code>assets/templates/</code>, <code>index*.html</code>, <code>styles.css</code>, and supporting assets render the actual documents and landing pages.</p>
+</li>
+<li>
+<p><strong>Packaging/tooling layer</strong>: <code>scripts/</code>, <code>.claude-plugin/</code>, <code>.agents/</code>, and <code>plugins/kami/</code> build and distribute the installable skill/plugin package. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<h2 id="3-how-it-works">3. How It Works<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-how-it-works" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Workflow in simple terms</strong><br/>
+A user gives a natural-language request like “make a resume” or “build a one-pager.” The skill auto-triggers, chooses the right document type, applies the Kami visual rules, fills the template, and produces a polished output. The repo explicitly says slash commands are not needed for common requests. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Major components/modules</strong></p>
+<ul>
+<li>
+<p><code>SKILL.md</code>: the routing and operating rules.</p>
+</li>
+<li>
+<p><code>AGENTS.md</code>: repo map, working rules, release flow, fonts, and verification notes.</p>
+</li>
+<li>
+<p><code>references/</code>: design, writing, diagrams, production, anti-patterns, resume rules, schema contracts.</p>
+</li>
+<li>
+<p><code>assets/templates/</code>: the actual output templates.</p>
+</li>
+<li>
+<p><code>plugins/kami/</code>: generated installable plugin tree.</p>
+</li>
+<li>
+<p><code>scripts/</code>: build, highlight, normalize, and packaging utilities.</p>
+</li>
+<li>
+<p><code>assets/demos/</code> and <code>assets/showcase/</code>: proof-of-output examples. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Data flow and execution flow</strong><br/>
+Natural language → skill routing → document type selection → template/rule application → content generation → rendering/preview → packaged output. The repo also includes version checks, packaging checks, and release verification to keep shipped behavior aligned with the repo source. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Integrations and dependencies</strong><br/>
+Integration points include Claude Code, Codex, Claude Desktop, and generic agent runtimes that can ingest a skill bundle from <code>~/.agents/</code>. The repo also mentions a release ZIP for distribution and a version-check mechanism that reads a public version file without sending data. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="4-why-this-project-exists">4. Why This Project Exists<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-why-this-project-exists" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Business problem</strong><br/>
+Kami exists because AI can generate content, but “document quality” is not just text quality. The missing layer is structure, design, and consistency. It acts like a productized document system so the output is actually shippable instead of looking like a default model dump. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Technical challenges it solves</strong></p>
+<ul>
+<li>
+<p>Keeping layout consistent across document types.</p>
+</li>
+<li>
+<p>Preventing style drift across agent sessions.</p>
+</li>
+<li>
+<p>Supporting multiple languages and font stacks.</p>
+</li>
+<li>
+<p>Packaging skills so multiple runtimes can consume them reliably.</p>
+</li>
+<li>
+<p>Ensuring visual output survives rendering constraints. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Advantages over traditional approaches</strong><br/>
+Compared with hand-built document templates or generic AI text generation, Kami provides a repeatable system: the same constraint set can generate consistent PDFs, decks, and landing pages across contexts. That’s a much better operational model than “prompt and pray.” (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Unique innovations</strong><br/>
+The main differentiator is the combination of:</p>
+<ul>
+<li>
+<p>a strict visual design language,</p>
+</li>
+<li>
+<p>document-specific templates,</p>
+</li>
+<li>
+<p>agent-facing skill packaging,</p>
+</li>
+<li>
+<p>multilingual support,</p>
+</li>
+<li>
+<p>and explicit checks for packaging and rendering quality.<br/>
+That is unusually cohesive for an open-source document-generation system. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="5-how-it-can-be-used">5. How It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-how-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Resume generation</strong><br/>
+Description: Create professional resumes with consistent structure and typography.<br/>
+Example: A founder or engineer wants a polished 1–2 page resume.<br/>
+Benefits: Fast drafting, cleaner presentation, better readability.<br/>
+Complexity: <strong>Low</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>One-pagers / executive summaries</strong><br/>
+Description: Generate compact business summaries or product briefs.<br/>
+Example: A startup needs a clean one-pager for investors or customers.<br/>
+Benefits: Good density, professional layout, reduced design effort.<br/>
+Complexity: <strong>Low</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>White papers / long-form reports</strong><br/>
+Description: Produce longer, structured documents with better visual hierarchy.<br/>
+Example: A team turns a technical memo into a publishable white paper.<br/>
+Benefits: Better sectioning, readability, and consistency.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Slide decks</strong><br/>
+Description: Generate presentation-style outputs from prompts.<br/>
+Example: A keynote outline becomes an 8-slide polished deck.<br/>
+Benefits: Less formatting toil, stable branding, faster iteration.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Portfolios and landing pages</strong><br/>
+Description: Present work, products, or services with a branded web surface.<br/>
+Example: A developer creates a project portfolio or product landing page.<br/>
+Benefits: Unified brand, faster publishing, easier agent-driven updates.<br/>
+Complexity: <strong>Medium</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Formal letters / recommendation letters</strong><br/>
+Description: Produce polished business or formal correspondence.<br/>
+Example: HR drafts a recommendation letter or client letter.<br/>
+Benefits: Better tone control and formatting.<br/>
+Complexity: <strong>Low</strong>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="6-where-it-can-be-used">6. Where It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-where-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Data Engineering</strong><br/>
+Relevant for documentation-heavy outputs: architecture docs, runbooks, design reviews, and data platform one-pagers. It is not a data pipeline engine, but it can package data engineering communication well. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Analytics</strong><br/>
+Useful for executive summaries, KPI narratives, and stakeholder reports. Strong fit for presentation-style output. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>AI/ML</strong><br/>
+Highly relevant. It is explicitly an AI-era document skill and is designed for agent-driven generation. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>DevOps</strong><br/>
+Useful for operational docs, incident summaries, postmortems, and release notes. Not a DevOps tool itself, but good for the communication layer. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Platform Engineering</strong><br/>
+Good for internal platform docs, standards, and onboarding packs. The system’s consistency is a strong match for platform documentation. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Cloud Engineering</strong><br/>
+Useful for cloud architecture briefs and migration summaries, especially where visual clarity matters. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security</strong><br/>
+Can be used for security reports, policy summaries, and review documents. The caveat: it is a presentation layer, not a security control system. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>FinOps</strong><br/>
+Good for cost narratives, optimization proposals, and finance-facing summaries. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Product Engineering</strong><br/>
+Very relevant. Product briefs, roadmap one-pagers, launch docs, and landing pages are obvious fit areas. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Enterprise Applications</strong><br/>
+Relevant for internal documentation, executive comms, proposals, and standardized client-facing deliverables. Its biggest enterprise value is consistency, not transactional processing. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="7-key-components-analysis">7. Key Components Analysis<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-key-components-analysis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong><code>SKILL.md</code></strong><br/>
+Purpose: routing and operating rules for document generation.<br/>
+Responsibility: decide document type, enforce checks, define handoff requirements.<br/>
+Key interaction: feeds templates, packaging, and verification. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>AGENTS.md</code></strong><br/>
+Purpose: repo-wide operational guide.<br/>
+Responsibility: document map, fonts, release flow, risk areas, and verification requirements.<br/>
+Key interaction: helps maintainers keep shipped skill behavior aligned with source. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>references/design.md</code></strong><br/>
+Purpose: design language and constraints.<br/>
+Responsibility: define the visual system, invariants, and aesthetic rules.<br/>
+Key interaction: governs template behavior and brand consistency. (<a href="https://github.com/tw93/kami/blob/main/references/design.md" title="Kami/references/design.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>references/writing.md</code>, <code>resume-writing.md</code>, <code>anti-patterns.md</code></strong><br/>
+Purpose: writing standards and quality rules.<br/>
+Responsibility: improve content quality and avoid weak drafts.<br/>
+Key interaction: used by the skill during generation and review. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>references/schemas/</code></strong><br/>
+Purpose: content contracts per document type.<br/>
+Responsibility: define what valid content looks like.<br/>
+Key interaction: keeps generated documents structurally bounded. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>assets/templates/</code> and <code>index*.html</code></strong><br/>
+Purpose: actual output surfaces.<br/>
+Responsibility: render the document types and multilingual versions.<br/>
+Key interaction: the content layer lands here for final visual output. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>scripts/</code></strong><br/>
+Purpose: build and normalization tooling.<br/>
+Responsibility: highlight code blocks, normalize Mermaid, package skill archive.<br/>
+Key interaction: transforms repo sources into installable runtime artifacts. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="8-setup-and-adoption">8. Setup and Adoption<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-setup-and-adoption" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Installation requirements</strong><br/>
+For Claude Code and Codex, the repo exposes marketplace metadata and a packaged skill path. For Claude Desktop, the repo instructs users to download <code>kami.zip</code> from releases rather than the raw source ZIP. For generic agents, it supports installing from <code>plugins/kami</code>. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Deployment options</strong></p>
+<ul>
+<li>
+<p>Claude Code plugin marketplace</p>
+</li>
+<li>
+<p>Codex plugin marketplace</p>
+</li>
+<li>
+<p>Claude Desktop skill upload</p>
+</li>
+<li>
+<p>Generic agent runtime via <code>~/.agents/</code></p>
+</li>
+<li>
+<p>Direct repo checkout for local editing/testing (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Infrastructure requirements</strong><br/>
+Lightweight on the consumer side; the skill bundle is intentionally packaged small. The repo also handles font recovery and rendering support for specific languages. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Learning curve</strong><br/>
+Moderate. Using it is easy; maintaining or extending it is more serious because it has a real design system, packaging flow, schemas, and release discipline. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Operational considerations</strong><br/>
+You need to keep the packaged skill in sync with repo changes, respect the visual invariants, and validate release assets. The repo is very explicit that changing core inputs means refreshing the shipped package. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="9-strengths-and-weaknesses">9. Strengths and Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-strengths-and-weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Strengths</strong></p>
+<ul>
+<li>
+<p><strong>Scalability</strong>: scales conceptually across many document types and languages.</p>
+</li>
+<li>
+<p><strong>Maintainability</strong>: strong separation between rules, templates, and build tooling.</p>
+</li>
+<li>
+<p><strong>Extensibility</strong>: schema/contracts and template structure make extension feasible.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: lightweight package design is good for agent runtimes.</p>
+</li>
+<li>
+<p><strong>Developer Experience</strong>: clear install paths, examples, and skill routing. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Weaknesses</strong></p>
+<ul>
+<li>
+<p><strong>Risks</strong>: visual systems can become rigid; strict constraints may frustrate edge cases.</p>
+</li>
+<li>
+<p><strong>Limitations</strong>: it is focused on document generation, not general workflow automation.</p>
+</li>
+<li>
+<p><strong>Missing features</strong>: no sign of broad collaboration, CMS-style content management, or enterprise governance layers.</p>
+</li>
+<li>
+<p><strong>Technical debt indicators</strong>: the presence of multiple generated artifacts and packaging rules means drift risk if maintainers skip the build/release process. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="10-enterprise-evaluation">10. Enterprise Evaluation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-enterprise-evaluation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Production readiness: 8/10</strong><br/>
+It has packaging, templates, docs, checks, and release discipline. This is not a toy. The remaining uncertainty is how robust its edge-case rendering and long-term release governance are at scale. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security: 6/10</strong><br/>
+Nothing in the surfaced repo suggests strong security controls as a product feature. It is not trying to be a security-sensitive platform, but enterprise teams would still need internal validation around content handling and release integrity. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Scalability: 8/10</strong><br/>
+The constraint/template model is highly scalable for document generation use cases. It is much easier to scale than ad hoc prompt formatting. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Observability: 5/10</strong><br/>
+There are checks and verification flows, but this is not an observability-heavy system in the monitoring sense. It is more “verify before ship” than “observe at runtime.” (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Documentation quality: 9/10</strong><br/>
+Very strong. The repo is unusually explicit about what it is, how to install it, and how it should be maintained. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Community support: 7/10</strong><br/>
+The project is active and visibly used, but still niche. Strong individual maintainer signal, not yet a broad ecosystem play. (<a href="https://github.com/tw93" title="Tw93" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maintainability: 8/10</strong><br/>
+Good internal structure, but it depends on disciplined upkeep of generated bundles and release artifacts. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="11-comparison-with-alternatives">11. Comparison with Alternatives<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-comparison-with-alternatives" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Versus generic AI prompting</strong><br/>
+Kami wins on consistency, brand control, and ship-ready output. Generic prompting is cheaper to start but usually produces visual mush. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Versus manual design tools</strong><br/>
+Design tools offer more freedom, but Kami is faster and more repeatable for standard document types. The trade-off is less artistic flexibility. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Versus office suites / slide tools</strong><br/>
+Office suites are broader, but Kami is more opinionated and better aligned to AI-assisted generation. That makes it faster for repeatable executive content. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Versus markdown-to-PDF toolchains</strong><br/>
+Markdown toolchains are simpler, but usually less polished and less brand-consistent. Kami adds a stronger design language and a clearer agent contract. (<a href="https://github.com/tw93/Kami/blob/main/index.html" title="Kami/index.html at main · tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="12-engineering-takeaways">12. Engineering Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-engineering-takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Design patterns used</strong></p>
+<ul>
+<li>
+<p>Constraint-driven design</p>
+</li>
+<li>
+<p>Template method style generation</p>
+</li>
+<li>
+<p>Separation of content rules from rendering surfaces</p>
+</li>
+<li>
+<p>Build-time packaging and validation</p>
+</li>
+<li>
+<p>Multilingual rendering strategy (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Architectural lessons</strong><br/>
+Good AI output needs more than prompts; it needs a constrained system. This repo is a clean example of turning “taste” into repeatable engineering artifacts. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Best practices worth adopting</strong></p>
+<ul>
+<li>
+<p>Keep document contracts explicit.</p>
+</li>
+<li>
+<p>Separate authoring rules from templates.</p>
+</li>
+<li>
+<p>Make the shipped artifact testable and versioned.</p>
+</li>
+<li>
+<p>Treat visual output as part of the contract, not decoration. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Anti-patterns</strong></p>
+<ul>
+<li>
+<p>Letting the skill/package diverge from the repo sources.</p>
+</li>
+<li>
+<p>Overloading a single template with too many cases.</p>
+</li>
+<li>
+<p>Treating document aesthetics as an afterthought. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="13-interview-preparation">13. Interview Preparation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-interview-preparation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Beginner questions</strong></p>
+<ol>
+<li>
+<p>What is Kami?</p>
+</li>
+<li>
+<p>What problem does it solve?</p>
+</li>
+<li>
+<p>What document types does it support?</p>
+</li>
+<li>
+<p>What is the role of <code>SKILL.md</code>?</p>
+</li>
+<li>
+<p>Why are templates important here?</p>
+</li>
+<li>
+<p>How does Kami differ from generic AI prompting?</p>
+</li>
+<li>
+<p>Why does the project support multiple languages?</p>
+</li>
+<li>
+<p>What is the purpose of the release ZIP?</p>
+</li>
+<li>
+<p>What is the purpose of <code>AGENTS.md</code>?</p>
+</li>
+<li>
+<p>Why is visual consistency important in documents?</p>
+</li>
+</ol>
+<p><strong>Intermediate questions</strong></p>
+<ol>
+<li>
+<p>How does Kami route a natural-language request to the right template?</p>
+</li>
+<li>
+<p>What parts of the repo define the document contract?</p>
+</li>
+<li>
+<p>How does the packaging flow protect runtime behavior?</p>
+</li>
+<li>
+<p>Why are fonts and typography treated as core infrastructure?</p>
+</li>
+<li>
+<p>How would you add a new document type?</p>
+</li>
+<li>
+<p>How do the templates and references interact?</p>
+</li>
+<li>
+<p>What is the benefit of generated plugin metadata?</p>
+</li>
+<li>
+<p>How would you validate a change before release?</p>
+</li>
+<li>
+<p>How do multilingual variants complicate maintenance?</p>
+</li>
+<li>
+<p>What trade-offs does the constraint system impose?</p>
+</li>
+</ol>
+<p><strong>Advanced architecture questions</strong></p>
+<ol>
+<li>
+<p>How would you redesign Kami for plugin-based theme packs?</p>
+</li>
+<li>
+<p>How would you make the rendering pipeline more observable?</p>
+</li>
+<li>
+<p>How would you separate content semantics from presentation semantics more cleanly?</p>
+</li>
+<li>
+<p>What failure modes could occur in the packaging/release chain?</p>
+</li>
+<li>
+<p>How would you support collaborative editing without losing layout guarantees?</p>
+</li>
+<li>
+<p>How would you add enterprise governance and approval workflows?</p>
+</li>
+<li>
+<p>How would you model content schemas for more complex document families?</p>
+</li>
+<li>
+<p>How would you version templates without breaking old outputs?</p>
+</li>
+<li>
+<p>How would you build automated visual regression tests for Kami?</p>
+</li>
+<li>
+<p>What would a cloud-native Kami service architecture look like?</p>
+</li>
+</ol>
+<h2 id="14-handoff-summary">14. Handoff Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-handoff-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>1-page executive summary</strong><br/>
+Kami is an opinionated document-generation system built for the AI era. It combines prompt routing, strict design constraints, multilingual templates, and installable skill packaging to produce professional documents and landing pages that are actually usable. Its main value is not raw text generation; it is output quality control. That makes it valuable for teams that care about presentation, repeatability, and brand consistency. The repository is well structured, well documented, and clearly maintained with production-style discipline. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Key findings</strong></p>
+<ul>
+<li>
+<p>Strong fit for AI-assisted document production.</p>
+</li>
+<li>
+<p>Clear productization around templates, rules, and packaging.</p>
+</li>
+<li>
+<p>Good multilingual and cross-runtime support.</p>
+</li>
+<li>
+<p>More of a document platform than a general automation framework. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Recommended adoption scenarios</strong></p>
+<ul>
+<li>
+<p>Executive summaries</p>
+</li>
+<li>
+<p>Resumes and portfolios</p>
+</li>
+<li>
+<p>Product one-pagers</p>
+</li>
+<li>
+<p>White papers</p>
+</li>
+<li>
+<p>Slide decks</p>
+</li>
+<li>
+<p>Release notes and polished internal docs (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Decision matrix</strong></p>
+<ul>
+<li>
+<p><strong>Use</strong>: if you need consistent, polished AI-generated documents or landing pages.</p>
+</li>
+<li>
+<p><strong>Evaluate</strong>: if you want a reusable document system but need custom governance or deeper integration.</p>
+</li>
+<li>
+<p><strong>Avoid</strong>: if you need a general-purpose workflow engine, CMS, or enterprise collaboration platform. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-aidata-engineering-relevance" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Can it be used in data platforms?</strong><br/>
+Yes, but mostly on the communication and documentation side. It is useful for architecture docs, data product briefs, pipeline design summaries, and stakeholder reporting. It is not itself a data processing platform. (<a href="https://github.com/tw93/Kami/blob/main/AGENTS.md" title="Kami/AGENTS.md at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be integrated into a lakehouse architecture?</strong><br/>
+Yes, as a document/reporting layer around the lakehouse: publishing pipeline overviews, governance docs, metric narratives, and executive summaries from data products. It would sit above the lakehouse, not inside it. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it improve ETL/ELT pipelines?</strong><br/>
+Not directly. It does not move or transform data. But it can improve operational quality by generating standardized runbooks, change summaries, incident reports, and pipeline documentation. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be used for LLM, RAG, agents, or AI workflows?</strong><br/>
+Yes, strongly. This is one of its core strengths. Kami is explicitly positioned as a skill system for AI agents, and the repo frames it as a document-generation package that agents can run reliably. (<a href="https://github.com/tw93/kami" title="tw93/Kami: 👩‍🚒 Good content deserves good paper." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Suggested enterprise architecture incorporating Kami</strong><br/>
+A practical setup would be:</p>
+<ul>
+<li>
+<p>source systems and lakehouse generate facts,</p>
+</li>
+<li>
+<p>an LLM/agent layer drafts content from those facts,</p>
+</li>
+<li>
+<p>Kami enforces layout and document contracts,</p>
+</li>
+<li>
+<p>CI/CD validates the output,</p>
+</li>
+<li>
+<p>release artifacts publish PDFs, pages, or decks to the intended audience.<br/>
+That gives you a clean separation between data truth, narrative generation, and final presentation. Kami belongs in the last mile. (<a href="https://github.com/tw93/Kami/blob/main/SKILL.md" title="SKILL.md - tw93/Kami" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>If you want, I can turn this into a cleaner board-ready memo or a markdown report file.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-137" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-1"><a href="#1-executive-summary" data-for="1-executive-summary">1. Executive Summary</a></li><li class="depth-1"><a href="#2-repository-overview" data-for="2-repository-overview">2. Repository Overview</a></li><li class="depth-1"><a href="#3-how-it-works" data-for="3-how-it-works">3. How It Works</a></li><li class="depth-1"><a href="#4-why-this-project-exists" data-for="4-why-this-project-exists">4. Why This Project Exists</a></li><li class="depth-1"><a href="#5-how-it-can-be-used" data-for="5-how-it-can-be-used">5. How It Can Be Used</a></li><li class="depth-1"><a href="#6-where-it-can-be-used" data-for="6-where-it-can-be-used">6. Where It Can Be Used</a></li><li class="depth-1"><a href="#7-key-components-analysis" data-for="7-key-components-analysis">7. Key Components Analysis</a></li><li class="depth-1"><a href="#8-setup-and-adoption" data-for="8-setup-and-adoption">8. Setup and Adoption</a></li><li class="depth-1"><a href="#9-strengths-and-weaknesses" data-for="9-strengths-and-weaknesses">9. Strengths and Weaknesses</a></li><li class="depth-1"><a href="#10-enterprise-evaluation" data-for="10-enterprise-evaluation">10. Enterprise Evaluation</a></li><li class="depth-1"><a href="#11-comparison-with-alternatives" data-for="11-comparison-with-alternatives">11. Comparison with Alternatives</a></li><li class="depth-1"><a href="#12-engineering-takeaways" data-for="12-engineering-takeaways">12. Engineering Takeaways</a></li><li class="depth-1"><a href="#13-interview-preparation" data-for="13-interview-preparation">13. Interview Preparation</a></li><li class="depth-1"><a href="#14-handoff-summary" data-for="14-handoff-summary">14. Handoff Summary</a></li><li class="depth-1"><a href="#15-aidata-engineering-relevance" data-for="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-2" class="overflow"><li><a href="../../05-Reference/ai/" class="internal">AI Tools Catalog</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

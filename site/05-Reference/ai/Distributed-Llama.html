@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>Distributed Llama</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="The Codex"/><meta property="og:title" content="Distributed Llama"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Distributed Llama"/><meta name="twitter:description" content="AI Summary Comprehensive analysis of Distributed Llama, an open-source distributed LLM inference engine that partitions models across multiple machines to enable larger or faster local inference."/><meta property="og:description" content="AI Summary Comprehensive analysis of Distributed Llama, an open-source distributed LLM inference engine that partitions models across multiple machines to enable larger or faster local inference."/><meta property="og:image:alt" content="AI Summary Comprehensive analysis of Distributed Llama, an open-source distributed LLM inference engine that partitions models across multiple machines to enable larger or faster local inference."/><meta property="og:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:url" content="https://localhost:8080/static/og-image.png"/><meta name="twitter:image" content="https://localhost:8080/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="localhost:8080"/><meta property="og:url" content="https://localhost:8080/05-Reference/ai/Distributed-Llama"/><meta property="twitter:url" content="https://localhost:8080/05-Reference/ai/Distributed-Llama"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AI Summary Comprehensive analysis of Distributed Llama, an open-source distributed LLM inference engine that partitions models across multiple machines to enable larger or faster local inference."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFByb2plY3RzXFxDaHJvbmljbGVcXHNpdGVcXC5xdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://localhost:8080/index.xml"/></head><body data-slug="05-Reference/ai/Distributed-Llama"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">The Codex</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-149"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-149" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/">Reference</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../05-Reference/ai/">AI Tools Catalog</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Distributed Llama</a></div></nav><h1 class="article-title">Distributed Llama</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T07:02:47.390Z">Sep 24, 2026</time><span>16 min read</span></p></div></div><article class="popover-hint"><h1 id="ai-summary">AI Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ai-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<pre><code>  Comprehensive analysis of Distributed Llama, an open-source distributed LLM inference engine that partitions models across multiple machines to enable larger or faster local inference. Covers its root-worker architecture, execution workflow, deployment model, use cases, strengths, limitations, enterprise readiness, comparisons with alternatives such as vLLM and llama.cpp, and its applicability to AI platforms, private inference, and distributed model serving. :contentReference[oaicite:3]{index=3}
+</code></pre>
+<hr/>
+<p>Below is a deep, architecture-focused analysis of <strong>b4rtaz/distributed-llama</strong> based on the repository’s README, file layout, release activity, and public issue/discussion signals. The project’s own documentation is the strongest source here, so I’ve anchored the conclusions to that. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="1-executive-summary">1. Executive Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>What this project is</strong><br/>
+Distributed Llama is a <strong>distributed LLM inference engine</strong> that splits a model across multiple machines on a local network so the combined cluster can run larger models or run them faster than a single device. The README describes it as a way to “connect home devices into a powerful cluster” and speed up inference using tensor parallelism and Ethernet synchronization. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>What problem it solves</strong><br/>
+It solves the very practical problem of <strong>insufficient memory and compute on a single machine</strong>. Instead of forcing one machine to hold the whole model and all runtime state, it spreads the neural network across multiple nodes. That makes local deployment of big models more feasible on consumer hardware, mini PCs, Raspberry Pis, Macs, and mixed CPU environments. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Target audience</strong><br/>
+The audience is pretty clear: power users, hobbyists, local AI enthusiasts, researchers, and engineers experimenting with <strong>distributed inference on commodity hardware</strong>. It is also relevant to people trying to run models privately without a cloud dependency. The repo’s discussions and issues show demand from users exploring Kubernetes, Docker, Open WebUI, embeddings, and API integration, which confirms a technically savvy audience. (<a href="https://github.com/b4rtaz/distributed-llama/discussions/215" title="Does this dllama work in kubernetes environment? #215" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maturity level</strong><br/>
+This is best described as a <strong>mature open-source research/prototype system</strong>, not enterprise-ready software. It is active, has many releases, and has real users, but the README still lists hard limitations such as only certain quantization/buffer combinations and node-count constraints. That is a strong signal that it is useful and evolving, but still opinionated and constrained rather than broadly production-hardened. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="2-repository-overview">2. Repository Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-repository-overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Main purpose</strong><br/>
+The repository implements a distributed runtime for LLM inference, with a root node and worker nodes. The root loads the model and coordinates synchronization; workers handle slices of the network. The project also provides a CLI chat mode, benchmark/inference mode, worker daemon, and an API server. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Core features and capabilities</strong></p>
+<ul>
+<li>
+<p>Distributed model execution across multiple nodes. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>CLI inference and chat. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Worker-node mode. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>API server mode (<code>dllama-api</code>). (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>One-command root-node setup via <code>launch.py</code>. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Support for Linux, macOS, Windows, ARM, and x86_64 AVX2 CPUs. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Experimental Vulkan support and recent support for Qwen3 MoE models. (<a href="https://github.com/b4rtaz/distributed-llama/releases" title="Releases · b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Key technologies, frameworks, and languages</strong></p>
+<ul>
+<li>
+<p><strong>C++ dominates</strong> the codebase at 96.9%. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Python</strong> is used for orchestration and setup (<code>launch.py</code>) and model conversion tooling. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>No heavyweight external framework is apparent from the README. This looks like a custom systems implementation rather than a wrapper around PyTorch/llama.cpp in the runtime path. That is an inference from the repo structure and README emphasis. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>High-level architecture inferred from the codebase</strong><br/>
+The architecture is a classic <strong>controller/worker distributed inference topology</strong>:</p>
+<ul>
+<li>
+<p>One <strong>root/controller node</strong></p>
+</li>
+<li>
+<p>Multiple <strong>worker nodes</strong></p>
+</li>
+<li>
+<p>A <strong>synchronization layer</strong> over the network</p>
+</li>
+<li>
+<p>A <strong>model conversion pipeline</strong> for preparing supported model formats</p>
+</li>
+<li>
+<p>A <strong>CLI/API front-end</strong> for interaction and serving (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h1 id="3-how-it-works">3. How It Works<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-how-it-works" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Workflow in simple terms</strong><br/>
+You start a root node with the model and tokenizer. The root then reaches out to workers over the local network. Each worker processes its slice of the neural network, and the root coordinates state so the slices behave like one model. More workers generally mean more throughput and/or a larger model can fit in aggregate RAM. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Major components/modules</strong><br/>
+The README exposes the main functional modules indirectly through commands and folder names:</p>
+<ul>
+<li>
+<p><code>src/</code>: core runtime implementation. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>converter/</code>: model conversion pipeline. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>docs/</code>: conversion and usage guides. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>examples/</code>: runnable demos. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>launch.py</code>: single-command root bootstrap. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><code>Makefile</code>: build targets. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Data flow / execution flow</strong></p>
+<ol>
+<li>
+<p>A model and tokenizer are downloaded or converted. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>The root node starts with model path, tokenizer path, worker addresses, buffer precision, and thread count. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>The root node distributes or synchronizes model state to workers. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Workers process their assigned network slice. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Inference or chat is run from CLI, or the API server serves requests. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ol>
+<p><strong>Integrations and dependencies</strong><br/>
+The repo clearly depends on:</p>
+<ul>
+<li>
+<p>A <strong>C++ build toolchain</strong> and compiler. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p><strong>Python 3</strong> for bootstrap/conversion scripts. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Networked worker processes on TCP ports. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Hardware/network setup that favors Ethernet and local low-latency connectivity. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h1 id="4-why-this-project-exists">4. Why This Project Exists<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-why-this-project-exists" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Business problem it addresses</strong><br/>
+The business problem is simple: <strong>big models are expensive to host centrally, and many users want local/private inference</strong>. Distributed Llama lets people use multiple cheap machines they already own instead of buying one giant GPU box or paying for hosted inference. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Technical challenges it solves</strong></p>
+<ul>
+<li>
+<p>Model memory pressure on a single machine. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Synchronizing neural network state across nodes. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Supporting mixed consumer hardware and operating systems. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Making distributed inference usable through a simple bootstrap flow. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Advantages over traditional approaches</strong><br/>
+Compared with “one fat server” deployment:</p>
+<ul>
+<li>
+<p>It can use <strong>commodity hardware</strong> already sitting around the house or lab.</p>
+</li>
+<li>
+<p>It can scale memory capacity by aggregation.</p>
+</li>
+<li>
+<p>It can reduce dependence on cloud inference.</p>
+</li>
+<li>
+<p>It can be a nicer fit for privacy-sensitive local workloads. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Unique innovations / differentiators</strong><br/>
+The standout idea is the <strong>root node is also a worker</strong>, which reduces the “special snowflake controller” problem and keeps the root on the hot path. The other differentiator is the project’s focus on <strong>home-device clustering over Ethernet</strong>, not datacenter orchestration. That is a different optimization target from typical distributed AI systems. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="5-how-it-can-be-used">5. How It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-how-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="1-local-multi-device-inference-cluster">1) Local multi-device inference cluster<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-local-multi-device-inference-cluster" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Description:</strong> Run a model across several machines on your LAN.<br/>
+<strong>Example scenario:</strong> A home lab with 4 mini PCs jointly runs a 70B model.<br/>
+<strong>Expected benefits:</strong> Higher effective memory capacity, better throughput, privacy.<br/>
+<strong>Complexity:</strong> High. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="2-private-chat-server">2) Private chat server<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-private-chat-server" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Description:</strong> Use <code>dllama-api</code> as a local chat-completion server.<br/>
+<strong>Example scenario:</strong> Internal team chatbot for sensitive prompts and documents.<br/>
+<strong>Expected benefits:</strong> No cloud dependency, local control, private data handling.<br/>
+<strong>Complexity:</strong> Medium-High. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="3-benchmarking-distributed-inference">3) Benchmarking distributed inference<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-benchmarking-distributed-inference" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Description:</strong> Use the inference command as a simple benchmark harness.<br/>
+<strong>Example scenario:</strong> Compare 1-node vs 2-node vs 4-node performance.<br/>
+<strong>Expected benefits:</strong> Useful measurements for hardware planning and tuning.<br/>
+<strong>Complexity:</strong> Medium. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="4-model-conversion-pipeline">4) Model conversion pipeline<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-model-conversion-pipeline" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Description:</strong> Convert Hugging Face models into the repo’s supported format.<br/>
+<strong>Example scenario:</strong> Prepare a model for local distributed deployment.<br/>
+<strong>Expected benefits:</strong> Standardizes input models and makes deployment repeatable.<br/>
+<strong>Complexity:</strong> Medium. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="5-experimental-distributed-research-platform">5) Experimental distributed research platform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-experimental-distributed-research-platform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Description:</strong> Use it to study distributed inference tradeoffs.<br/>
+<strong>Example scenario:</strong> Research on synchronization overhead, node scaling, or quantization behavior.<br/>
+<strong>Expected benefits:</strong> Real-world system to test ideas, not a toy simulator.<br/>
+<strong>Complexity:</strong> High. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="6-where-it-can-be-used">6. Where It Can Be Used<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-where-it-can-be-used" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Data Engineering</strong><br/>
+Relevant for local inference services, metadata enrichment, and batch/stream helper agents. Not a native data tool, but useful as a model-serving backend for data workflows. Medium relevance. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Analytics</strong><br/>
+Useful if analytics teams need a private local LLM for summarization, SQL assistance, or semantic query workflows. Indirectly relevant. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>AI/ML</strong><br/>
+Very high relevance. This is squarely an AI inference system, especially for distributed local execution. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>DevOps</strong><br/>
+Moderate relevance. It can be containerized and deployed, but operational maturity is limited; issues around persistent API behavior and node failure recovery show why DevOps would need to harden it. (<a href="https://github.com/b4rtaz/distributed-llama/releases" title="Releases · b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Platform Engineering</strong><br/>
+High relevance as an internal AI platform primitive, especially for private model serving in controlled environments. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Cloud Engineering</strong><br/>
+Relevant if you want hybrid or edge-style distributed inference, but this project is more LAN/home-cluster oriented than cloud-native. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Security</strong><br/>
+Interesting for privacy-preserving local inference. However, it is not a security product and would need network hardening, auth, and auditability before serious enterprise use. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>FinOps</strong><br/>
+Potentially useful because it can shift workload from cloud inference spend to owned hardware. That is a cost strategy, not a built-in FinOps feature. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Product Engineering</strong><br/>
+Useful for embedding private inference into products that need local model access. The lack of mature OpenAI-compatible behavior is a current gap. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Enterprise Applications</strong><br/>
+Possible in narrow internal/private deployments, but not turnkey. The project lacks evidence of enterprise controls such as auth, RBAC, HA orchestration, or rich observability. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="7-key-components-analysis">7. Key Components Analysis<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-key-components-analysis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Because the GitHub HTML view exposes only top-level paths and README-level details, this analysis is necessarily higher-level than a full source tree inspection. The visible structure still tells a lot. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>src/</code></strong><br/>
+Core C++ runtime. Likely contains model execution, node networking, synchronization, and command implementations. Responsibilities: inference logic, distributed coordination, worker behavior. Interacts with converter output, CLI entry points, and API server. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>converter/</code></strong><br/>
+Prepares models into the repo’s supported binary/model format. Responsibilities: ingest HF models, transform weights, emit runtime-ready artifacts. Interacts with docs and launch scripts. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>docs/</code></strong><br/>
+Contains the “how to convert HF model” guide and likely operational setup instructions. Responsibilities: onboarding and model preparation knowledge. Interacts with <code>launch.py</code> and usage commands. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>examples/</code></strong><br/>
+Reference runs, demos, or sample commands. Responsibilities: proving supported scenarios and configurations. Useful for adoption and reproducibility. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>report/</code></strong><br/>
+There is a <code>report.pdf</code>, which likely contains deeper analysis, measurements, or a technical write-up. That is a strong signal the project has a research/documentation layer beyond code. (<a href="https://github.com/b4rtaz/distributed-llama/blob/main/report/report.pdf" title="distributed-llama/report/report.pdf at main" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>launch.py</code></strong><br/>
+Single-command bootstrap for root node/model download. Responsibilities: improve first-run UX and hide complexity. Interacts with model artifacts, tokenizer, and runtime binary. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong><code>Makefile</code></strong><br/>
+Build orchestration. Responsibilities: compile native binaries, possibly target <code>dllama</code> and <code>dllama-api</code>. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="8-setup-and-adoption">8. Setup and Adoption<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-setup-and-adoption" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Installation requirements</strong></p>
+<ul>
+<li>
+<p>Python 3. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>C++ compiler / build toolchain. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Networked machines with reachable ports. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Sufficient RAM across nodes for the target model. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Deployment options</strong></p>
+<ul>
+<li>
+<p>Bare metal on Linux/macOS/Windows. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Home lab / mini-PC cluster. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Raspberry Pi setups. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>GPU-oriented execution paths are mentioned in the README. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Infrastructure requirements</strong></p>
+<ul>
+<li>
+<p>Low-latency LAN and stable host addressing.</p>
+</li>
+<li>
+<p>Consistent ports for root and workers.</p>
+</li>
+<li>
+<p>Enough aggregate RAM, with root needing more than workers. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Learning curve</strong><br/>
+Moderate to steep. The core mental model is simple, but the practical reality of model conversion, quantization limits, and node coordination makes it non-trivial. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Operational considerations</strong></p>
+<ul>
+<li>
+<p>Node failure handling is an area of active interest, not a solved enterprise feature. (<a href="https://github.com/b4rtaz/distributed-llama/releases" title="Releases · b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>API shape is still evolving; users requested broader OpenAI-like API features, embeddings, and model-list endpoints. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Containerization exists via PR work, but the project is not presented as natively cloud-native. (<a href="https://github.com/b4rtaz/distributed-llama/pull/233/files" title="Implement docker #233 - b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h1 id="9-strengths-and-weaknesses">9. Strengths and Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-strengths-and-weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="strengths">Strengths<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#strengths" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Scalability</strong><br/>
+Scales memory and throughput by adding nodes, with a clear root/worker model. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Maintainability</strong><br/>
+The codebase is compact enough to reason about, but native distributed systems code is inherently harder to maintain than a Python wrapper. The repository structure is clean. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Extensibility</strong><br/>
+The presence of API mode, discussions around embeddings, models endpoint support, Docker work, and Vulkan support shows a project that is moving. (<a href="https://github.com/b4rtaz/distributed-llama/releases" title="Releases · b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Performance</strong><br/>
+Designed specifically for local synchronized inference, with hardware-aware support for ARM and AVX2. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Developer Experience</strong><br/>
+<code>launch.py</code> and the top-level command set are good UX choices for a system this low-level. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="weaknesses">Weaknesses<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#weaknesses" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Risks</strong><br/>
+Distributed inference over home networks is fragile compared with single-node deployment. Node failures, socket issues, and protocol mismatches can ruin the experience fast. (<a href="https://github.com/b4rtaz/distributed-llama/discussions/261" title="Roadmap · b4rtaz distributed-llama · Discussion #261" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Limitations</strong></p>
+<ul>
+<li>
+<p>Only supports 1, 2, 4, … 2^n nodes. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Maximum node count tied to KV heads. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Only certain quantization/buffer combinations are supported. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Missing features</strong></p>
+<ul>
+<li>
+<p>Robust model registry / multi-model API behavior. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Broader OpenAI-compatible endpoints such as embeddings. (<a href="https://github.com/b4rtaz/distributed-llama/issues/96" title="[New Feature] Add new route for dllama api for embeding ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>More dynamic node membership and HA-style orchestration. (<a href="https://github.com/b4rtaz/distributed-llama/discussions/261" title="Roadmap · b4rtaz distributed-llama · Discussion #261" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Technical debt indicators</strong></p>
+<ul>
+<li>
+<p>Tight coupling to supported model/quantization paths.</p>
+</li>
+<li>
+<p>Distributed system constraints that leak into user experience.</p>
+</li>
+<li>
+<p>Compatibility issues across hardware types are likely to be a recurring tax. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h1 id="10-enterprise-evaluation">10. Enterprise Evaluation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-enterprise-evaluation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="ratings">Ratings<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ratings" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p><strong>Production readiness:</strong> 4/10</p>
+</li>
+<li>
+<p><strong>Security:</strong> 3/10</p>
+</li>
+<li>
+<p><strong>Scalability:</strong> 6/10</p>
+</li>
+<li>
+<p><strong>Observability:</strong> 2/10</p>
+</li>
+<li>
+<p><strong>Documentation quality:</strong> 7/10</p>
+</li>
+<li>
+<p><strong>Community support:</strong> 6/10</p>
+</li>
+<li>
+<p><strong>Maintainability:</strong> 5/10</p>
+</li>
+</ul>
+<h2 id="reasoning">Reasoning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#reasoning" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Production readiness is limited by hard constraints, incomplete API maturity, and the lack of visible enterprise controls. Security is low because there is no evidence here of auth, RBAC, encryption posture, or audit logging. Scalability is decent within its design envelope, but this is more “works well for a bounded cluster” than “infinitely elastic platform.” Observability appears minimal from the public surface. Documentation is unusually strong for a hobby/research project, and community activity is real, with many releases, issues, and discussions. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="11-comparison-with-alternatives">11. Comparison with Alternatives<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-comparison-with-alternatives" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Likely alternatives include:</p>
+<ul>
+<li>
+<p><strong>llama.cpp</strong>: simpler single-node or simpler distributed/offload workflows, broader mindshare, different tradeoffs.</p>
+</li>
+<li>
+<p><strong>vLLM</strong>: high-throughput serving, but aimed at server-grade GPU inference rather than home-device CPU clusters.</p>
+</li>
+<li>
+<p><strong>LocalAI / Open WebUI backends</strong>: better API ecosystem compatibility, less specialized distributed partitioning.</p>
+</li>
+<li>
+<p><strong>Exo / similar distributed local inference projects</strong>: closer philosophically, but architecture and maturity vary. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="comparison-dimensions">Comparison dimensions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#comparison-dimensions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Features</strong><br/>
+Distributed Llama is specialized for multi-node local inference with root/worker partitioning. It is less of a generic model server than vLLM/LocalAI. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Complexity</strong><br/>
+Higher operational complexity than single-node serving. Lower conceptual overhead than a full Kubernetes-native AI serving stack. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Performance</strong><br/>
+Potentially strong for CPU-heavy distributed local setups, but constrained by synchronization overhead and the supported model formats. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Cost</strong><br/>
+Excellent if you already own hardware. Poor if you have to buy machines only for this. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Ecosystem</strong><br/>
+Weaker than the big serving ecosystems. Good community energy, but not yet a broad platform standard. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="12-engineering-takeaways">12. Engineering Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-engineering-takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Design patterns used</strong></p>
+<ul>
+<li>
+<p>Root/worker distributed processing</p>
+</li>
+<li>
+<p>Controller-managed synchronization</p>
+</li>
+<li>
+<p>Thin operational entrypoints (<code>launch.py</code>, CLI commands)</p>
+</li>
+<li>
+<p>Native systems programming for performance (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Architectural lessons</strong></p>
+<ul>
+<li>
+<p>Distributed inference is mostly a latency and memory-management problem, not just a compute problem.</p>
+</li>
+<li>
+<p>A root node that is also a worker is a pragmatic way to avoid wasted capacity.</p>
+</li>
+<li>
+<p>Clear format constraints are better than pretending all models are supported. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Best practices worth adopting</strong></p>
+<ul>
+<li>
+<p>Strong bootstrap UX with a single command.</p>
+</li>
+<li>
+<p>Clear documentation of limitations.</p>
+</li>
+<li>
+<p>Separate model conversion from runtime execution.</p>
+</li>
+<li>
+<p>Keep the operational story honest. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p><strong>Anti-patterns</strong></p>
+<ul>
+<li>
+<p>Hard-coding support boundaries too tightly can reduce adoption.</p>
+</li>
+<li>
+<p>Over-reliance on fixed node counts limits elasticity.</p>
+</li>
+<li>
+<p>A distributed system without obvious observability and recovery paths becomes a science experiment fast. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<hr/>
+<h1 id="13-interview-preparation">13. Interview Preparation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-interview-preparation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="10-beginner-questions">10 beginner questions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-beginner-questions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol>
+<li>
+<p>What problem does Distributed Llama solve?</p>
+</li>
+<li>
+<p>What is the role of the root node?</p>
+</li>
+<li>
+<p>What is the role of a worker node?</p>
+</li>
+<li>
+<p>Why does the project need multiple machines?</p>
+</li>
+<li>
+<p>What does <code>dllama chat</code> do?</p>
+</li>
+<li>
+<p>What does <code>dllama inference</code> do?</p>
+</li>
+<li>
+<p>Why is Python included in a mostly C++ project?</p>
+</li>
+<li>
+<p>What is model conversion, and why is it needed?</p>
+</li>
+<li>
+<p>Why are supported quantizations limited?</p>
+</li>
+<li>
+<p>What is the purpose of <code>launch.py</code>?</p>
+</li>
+</ol>
+<h2 id="10-intermediate-questions">10 intermediate questions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-intermediate-questions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol>
+<li>
+<p>How does tensor parallelism differ from model replication?</p>
+</li>
+<li>
+<p>Why is Ethernet synchronization important here?</p>
+</li>
+<li>
+<p>What are the tradeoffs of the root-being-a-worker design?</p>
+</li>
+<li>
+<p>Why does the maximum node count depend on KV heads?</p>
+</li>
+<li>
+<p>What makes distributed inference harder than single-node inference?</p>
+</li>
+<li>
+<p>How would you benchmark throughput across 1, 2, and 4 nodes?</p>
+</li>
+<li>
+<p>What failure modes would you expect on a worker crash?</p>
+</li>
+<li>
+<p>Why is API compatibility important for tools like Open WebUI?</p>
+</li>
+<li>
+<p>How would you improve the model conversion pipeline?</p>
+</li>
+<li>
+<p>What are the main portability concerns across ARM and x86_64?</p>
+</li>
+</ol>
+<h2 id="10-advanced-architecture-questions">10 advanced architecture questions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-advanced-architecture-questions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol>
+<li>
+<p>How would you redesign node membership to support dynamic add/remove?</p>
+</li>
+<li>
+<p>How would you add HA and failover for the root node?</p>
+</li>
+<li>
+<p>What protocol would you use for synchronization to reduce overhead?</p>
+</li>
+<li>
+<p>How would you measure and minimize cross-node communication cost?</p>
+</li>
+<li>
+<p>How would you support multi-model serving without memory thrash?</p>
+</li>
+<li>
+<p>How would you introduce observability for latency, throughput, and worker health?</p>
+</li>
+<li>
+<p>How would you secure the cluster on an untrusted LAN?</p>
+</li>
+<li>
+<p>How would you integrate this into Kubernetes without fighting the architecture?</p>
+</li>
+<li>
+<p>What changes would be required to support embeddings and tool-calling endpoints?</p>
+</li>
+<li>
+<p>How would you redesign quantization support to be less restrictive?</p>
+</li>
+</ol>
+<hr/>
+<h1 id="14-handoff-summary">14. Handoff Summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#14-handoff-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="one-page-executive-summary">One-page executive summary<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#one-page-executive-summary" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Distributed Llama is an open-source distributed inference system for running large language models across multiple local devices. It targets users who want private, local, hardware-efficient inference without cloud dependency. The architecture is straightforward: a root node coordinates execution and also serves as a worker, while additional worker nodes handle slices of the model. The repo is active, documented, and experimentally rich, with many releases and community discussions. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p>The strongest value proposition is turning a pile of underused devices into a practical local AI cluster. Its strongest weaknesses are operational maturity, hard format/node constraints, and incomplete enterprise features. This is not a generic production model-serving platform; it is a specialized distributed systems project with real utility and real sharp edges. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="key-findings">Key findings<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#key-findings" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>Strong distributed-inference concept with clear user value. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Good documentation and simple bootstrap path. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Meaningful limitations in quantization and topology. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+<li>
+<p>Active ecosystem movement toward API, Docker, and richer model support. (<a href="https://github.com/b4rtaz/distributed-llama/releases" title="Releases · b4rtaz/distributed-llama" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="recommended-adoption-scenarios">Recommended adoption scenarios<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#recommended-adoption-scenarios" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Use it for:</p>
+<ul>
+<li>
+<p>home labs,</p>
+</li>
+<li>
+<p>private local inference,</p>
+</li>
+<li>
+<p>distributed inference experiments,</p>
+</li>
+<li>
+<p>hardware utilization of mixed devices,</p>
+</li>
+<li>
+<p>prototype AI serving for technically strong teams. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>Avoid it for:</p>
+<ul>
+<li>
+<p>strict production SLAs,</p>
+</li>
+<li>
+<p>regulated enterprise workloads without extra hardening,</p>
+</li>
+<li>
+<p>heavily dynamic clusters,</p>
+</li>
+<li>
+<p>teams needing broad API compatibility out of the box. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<h2 id="decision-matrix">Decision matrix<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#decision-matrix" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Use</strong><br/>
+When you have multiple local devices, want private inference, and can tolerate system-level constraints. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Evaluate</strong><br/>
+When you need local model serving but require better API compatibility, dynamic orchestration, or enterprise controls. (<a href="https://github.com/b4rtaz/distributed-llama/issues/146" title="Feature request: models endpoint support in dllama-api #146" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Avoid</strong><br/>
+When you need turnkey production, strong security guarantees, or elastic cloud-native scaling. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<hr/>
+<h1 id="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#15-aidata-engineering-relevance" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Can this repository be used in data platforms?</strong><br/>
+Yes, as a local inference backend for internal assistants, data-quality copilots, SQL helpers, or enrichment agents. It is not a data platform component by itself, but it can sit beside one. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be integrated into a lakehouse architecture?</strong><br/>
+Yes, as a private inference service consumed by notebooks, orchestrators, and semantic layers. It would live as an auxiliary AI service, not in the storage/compute core. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it improve ETL/ELT pipelines?</strong><br/>
+Indirectly, yes. It could power schema understanding, metadata extraction, documentation generation, exception triage, or data contract assistants. It will not replace the ETL engine itself. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><strong>Can it be used for LLM, RAG, agents, or AI workflows?</strong><br/>
+Yes, especially for local/private inference. The main caveat is ecosystem compatibility; current discussions show demand for embeddings and richer API behavior, which are not yet first-class in the public surface. (<a href="https://github.com/b4rtaz/distributed-llama/issues/96" title="[New Feature] Add new route for dllama api for embeding ..." class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<h2 id="suggested-enterprise-architecture-incorporating-this-project">Suggested enterprise architecture incorporating this project<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#suggested-enterprise-architecture-incorporating-this-project" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>A pragmatic design would be:</p>
+<ul>
+<li>
+<p><strong>Data layer:</strong> lakehouse or warehouse as system of record.</p>
+</li>
+<li>
+<p><strong>Model-serving layer:</strong> Distributed Llama as a private local inference cluster for selected internal workloads.</p>
+</li>
+<li>
+<p><strong>Orchestration layer:</strong> Airflow/Dagster/Prefect or an internal job runner calling the API server.</p>
+</li>
+<li>
+<p><strong>Retrieval layer:</strong> vector database and document pipelines for RAG.</p>
+</li>
+<li>
+<p><strong>Governance layer:</strong> auth proxy, audit logging, rate limiting, and policy controls in front of <code>dllama-api</code>.</p>
+</li>
+<li>
+<p><strong>Observability layer:</strong> metrics collection for token throughput, node health, sync latency, and worker reconnects.</p>
+</li>
+<li>
+<p><strong>Fallback layer:</strong> cloud LLM provider for workloads that exceed local capacity or need strict compatibility. (<a href="https://github.com/b4rtaz/distributed-llama" title="GitHub - b4rtaz/distributed-llama: Distributed LLM inference. Connect home devices into a powerful cluster to accelerate LLM inference. More devices means faster inference. · GitHub" class="external">GitHub<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+</li>
+</ul>
+<p>If you want, I can turn this into a polished <strong>Markdown report</strong>, a <strong>PDF</strong>, or a <strong>slide deck</strong> next.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-126" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#ai-summary" data-for="ai-summary">AI Summary</a></li><li class="depth-0"><a href="#1-executive-summary" data-for="1-executive-summary">1. Executive Summary</a></li><li class="depth-0"><a href="#2-repository-overview" data-for="2-repository-overview">2. Repository Overview</a></li><li class="depth-0"><a href="#3-how-it-works" data-for="3-how-it-works">3. How It Works</a></li><li class="depth-0"><a href="#4-why-this-project-exists" data-for="4-why-this-project-exists">4. Why This Project Exists</a></li><li class="depth-0"><a href="#5-how-it-can-be-used" data-for="5-how-it-can-be-used">5. How It Can Be Used</a></li><li class="depth-1"><a href="#1-local-multi-device-inference-cluster" data-for="1-local-multi-device-inference-cluster">1) Local multi-device inference cluster</a></li><li class="depth-1"><a href="#2-private-chat-server" data-for="2-private-chat-server">2) Private chat server</a></li><li class="depth-1"><a href="#3-benchmarking-distributed-inference" data-for="3-benchmarking-distributed-inference">3) Benchmarking distributed inference</a></li><li class="depth-1"><a href="#4-model-conversion-pipeline" data-for="4-model-conversion-pipeline">4) Model conversion pipeline</a></li><li class="depth-1"><a href="#5-experimental-distributed-research-platform" data-for="5-experimental-distributed-research-platform">5) Experimental distributed research platform</a></li><li class="depth-0"><a href="#6-where-it-can-be-used" data-for="6-where-it-can-be-used">6. Where It Can Be Used</a></li><li class="depth-0"><a href="#7-key-components-analysis" data-for="7-key-components-analysis">7. Key Components Analysis</a></li><li class="depth-0"><a href="#8-setup-and-adoption" data-for="8-setup-and-adoption">8. Setup and Adoption</a></li><li class="depth-0"><a href="#9-strengths-and-weaknesses" data-for="9-strengths-and-weaknesses">9. Strengths and Weaknesses</a></li><li class="depth-1"><a href="#strengths" data-for="strengths">Strengths</a></li><li class="depth-1"><a href="#weaknesses" data-for="weaknesses">Weaknesses</a></li><li class="depth-0"><a href="#10-enterprise-evaluation" data-for="10-enterprise-evaluation">10. Enterprise Evaluation</a></li><li class="depth-1"><a href="#ratings" data-for="ratings">Ratings</a></li><li class="depth-1"><a href="#reasoning" data-for="reasoning">Reasoning</a></li><li class="depth-0"><a href="#11-comparison-with-alternatives" data-for="11-comparison-with-alternatives">11. Comparison with Alternatives</a></li><li class="depth-1"><a href="#comparison-dimensions" data-for="comparison-dimensions">Comparison dimensions</a></li><li class="depth-0"><a href="#12-engineering-takeaways" data-for="12-engineering-takeaways">12. Engineering Takeaways</a></li><li class="depth-0"><a href="#13-interview-preparation" data-for="13-interview-preparation">13. Interview Preparation</a></li><li class="depth-1"><a href="#10-beginner-questions" data-for="10-beginner-questions">10 beginner questions</a></li><li class="depth-1"><a href="#10-intermediate-questions" data-for="10-intermediate-questions">10 intermediate questions</a></li><li class="depth-1"><a href="#10-advanced-architecture-questions" data-for="10-advanced-architecture-questions">10 advanced architecture questions</a></li><li class="depth-0"><a href="#14-handoff-summary" data-for="14-handoff-summary">14. Handoff Summary</a></li><li class="depth-1"><a href="#one-page-executive-summary" data-for="one-page-executive-summary">One-page executive summary</a></li><li class="depth-1"><a href="#key-findings" data-for="key-findings">Key findings</a></li><li class="depth-1"><a href="#recommended-adoption-scenarios" data-for="recommended-adoption-scenarios">Recommended adoption scenarios</a></li><li class="depth-1"><a href="#decision-matrix" data-for="decision-matrix">Decision matrix</a></li><li class="depth-0"><a href="#15-aidata-engineering-relevance" data-for="15-aidata-engineering-relevance">15. AI/Data Engineering Relevance</a></li><li class="depth-1"><a href="#suggested-enterprise-architecture-incorporating-this-project" data-for="suggested-enterprise-architecture-incorporating-this-project">Suggested enterprise architecture incorporating this project</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-2" class="overflow"><li><a href="../../05-Reference/ai/" class="internal">AI Tools Catalog</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>
