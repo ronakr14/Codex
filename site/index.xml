@@ -6,65 +6,65 @@
       <description>Last 10 notes on The Codex</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>software-engineering</title>
-    <link>https://localhost:8080/01-Knowledge/software-engineering/</link>
-    <guid>https://localhost:8080/01-Knowledge/software-engineering/</guid>
+    <title>Lakehouse_</title>
+    <link>https://localhost:8080/02-Knowledge/Data-Engineering/Lakehouse_/</link>
+    <guid>https://localhost:8080/02-Knowledge/Data-Engineering/Lakehouse_/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>cloud</title>
-    <link>https://localhost:8080/05-Reference/cloud/</link>
-    <guid>https://localhost:8080/05-Reference/cloud/</guid>
+    <title>Storage</title>
+    <link>https://localhost:8080/02-Knowledge/Data-Engineering/Storage/</link>
+    <guid>https://localhost:8080/02-Knowledge/Data-Engineering/Storage/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>data-engineering</title>
-    <link>https://localhost:8080/05-Reference/data-engineering/</link>
-    <guid>https://localhost:8080/05-Reference/data-engineering/</guid>
+    <title>Storage_</title>
+    <link>https://localhost:8080/02-Knowledge/Data-Engineering/Storage_/</link>
+    <guid>https://localhost:8080/02-Knowledge/Data-Engineering/Storage_/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>database</title>
-    <link>https://localhost:8080/05-Reference/database/</link>
-    <guid>https://localhost:8080/05-Reference/database/</guid>
+    <title>Data-Engineering</title>
+    <link>https://localhost:8080/02-Knowledge/Data-Engineering/</link>
+    <guid>https://localhost:8080/02-Knowledge/Data-Engineering/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>Reference</title>
-    <link>https://localhost:8080/05-Reference/</link>
-    <guid>https://localhost:8080/05-Reference/</guid>
+    <title>Indexing</title>
+    <link>https://localhost:8080/02-Knowledge/Databases/Indexing/</link>
+    <guid>https://localhost:8080/02-Knowledge/Databases/Indexing/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>pkm</title>
-    <link>https://localhost:8080/05-Reference/pkm/</link>
-    <guid>https://localhost:8080/05-Reference/pkm/</guid>
+    <title>Probabilistic_Structures</title>
+    <link>https://localhost:8080/02-Knowledge/Databases/Probabilistic_Structures/</link>
+    <guid>https://localhost:8080/02-Knowledge/Databases/Probabilistic_Structures/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>python</title>
-    <link>https://localhost:8080/05-Reference/python/</link>
-    <guid>https://localhost:8080/05-Reference/python/</guid>
+    <title>Vector_Search</title>
+    <link>https://localhost:8080/02-Knowledge/Databases/Vector_Search/</link>
+    <guid>https://localhost:8080/02-Knowledge/Databases/Vector_Search/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>software-engineering</title>
-    <link>https://localhost:8080/05-Reference/software-engineering/</link>
-    <guid>https://localhost:8080/05-Reference/software-engineering/</guid>
+    <title>Databases</title>
+    <link>https://localhost:8080/02-Knowledge/Databases/</link>
+    <guid>https://localhost:8080/02-Knowledge/Databases/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>tool</title>
-    <link>https://localhost:8080/05-Reference/tool/</link>
-    <guid>https://localhost:8080/05-Reference/tool/</guid>
+    <title>Data_Engineering</title>
+    <link>https://localhost:8080/03-Architecture/ADRs/Data_Engineering/</link>
+    <guid>https://localhost:8080/03-Architecture/ADRs/Data_Engineering/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item><item>
-    <title>Prompts</title>
-    <link>https://localhost:8080/08-Prompts/</link>
-    <guid>https://localhost:8080/08-Prompts/</guid>
+    <title>ADRs</title>
+    <link>https://localhost:8080/03-Architecture/ADRs/</link>
+    <guid>https://localhost:8080/03-Architecture/ADRs/</guid>
     <description><![CDATA[  ]]></description>
-    <pubDate>Mon, 19 Oct 2026 06:24:24 GMT</pubDate>
+    <pubDate>Thu, 12 Nov 2026 16:49:02 GMT</pubDate>
   </item>
     </channel>
   </rss>
